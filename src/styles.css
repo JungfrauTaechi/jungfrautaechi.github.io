@@ -125,9 +125,11 @@
 .station-trend>small{color:var(--muted);font-size:.68rem}
 .meteo-secondary{padding-block:3.5rem 4.5rem;border-top:1px solid var(--line);background:#fff}
 .meteo-secondary-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,.75fr);gap:2rem;align-items:start}
+.meteo-secondary-grid>*{min-width:0;max-width:100%}
 .webcam-refresh{padding:.55rem .75rem;border:1px solid var(--blue);background:#fff;color:var(--blue);font:inherit;font-size:.72rem;font-weight:800;cursor:pointer}.webcam-refresh:hover,.webcam-refresh:focus-visible{background:var(--blue);color:#fff}
-.webcam-gallery{border:1px solid var(--line);background:#fff}
-.webcam-panorama-viewport{width:100%;aspect-ratio:16/7;overflow-x:auto;overflow-y:hidden;background:#071d30;overscroll-behavior-inline:contain;scrollbar-width:thin;-webkit-overflow-scrolling:touch;cursor:ew-resize}
+.webcam-panel,.webcam-gallery{width:100%;min-width:0;max-width:100%}
+.webcam-gallery{overflow:hidden;border:1px solid var(--line);background:#fff}
+.webcam-panorama-viewport{display:block;width:100%;min-width:0;max-width:100%;aspect-ratio:16/7;overflow-x:auto;overflow-y:hidden;background:#071d30;overscroll-behavior-inline:contain;scrollbar-width:thin;-webkit-overflow-scrolling:touch;cursor:ew-resize}
 .webcam-panorama-viewport:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
 .webcam-panorama-viewport img{display:block;width:auto;max-width:none;height:100%;object-fit:contain;user-select:none}
 .webcam-gallery-nav{display:grid;grid-template-columns:48px minmax(0,1fr) 48px;align-items:stretch;border-top:1px solid var(--line)}
@@ -138,7 +140,7 @@
 .webcam-gallery-meta>span{display:flex;align-items:baseline;justify-content:center;gap:.6rem;min-width:0;flex-wrap:wrap}
 .webcam-gallery-meta strong{font-size:.88rem}.webcam-gallery-meta em{color:var(--muted);font-size:.7rem;font-style:normal;white-space:nowrap}
 .webcam-gallery-links{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.65rem .85rem;border-top:1px solid var(--line);font-size:.68rem}
-.webcam-gallery-links>span{color:var(--muted)}.webcam-gallery-links a{color:var(--blue);font-weight:800;text-align:right}
+.webcam-gallery-links>span{color:var(--muted)}.webcam-gallery-links a{min-width:0;color:var(--blue);font-weight:800;text-align:right;overflow-wrap:anywhere}
 .webcam-credit{margin:.75rem 0 0;color:var(--muted);font-size:.68rem;line-height:1.5}
 .dabs-panel{padding:1.5rem;border:1px solid #dcc17c;background:#fff7e2}
 .dabs-panel h2{margin-bottom:1rem;font-family:"DM Sans",Arial,sans-serif;font-size:1.55rem;letter-spacing:-.035em}

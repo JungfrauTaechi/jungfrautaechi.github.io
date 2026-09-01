@@ -68,6 +68,9 @@ test("meteo prototype exposes the reviewed station hierarchy, Grund placeholder,
   assert.match(styles, /\.wind-history\{display:grid;grid-template-columns:repeat\(4/);
   assert.match(styles, /\.wind-grid\.is-regional/);
   assert.match(styles, /\.webcam-panorama-viewport\{[^}]*aspect-ratio:16\/7;[^}]*overflow-x:auto/);
+  assert.match(styles, /\.webcam-panel,\.webcam-gallery\{width:100%;min-width:0;max-width:100%\}/);
+  assert.match(styles, /\.webcam-gallery\{overflow:hidden/);
+  assert.match(styles, /\.webcam-panorama-viewport\{[^}]*width:100%;[^}]*max-width:100%/);
   assert.match(styles, /\.webcam-panorama-viewport img\{[^}]*width:auto;[^}]*max-width:none;[^}]*height:100%/);
   assert.match(styles, /\.webcam-panorama-viewport\{aspect-ratio:16\/9\}/);
 });
