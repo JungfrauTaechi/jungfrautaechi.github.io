@@ -43,6 +43,26 @@ function PlannedStationCard({ station }) {
   </article>;
 }
 
+function WebcamCard({ camera, refreshToken }) {
+  const [capturedAt, setCapturedAt] = useState("");
+  const imageUrl = `${camera.image}${refreshToken ? `?refresh=${refreshToken}` : ""}`;
+  useEffect(() => {
+    const controller = new AbortController();
+    setCapturedAt("");
+    fetch(imageUrl, { method: "HEAD", cache: "no-store", signal: controller.signal })
+      .then((response) => response.ok ? response.headers.get("Last-Modified") : null)
+      .then((value) => {
+        if (!value) return setCapturedAt("Zeit nicht verfügbar");
+        const date = new Date(value);
+        const label = new Intl.DateTimeFormat("de-CH", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Zurich" }).format(date);
+        setCapturedAt(`Stand ${label}`);
+      })
+      .catch((error) => { if (error.name !== "AbortError") setCapturedAt("Zeit nicht verfügbar"); });
+    return () => controller.abort();
+  }, [imageUrl]);
+  return <article><ExternalLink className="webcam-panorama-link" href={camera.viewerUrl}><img src={imageUrl} alt={camera.alt} loading="lazy" /></ExternalLink><div><strong>{camera.title}</strong><span aria-live="polite">{capturedAt || "Stand wird geladen…"}</span></div></article>;
+}
+
 function MeteoPage() {
   const [activeId, setActiveId] = useState(meteoStations[0].id);
   const [showRegionalStations, setShowRegionalStations] = useState(false);
@@ -70,7 +90,7 @@ function MeteoPage() {
       <div className="station-trend"><p className="eyebrow">Entwicklung</p><strong>{activeStation.trend}</strong><p>Die letzten vier gemeldeten Werte bleiben auf jeder Stationskarte direkt sichtbar.</p><div className="trend-values">{activeStation.values.slice().reverse().map((value) => <span key={value.time}><small>{value.time}</small><i style={{ height: `${Math.max(22, value.gust * 1.5)}px` }} /><strong>{value.average}/{value.gust}</strong></span>)}</div><small>Ø / Böe in km/h</small></div>
     </section>
     <section className="meteo-secondary"><div className="shell meteo-secondary-grid">
-      <div className="webcam-panel"><div className="meteo-section-head"><div><p className="eyebrow">Sicht vor Ort</p><h2>Live-Webcams</h2></div><button className="webcam-refresh" type="button" onClick={() => setWebcamRefresh(Date.now())}>Bilder neu laden</button></div><div className="webcam-grid">{meteoWebcams.map((camera) => <article key={camera.id}><ExternalLink href={camera.viewerUrl}><img src={`${camera.image}${webcamRefresh ? `?refresh=${webcamRefresh}` : ""}`} alt={camera.alt} loading="lazy" /></ExternalLink><div><strong>{camera.title}</strong><span>Live-Panorama</span></div></article>)}</div><p className="webcam-credit">Unveränderte Livebilder: © Jungfraubahnen · Roundshot. Bild anklicken für die interaktive Original-Webcam.</p></div>
+      <div className="webcam-panel"><div className="meteo-section-head"><div><p className="eyebrow">Sicht vor Ort</p><h2>Live-Webcams</h2></div><button className="webcam-refresh" type="button" onClick={() => setWebcamRefresh(Date.now())}>Bilder neu laden</button></div><div className="webcam-grid">{meteoWebcams.map((camera) => <WebcamCard key={camera.id} camera={camera} refreshToken={webcamRefresh} />)}</div><p className="webcam-credit">Unveränderte Livebilder: © Jungfraubahnen · Roundshot. Bild anklicken für die interaktive Original-Webcam.</p></div>
       <aside className="dabs-panel"><p className="eyebrow">Luftraum · Mockanzeige</p><h2>DABS</h2><div className="dabs-status"><span>!</span><div><strong>LS-R6 als aktiv simuliert</strong><p>Demonstrationszeit 13:00–15:00. Verbindliche Angaben immer im offiziellen Daily Airspace Bulletin prüfen.</p></div></div><ExternalLink className="button dabs-button" href="https://www.skybriefing.com/de/">Offizielles DABS öffnen</ExternalLink><p className="dabs-footnote">Externer Link · Skybriefing</p></aside>
     </div></section>
   </div>;

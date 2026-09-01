@@ -16,6 +16,8 @@ Webcams remain a frontend-only integration and do not pass through Thermalbase. 
 - Show visible `© Jungfraubahnen · Roundshot` attribution.
 - Link every image to its official interactive webcam.
 - Keep the images lazy-loaded and refresh them only after an explicit visitor action.
+- Read each source image's `Last-Modified` header once and display it in `Europe/Zurich` next to the station name. Repeat that metadata request only when the visitor explicitly reloads the images.
+- On narrow screens, preserve the panorama's natural proportions at a useful fixed height and expose horizontal touch scrolling instead of cropping it.
 - Treat webcam availability and timestamps as informational; they are not a flight-safety data source.
 
 This follows the [Jungfraubahnen website usage conditions](https://www.jungfrau.ch/de-ch/anb/), which permit publication of images in connection with tourist offerings while requiring original, unmodified use, and the separate [media usage terms](https://www.jungfrau.ch/de-ch/unternehmen/medien/bilder/nutzungsbestimmungen/). Recheck these conditions if ownership, monetization or the image endpoints change.
