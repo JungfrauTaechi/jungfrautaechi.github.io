@@ -52,7 +52,6 @@ export const meteoWebcams = [
   { id: "valley", title: "Grindelwald · Tal", time: "Aufnahme 10:37", image: images.webcamValley, alt: "Mockaufnahme der Webcam Grindelwald Tal" },
 ];
 export const news = generatedNews.map((item) => ({ ...item, dateLabel: formatDate(item.date), image: contentAsset(item.coverImage) || images.hero, alt: item.gallery?.[0]?.alt || item.title, path: `/news/${item.slug}`, gallery: (item.gallery || []).map((image, index) => ({ ...image, src: contentAsset(image.src), alt: image.alt || `${item.title} – Bild ${index + 1}` })) }));
-export const activityLinks = news.slice(0, 3).map(({ title, category, path }) => ({ title, category, path }));
 export const clubPurposes = [
   { number: "01", title: "Fluggebiet erhalten", text: "Erhaltung des Fluggebietes mit Start- und Landeplätzen, vor allem in den Lütschinentälern." },
   { number: "02", title: "Sport und Gemeinschaft", text: "Förderung des Sports und der Geselligkeit für Mitglieder durch Clubaktivitäten." },
