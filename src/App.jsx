@@ -46,6 +46,7 @@ function PlannedStationCard({ station }) {
 function MeteoPage() {
   const [activeId, setActiveId] = useState(meteoStations[0].id);
   const [showRegionalStations, setShowRegionalStations] = useState(false);
+  const [webcamRefresh, setWebcamRefresh] = useState(0);
   const activeStation = meteoStations.find((station) => station.id === activeId) || meteoStations[0];
   const primaryStations = meteoStations.slice(0, 5);
   const regionalStations = meteoStations.slice(5);
@@ -56,7 +57,7 @@ function MeteoPage() {
         <div className="meteo-update"><span className="live-dot" aria-hidden="true" /><div><strong>Mockdaten aktualisiert</strong><span>Heute, 10:42 · Abruf bei Bedarf</span></div></div>
       </div>
     </section>
-    <aside className="mock-notice" aria-label="Hinweis zu den Wetterdaten"><div className="shell"><strong>Demonstration:</strong> Alle Werte, Bilder und Sicherheitsmeldungen auf dieser Seite sind simuliert und nicht für Flugentscheidungen geeignet.</div></aside>
+    <aside className="mock-notice" aria-label="Hinweis zu den Wetterdaten"><div className="shell"><strong>Demonstration:</strong> Windwerte und Sicherheitsmeldungen sind simuliert und nicht für Flugentscheidungen geeignet. Die Webcam-Panoramen werden live von Jungfraubahnen geladen.</div></aside>
     <section className="shell meteo-overview" aria-labelledby="wind-heading">
       <div className="meteo-section-head"><div><p className="eyebrow">Messstationen rund um Grindelwald</p><h2 id="wind-heading">Die fünf nächsten Stationen</h2><p>Nach Luftlinie ab Grindelwald, ergänzt um die geplante Station am Landeplatz Grund.</p></div><div className="meteo-section-tools"><span className="station-count">5 aktiv · 1 geplant</span><div className="meteo-legend"><span><i className="legend-good" />Ruhig</span><span><i className="legend-watch" />Beobachten</span><span><i className="legend-strong" />Stark</span></div></div></div>
       <PlannedStationCard station={plannedMeteoStation} />
@@ -69,7 +70,7 @@ function MeteoPage() {
       <div className="station-trend"><p className="eyebrow">Entwicklung</p><strong>{activeStation.trend}</strong><p>Die letzten vier gemeldeten Werte bleiben auf jeder Stationskarte direkt sichtbar.</p><div className="trend-values">{activeStation.values.slice().reverse().map((value) => <span key={value.time}><small>{value.time}</small><i style={{ height: `${Math.max(22, value.gust * 1.5)}px` }} /><strong>{value.average}/{value.gust}</strong></span>)}</div><small>Ø / Böe in km/h</small></div>
     </section>
     <section className="meteo-secondary"><div className="shell meteo-secondary-grid">
-      <div className="webcam-panel"><div className="meteo-section-head"><div><p className="eyebrow">Sicht vor Ort</p><h2>Webcams</h2></div><span className="mock-pill">Mockbilder</span></div><div className="webcam-grid">{meteoWebcams.map((camera) => <article key={camera.id}><img src={camera.image} alt={camera.alt} /><div><strong>{camera.title}</strong><span>{camera.time}</span></div></article>)}</div></div>
+      <div className="webcam-panel"><div className="meteo-section-head"><div><p className="eyebrow">Sicht vor Ort</p><h2>Live-Webcams</h2></div><button className="webcam-refresh" type="button" onClick={() => setWebcamRefresh(Date.now())}>Bilder neu laden</button></div><div className="webcam-grid">{meteoWebcams.map((camera) => <article key={camera.id}><ExternalLink href={camera.viewerUrl}><img src={`${camera.image}${webcamRefresh ? `?refresh=${webcamRefresh}` : ""}`} alt={camera.alt} loading="lazy" /></ExternalLink><div><strong>{camera.title}</strong><span>Live-Panorama</span></div></article>)}</div><p className="webcam-credit">Unveränderte Livebilder: © Jungfraubahnen · Roundshot. Bild anklicken für die interaktive Original-Webcam.</p></div>
       <aside className="dabs-panel"><p className="eyebrow">Luftraum · Mockanzeige</p><h2>DABS</h2><div className="dabs-status"><span>!</span><div><strong>LS-R6 als aktiv simuliert</strong><p>Demonstrationszeit 13:00–15:00. Verbindliche Angaben immer im offiziellen Daily Airspace Bulletin prüfen.</p></div></div><ExternalLink className="button dabs-button" href="https://www.skybriefing.com/de/">Offizielles DABS öffnen</ExternalLink><p className="dabs-footnote">Externer Link · Skybriefing</p></aside>
     </div></section>
   </div>;

@@ -125,12 +125,13 @@
 .station-trend>small{color:var(--muted);font-size:.68rem}
 .meteo-secondary{padding-block:3.5rem 4.5rem;border-top:1px solid var(--line);background:#fff}
 .meteo-secondary-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,.75fr);gap:2rem;align-items:start}
-.mock-pill{padding:.35rem .55rem;border:1px solid #dbc284;background:#fff6dc;color:#624716;font-size:.7rem;font-weight:700}
-.webcam-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.webcam-refresh{padding:.55rem .75rem;border:1px solid var(--blue);background:#fff;color:var(--blue);font:inherit;font-size:.72rem;font-weight:800;cursor:pointer}.webcam-refresh:hover,.webcam-refresh:focus-visible{background:var(--blue);color:#fff}
+.webcam-grid{display:grid;grid-template-columns:1fr;gap:.85rem}
 .webcam-grid article{border:1px solid var(--line);background:#fff}
-.webcam-grid img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.webcam-grid article>a{display:block;background:#071d30}.webcam-grid img{display:block;width:100%;height:auto;object-fit:contain}
 .webcam-grid article>div{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem}
 .webcam-grid strong{font-size:.87rem}.webcam-grid span{color:var(--muted);font-size:.7rem;white-space:nowrap}
+.webcam-credit{margin:.75rem 0 0;color:var(--muted);font-size:.68rem;line-height:1.5}
 .dabs-panel{padding:1.5rem;border:1px solid #dcc17c;background:#fff7e2}
 .dabs-panel h2{margin-bottom:1rem;font-family:"DM Sans",Arial,sans-serif;font-size:1.55rem;letter-spacing:-.035em}
 .dabs-status{display:grid;grid-template-columns:36px 1fr;gap:.8rem;margin-bottom:1.3rem}
