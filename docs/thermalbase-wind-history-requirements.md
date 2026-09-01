@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Status | Proposed for implementation review |
-| Version | 0.3 |
+| Version | 0.4 |
 | Date | 1 September 2026 |
 | Product owner / approver | Alain |
 | Technical owner | Thermalbase backend team |
@@ -146,6 +146,10 @@ Snapshot source: winds.mobi API 2.3 station search on 1 September 2026, bounded 
 | 29 | `windline-4109` | Niederhorn | 1960 m | windline.ch | 22.4 km | Expanded |
 
 Review the allowlist at implementation time and then every six months. A station that disappears or becomes unhealthy remains identifiable in the response but must not silently be replaced with a different provider station. Any roster change is a reviewed feed configuration change.
+
+### Planned Grindelwald Grund station
+
+The club site also shows `Grindelwald Grund` as a non-interactive planned station at the landing area (`46.6202, 8.0294`, 950 m). It is not part of the 29-station winds.mobi allowlist and must not receive a fabricated provider ID or measurement. Once the physical station has been published by winds.mobi, replace the placeholder through a reviewed roster change and retain the provider-issued ID.
 
 ## Request flow
 
@@ -340,6 +344,7 @@ Platform references: [securing the Supabase Data API](https://supabase.com/docs/
 
 ## Changelog
 
+- **0.4 — 2026-09-02:** Added Grindelwald Grund as an explicit planned-station placeholder outside the winds.mobi allowlist.
 - **0.3 — 2026-09-01:** Added the reviewed, distance-ordered 29-station Jungfrau feed roster and the five-primary/24-expanded public UI hierarchy.
 - **0.2 — 2026-09-01:** Removed scheduled provider polling and long-term history. Switched to user-triggered, daylight-gated cache-aside refresh using winds.mobi's seven-day history endpoint.
 - **0.1 — 2026-09-01:** Initial scheduled-collection proposal.

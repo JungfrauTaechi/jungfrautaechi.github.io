@@ -75,6 +75,16 @@ export const windStationCatalog = [
   { id: "windline-4109", name: "Niederhorn", altitude: 1960, provider: "windline.ch", latitude: 46.711389, longitude: 7.776667, distanceKm: 22.4 },
 ];
 
+export const plannedMeteoStation = {
+  id: "planned-grindelwald-grund",
+  name: "Grindelwald Grund",
+  detail: "Landeplatz",
+  altitude: 950,
+  latitude: 46.6202,
+  longitude: 8.0294,
+  statusLabel: "Geplant",
+};
+
 const compassLabel = (degrees) => ["N", "NE", "E", "SE", "S", "SW", "W", "NW"][Math.round(degrees / 45) % 8];
 const mockAverages = [12, 9, 7, 16, 11, 22, 15, 6, 8, 5, 10, 14, 7, 4, 18, 13, 25, 6, 9, 12, 20, 8, 7, 17, 15, 19, 11, 13, 21];
 const mockDirections = [248, 212, 276, 281, 236, 305, 258, 198, 92, 244, 225, 270, 186, 240, 284, 210, 304, 248, 132, 204, 278, 244, 226, 290, 262, 248, 220, 238, 286];

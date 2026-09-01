@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "pannellum";
-import { CONFIG, boardMembers, chronology, clubPortrait, clubProgramme, clubPurposes, clubStories, flightFacts, images, landingSites, membershipFormUrl, meteoStations, meteoWebcams, news, photoReports, routes, safetyAreas, shvAirspaceUrl, shvGrindelwaldDocument, startSites, utilityLinks } from "./data.js";
+import { CONFIG, boardMembers, chronology, clubPortrait, clubProgramme, clubPurposes, clubStories, flightFacts, images, landingSites, membershipFormUrl, meteoStations, meteoWebcams, news, photoReports, plannedMeteoStation, routes, safetyAreas, shvAirspaceUrl, shvGrindelwaldDocument, startSites, utilityLinks } from "./data.js";
 import { appPath, routeFromPathname } from "./site-paths.js";
 const navItems = [routes.flightArea, routes.meteo, routes.club, routes.news, routes.photos]; const routeList = Object.values(routes);
 const siteBase = import.meta.env.BASE_URL;
@@ -36,6 +36,13 @@ function StationCard({ station, selected, onSelect, compact = false }) {
   </button>;
 }
 
+function PlannedStationCard({ station }) {
+  return <article className="planned-station-card" aria-label={`${station.name}, Messstation geplant`}>
+    <span className="planned-station-marker" aria-hidden="true">L</span>
+    <span className="planned-station-copy"><span className="wind-card-head"><span><strong>{station.name}</strong><small>{station.detail} · {station.altitude} m</small></span><span className="station-status">{station.statusLabel}</span></span><span className="planned-station-message"><strong>Noch keine Messwerte</strong><small>Eine eigene Windstation und die Anbindung an winds.mobi sind vorgesehen.</small></span></span>
+  </article>;
+}
+
 function MeteoPage() {
   const [activeId, setActiveId] = useState(meteoStations[0].id);
   const [showRegionalStations, setShowRegionalStations] = useState(false);
@@ -51,7 +58,8 @@ function MeteoPage() {
     </section>
     <aside className="mock-notice" aria-label="Hinweis zu den Wetterdaten"><div className="shell"><strong>Demonstration:</strong> Alle Werte, Bilder und Sicherheitsmeldungen auf dieser Seite sind simuliert und nicht für Flugentscheidungen geeignet.</div></aside>
     <section className="shell meteo-overview" aria-labelledby="wind-heading">
-      <div className="meteo-section-head"><div><p className="eyebrow">Messstationen rund um Grindelwald</p><h2 id="wind-heading">Die fünf nächsten Stationen</h2><p>Nach Luftlinie ab Grindelwald, mit Stationsdaten von winds.mobi.</p></div><div className="meteo-section-tools"><span className="station-count">5 von {meteoStations.length}</span><div className="meteo-legend"><span><i className="legend-good" />Ruhig</span><span><i className="legend-watch" />Beobachten</span><span><i className="legend-strong" />Stark</span></div></div></div>
+      <div className="meteo-section-head"><div><p className="eyebrow">Messstationen rund um Grindelwald</p><h2 id="wind-heading">Die fünf nächsten Stationen</h2><p>Nach Luftlinie ab Grindelwald, ergänzt um die geplante Station am Landeplatz Grund.</p></div><div className="meteo-section-tools"><span className="station-count">5 aktiv · 1 geplant</span><div className="meteo-legend"><span><i className="legend-good" />Ruhig</span><span><i className="legend-watch" />Beobachten</span><span><i className="legend-strong" />Stark</span></div></div></div>
+      <PlannedStationCard station={plannedMeteoStation} />
       <div className="wind-grid" role="tablist" aria-label="Nahe Messstation auswählen">{primaryStations.map((station) => <StationCard key={station.id} station={station} selected={station.id === activeStation.id} onSelect={() => setActiveId(station.id)} />)}</div>
       <button className="station-expand" type="button" aria-expanded={showRegionalStations} aria-controls="regional-wind-stations" onClick={() => setShowRegionalStations((visible) => !visible)}><span><strong>{showRegionalStations ? "Regionale Stationen ausblenden" : `${regionalStations.length} weitere Stationen anzeigen`}</strong><small>Interlaken · Lauterbrunnen · Meiringen und Umgebung</small></span><span className="station-expand-icon" aria-hidden="true">{showRegionalStations ? "−" : "+"}</span></button>
       {showRegionalStations && <section className="regional-stations" id="regional-wind-stations" aria-labelledby="regional-stations-title"><header><div><p className="eyebrow">Erweiterte Region</p><h3 id="regional-stations-title">Alle weiteren Stationen</h3></div><p>Sortiert nach Entfernung zu Grindelwald. Antippen, um Verlauf und Details unten anzuzeigen.</p></header><div className="wind-grid is-regional" role="tablist" aria-label="Regionale Messstation auswählen">{regionalStations.map((station) => <StationCard compact key={station.id} station={station} selected={station.id === activeStation.id} onSelect={() => setActiveId(station.id)} />)}</div></section>}
