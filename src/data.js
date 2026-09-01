@@ -41,12 +41,64 @@ export const routes = {
   home: { path: "/", label: "Start", sourceUrl: source("/") }, meteo: { path: "/meteo", label: "Meteo", sourceUrl: source("/sites/meteo") }, news: { path: "/news", label: "News", sourceUrl: source("/sites/news") }, club: { path: "/club", label: "Club", sourceUrl: source("/sites/club") }, chronology: { path: "/chronik", label: "Chronik", sourceUrl: source("/sites/chronik") }, membership: { path: "/mitglied", label: "Mitglied werden", sourceUrl: source("/sites/mitglied") }, flightArea: { path: "/fluggebiet", label: "Fluggebiet", sourceUrl: source("/sites/fluggebiet") }, startSites: { path: "/fluggebiet/startplaetze", label: "Startplätze", sourceUrl: source("/sites/dcjt360") }, landingSites: { path: "/fluggebiet/landeplaetze", label: "Landeplätze", sourceUrl: source("/sites/dcjt360") }, safety: { path: "/fluggebiet/sicherheit", label: "Sicherheit", sourceUrl: source("/sites/gk_gw") }, grund: { path: "/fluggebiet/grund", label: "Grund", sourceUrl: source("/sites/grund") }, photos: { path: "/fotos", label: "Fotos", sourceUrl: source("/sites/fotoreports") }, contact: { path: "/kontakt", label: "Kontakt", sourceUrl: source("/sites/kontakt") },
 };
 export const utilityLinks = [{ label: "Wind & Meteo", to: routes.meteo.path }, { label: "Webcams", href: "https://www.jungfrau-taechi.ch/sites/webcamlinks" }, { label: "DABS", href: "https://www.skybriefing.com/de/" }];
-export const meteoStations = [
-  { id: "first", name: "First", place: "Bergstation", altitude: 2168, average: 12, gust: 18, direction: 248, directionLabel: "WSW", age: "vor 2 Min.", status: "good", statusLabel: "Ruhig", temperature: 8, trend: "Leicht zunehmend", values: [{ time: "10:40", average: 12, gust: 18 }, { time: "10:30", average: 11, gust: 17 }, { time: "10:20", average: 10, gust: 15 }, { time: "10:10", average: 9, gust: 14 }] },
-  { id: "maennlichen", name: "Männlichen", place: "Gipfel", altitude: 2230, average: 20, gust: 29, direction: 281, directionLabel: "W", age: "vor 4 Min.", status: "watch", statusLabel: "Beobachten", temperature: 6, trend: "Zunehmend", values: [{ time: "10:38", average: 20, gust: 29 }, { time: "10:28", average: 18, gust: 26 }, { time: "10:18", average: 17, gust: 24 }, { time: "10:08", average: 15, gust: 22 }] },
-  { id: "eigergletscher", name: "Eigergletscher", place: "Station", altitude: 2320, average: 8, gust: 13, direction: 171, directionLabel: "S", age: "vor 3 Min.", status: "good", statusLabel: "Ruhig", temperature: 5, trend: "Stabil", values: [{ time: "10:39", average: 8, gust: 13 }, { time: "10:29", average: 8, gust: 12 }, { time: "10:19", average: 7, gust: 12 }, { time: "10:09", average: 8, gust: 13 }] },
-  { id: "schilthorn", name: "Schilthorn", place: "Gipfel", altitude: 2970, average: 31, gust: 43, direction: 304, directionLabel: "NW", age: "vor 6 Min.", status: "strong", statusLabel: "Stark", temperature: 1, trend: "Böig", values: [{ time: "10:36", average: 31, gust: 43 }, { time: "10:26", average: 28, gust: 39 }, { time: "10:16", average: 30, gust: 42 }, { time: "10:06", average: 26, gust: 37 }] },
+// Ordered snapshot from the winds.mobi station API, resolved around Grindelwald
+// (46.6242, 8.0414) on 2026-09-01. Readings below remain deterministic mock data.
+export const windStationCatalog = [
+  { id: "windline-4104", name: "Grindelwald First", altitude: 2150, provider: "windline.ch", latitude: 46.657778, longitude: 8.055, distanceKm: 3.9 },
+  { id: "slf-FIR2", name: "Schmidigen-Bidmeren", altitude: 2111, provider: "slf.ch", latitude: 46.668777, longitude: 8.064403, distanceKm: 5.3 },
+  { id: "slf-MAE2", name: "Itramen", altitude: 2162, provider: "slf.ch", latitude: 46.618649, longitude: 7.943542, distanceKm: 7.5 },
+  { id: "slf-MAN1", name: "Männlichen", altitude: 2341, provider: "slf.ch", latitude: 46.618115, longitude: 7.938067, distanceKm: 7.9 },
+  { id: "slf-LHO2", name: "Russisprung", altitude: 2150, provider: "slf.ch", latitude: 46.582791, longitude: 7.943742, distanceKm: 8.8 },
+  { id: "meteoswiss-JUN", name: "Jungfraujoch", altitude: 3581, provider: "meteoswiss.ch", latitude: 46.547562, longitude: 7.985444, distanceKm: 9.5 },
+  { id: "slf-SWM1", name: "Schwarzmönch", altitude: 2673, provider: "slf.ch", latitude: 46.551367, longitude: 7.927542, distanceKm: 11.9 },
+  { id: "holfuy-1989", name: "Stechelberg", altitude: 850, provider: "holfuy.com", latitude: 46.56665, longitude: 7.90838, distanceKm: 12.0 },
+  { id: "meteoswiss-BRZ", name: "Brienz", altitude: 577, provider: "meteoswiss.ch", latitude: 46.740726, longitude: 8.060863, distanceKm: 13.0 },
+  { id: "meteoswiss-INT", name: "Interlaken", altitude: 588, provider: "meteoswiss.ch", latitude: 46.672086, longitude: 7.870433, distanceKm: 14.1 },
+  { id: "metar-LSMM", name: "Meiringen Arpt", altitude: 570, provider: "aviationweather.gov", latitude: 46.743, longitude: 8.11, distanceKm: 14.2 },
+  { id: "holfuy-680", name: "Schiltgrat", altitude: 2100, provider: "holfuy.com", latitude: 46.55708, longitude: 7.87254, distanceKm: 14.9 },
+  { id: "meteoswiss-MER", name: "Meiringen", altitude: 599, provider: "meteoswiss.ch", latitude: 46.732228, longitude: 8.169248, distanceKm: 15.5 },
+  { id: "holfuy-1804", name: "Höhematte", altitude: 630, provider: "holfuy.com", latitude: 46.68572, longitude: 7.85703, distanceKm: 15.6 },
+  { id: "slf-SCH2", name: "Türliboden", altitude: 2332, provider: "slf.ch", latitude: 46.576916, longitude: 7.834732, distanceKm: 16.6 },
+  { id: "slf-ROA2", name: "Rotschalp", altitude: 1875, provider: "slf.ch", latitude: 46.774319, longitude: 7.993941, distanceKm: 17.1 },
+  { id: "slf-SCH1", name: "Schilthorn", altitude: 2996, provider: "slf.ch", latitude: 46.557313, longitude: 7.835202, distanceKm: 17.4 },
+  { id: "holfuy-1850", name: "Lehn", altitude: 560, provider: "holfuy.com", latitude: 46.68084, longitude: 7.82554, distanceKm: 17.6 },
+  { id: "holfuy-1957", name: "Bilitscher", altitude: 1300, provider: "holfuy.com", latitude: 46.71637, longitude: 8.2322, distanceKm: 17.8 },
+  { id: "slf-SCB2", name: "Schönbüel", altitude: 1777, provider: "slf.ch", latitude: 46.779375, longitude: 8.103438, distanceKm: 17.9 },
+  { id: "slf-ROA1", name: "Brienzer Rothorn", altitude: 2348, provider: "slf.ch", latitude: 46.78712, longitude: 8.046917, distanceKm: 18.1 },
+  { id: "holfuy-1808", name: "Amisbühl", altitude: 1315, provider: "holfuy.com", latitude: 46.70258, longitude: 7.82217, distanceKm: 18.9 },
+  { id: "holfuy-1829", name: "Hohwald", altitude: 1600, provider: "holfuy.com", latitude: 46.71347, longitude: 7.82346, distanceKm: 19.4 },
+  { id: "slf-GUT1", name: "Bänzlauistock", altitude: 2528, provider: "slf.ch", latitude: 46.692522, longitude: 8.277976, distanceKm: 19.6 },
+  { id: "slf-GUT2", name: "Homad", altitude: 2115, provider: "slf.ch", latitude: 46.67931, longitude: 8.289691, distanceKm: 19.9 },
+  { id: "holfuy-947", name: "Planplatten", altitude: 2240, provider: "holfuy.com", latitude: 46.73623, longitude: 8.25459, distanceKm: 20.5 },
+  { id: "pioupiou-1510", name: "Hüttstett", altitude: 1667, provider: "openwindmap.org", latitude: 46.787968, longitude: 8.194746, distanceKm: 21.6 },
+  { id: "slf-SHE2", name: "Schibe", altitude: 1852, provider: "slf.ch", latitude: 46.748825, longitude: 7.812449, distanceKm: 22.3 },
+  { id: "windline-4109", name: "Niederhorn", altitude: 1960, provider: "windline.ch", latitude: 46.711389, longitude: 7.776667, distanceKm: 22.4 },
 ];
+
+const compassLabel = (degrees) => ["N", "NE", "E", "SE", "S", "SW", "W", "NW"][Math.round(degrees / 45) % 8];
+const mockAverages = [12, 9, 7, 16, 11, 22, 15, 6, 8, 5, 10, 14, 7, 4, 18, 13, 25, 6, 9, 12, 20, 8, 7, 17, 15, 19, 11, 13, 21];
+const mockDirections = [248, 212, 276, 281, 236, 305, 258, 198, 92, 244, 225, 270, 186, 240, 284, 210, 304, 248, 132, 204, 278, 244, 226, 290, 262, 248, 220, 238, 286];
+
+export const meteoStations = windStationCatalog.map((station, index) => {
+  const average = mockAverages[index];
+  const gust = average + 5 + (index % 5);
+  const direction = mockDirections[index];
+  const status = average >= 22 ? "strong" : average >= 16 ? "watch" : "good";
+  return {
+    ...station,
+    primary: index < 5,
+    average,
+    gust,
+    direction,
+    directionLabel: compassLabel(direction),
+    age: `vor ${2 + (index % 8)} Min.`,
+    status,
+    statusLabel: status === "strong" ? "Stark" : status === "watch" ? "Beobachten" : "Ruhig",
+    temperature: Math.round(18 - station.altitude / 230),
+    trend: index % 3 === 0 ? "Leicht zunehmend" : index % 3 === 1 ? "Stabil" : "Leicht abnehmend",
+    values: [0, 1, 2, 3].map((offset) => ({ time: `10:${String(40 - offset * 10 - (index % 3)).padStart(2, "0")}`, average: Math.max(1, average - offset + (index % 2)), gust: Math.max(3, gust - offset) })),
+  };
+});
 export const meteoWebcams = [
   { id: "first", title: "First · Schreckfeld", time: "Aufnahme 10:39", image: images.webcamFirst, alt: "Mockaufnahme der Webcam First und Schreckfeld" },
   { id: "valley", title: "Grindelwald · Tal", time: "Aufnahme 10:37", image: images.webcamValley, alt: "Mockaufnahme der Webcam Grindelwald Tal" },

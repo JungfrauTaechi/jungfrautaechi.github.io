@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Status | Proposed for implementation review |
-| Version | 0.2 |
+| Version | 0.3 |
 | Date | 1 September 2026 |
 | Product owner / approver | Alain |
 | Technical owner | Thermalbase backend team |
@@ -106,6 +106,46 @@ Not included:
 These values are configuration, not constants hidden in the adapter. A public client cannot choose arbitrary provider station IDs or an unbounded duration.
 
 On-demand refresh follows the active-window gate. At night, the API returns last-known stored data with a paused state and makes no winds.mobi request. An admin-only diagnostic operation may bypass the gate; public clients may not.
+
+## Jungfrau public feed station roster
+
+The `jungfrau` feed uses a fixed, reviewed allowlist. The first five entries are shown by default on the club site; the remaining entries appear only after the visitor expands the regional list. The order is distance by air from central Grindelwald (`46.6242, 8.0414`). Do not discover or reorder stations on each public page request.
+
+Snapshot source: winds.mobi API 2.3 station search on 1 September 2026, bounded by `46.54, 7.75` and `46.81, 8.30`, with the highest-rated duplicate selected.
+
+| Order | Station ID | Display name | Altitude | Provider | Distance | Initial UI |
+| ---: | --- | --- | ---: | --- | ---: | --- |
+| 1 | `windline-4104` | Grindelwald First | 2150 m | windline.ch | 3.9 km | Primary |
+| 2 | `slf-FIR2` | Schmidigen-Bidmeren | 2111 m | slf.ch | 5.3 km | Primary |
+| 3 | `slf-MAE2` | Itramen | 2162 m | slf.ch | 7.5 km | Primary |
+| 4 | `slf-MAN1` | Männlichen | 2341 m | slf.ch | 7.9 km | Primary |
+| 5 | `slf-LHO2` | Russisprung | 2150 m | slf.ch | 8.8 km | Primary |
+| 6 | `meteoswiss-JUN` | Jungfraujoch | 3581 m | meteoswiss.ch | 9.5 km | Expanded |
+| 7 | `slf-SWM1` | Schwarzmönch | 2673 m | slf.ch | 11.9 km | Expanded |
+| 8 | `holfuy-1989` | Stechelberg | 850 m | holfuy.com | 12.0 km | Expanded |
+| 9 | `meteoswiss-BRZ` | Brienz | 577 m | meteoswiss.ch | 13.0 km | Expanded |
+| 10 | `meteoswiss-INT` | Interlaken | 588 m | meteoswiss.ch | 14.1 km | Expanded |
+| 11 | `metar-LSMM` | Meiringen Arpt | 570 m | aviationweather.gov | 14.2 km | Expanded |
+| 12 | `holfuy-680` | Schiltgrat | 2100 m | holfuy.com | 14.9 km | Expanded |
+| 13 | `meteoswiss-MER` | Meiringen | 599 m | meteoswiss.ch | 15.5 km | Expanded |
+| 14 | `holfuy-1804` | Höhematte | 630 m | holfuy.com | 15.6 km | Expanded |
+| 15 | `slf-SCH2` | Türliboden | 2332 m | slf.ch | 16.6 km | Expanded |
+| 16 | `slf-ROA2` | Rotschalp | 1875 m | slf.ch | 17.1 km | Expanded |
+| 17 | `slf-SCH1` | Schilthorn | 2996 m | slf.ch | 17.4 km | Expanded |
+| 18 | `holfuy-1850` | Lehn | 560 m | holfuy.com | 17.6 km | Expanded |
+| 19 | `holfuy-1957` | Bilitscher | 1300 m | holfuy.com | 17.8 km | Expanded |
+| 20 | `slf-SCB2` | Schönbüel | 1777 m | slf.ch | 17.9 km | Expanded |
+| 21 | `slf-ROA1` | Brienzer Rothorn | 2348 m | slf.ch | 18.1 km | Expanded |
+| 22 | `holfuy-1808` | Amisbühl | 1315 m | holfuy.com | 18.9 km | Expanded |
+| 23 | `holfuy-1829` | Hohwald | 1600 m | holfuy.com | 19.4 km | Expanded |
+| 24 | `slf-GUT1` | Bänzlauistock | 2528 m | slf.ch | 19.6 km | Expanded |
+| 25 | `slf-GUT2` | Homad | 2115 m | slf.ch | 19.9 km | Expanded |
+| 26 | `holfuy-947` | Planplatten | 2240 m | holfuy.com | 20.5 km | Expanded |
+| 27 | `pioupiou-1510` | Hüttstett | 1667 m | openwindmap.org | 21.6 km | Expanded |
+| 28 | `slf-SHE2` | Schibe | 1852 m | slf.ch | 22.3 km | Expanded |
+| 29 | `windline-4109` | Niederhorn | 1960 m | windline.ch | 22.4 km | Expanded |
+
+Review the allowlist at implementation time and then every six months. A station that disappears or becomes unhealthy remains identifiable in the response but must not silently be replaced with a different provider station. Any roster change is a reviewed feed configuration change.
 
 ## Request flow
 
@@ -294,11 +334,12 @@ Platform references: [securing the Supabase Data API](https://supabase.com/docs/
 ## Open items
 
 - Replace the example User-Agent contact with the real monitored address.
-- Confirm the number of enabled Jungfrau stations.
+- Confirm the reviewed 29-station Jungfrau allowlist at implementation start.
 - Confirm whether the intended EigAir screen is monetized in any way.
 - Record winds.mobi's written response on rolling storage, redistribution, per-station history calls and attribution.
 
 ## Changelog
 
+- **0.3 — 2026-09-01:** Added the reviewed, distance-ordered 29-station Jungfrau feed roster and the five-primary/24-expanded public UI hierarchy.
 - **0.2 — 2026-09-01:** Removed scheduled provider polling and long-term history. Switched to user-triggered, daylight-gated cache-aside refresh using winds.mobi's seven-day history endpoint.
 - **0.1 — 2026-09-01:** Initial scheduled-collection proposal.

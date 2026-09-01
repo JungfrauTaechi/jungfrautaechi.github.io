@@ -27,19 +27,21 @@ function Home() {
   </>;
 }
 
-function StationCard({ station, selected, onSelect }) {
-  return <button className={`wind-card status-${station.status}${selected ? " is-selected" : ""}`} type="button" role="tab" aria-selected={selected} aria-controls="meteo-station-detail" onClick={onSelect}>
-    <span className="wind-card-head"><span><strong>{station.name}</strong><small>{station.place} · {station.altitude} m</small></span><span className="station-status">{station.statusLabel}</span></span>
+function StationCard({ station, selected, onSelect, compact = false }) {
+  return <button className={`wind-card status-${station.status}${selected ? " is-selected" : ""}${compact ? " is-compact" : ""}`} type="button" role="tab" aria-selected={selected} aria-controls="meteo-station-detail" onClick={onSelect}>
+    <span className="wind-card-head"><span><strong>{station.name}</strong><small>{station.altitude} m · {station.distanceKm.toFixed(1)} km ab Grindelwald</small></span><span className="station-status">{station.statusLabel}</span></span>
     <span className="wind-current"><span className="wind-direction" style={{ transform: `rotate(${station.direction}deg)` }} aria-label={`Wind aus ${station.directionLabel}`}>↑</span><span><strong>{station.average}</strong><small>km/h Ø</small></span><span><strong>{station.gust}</strong><small>Böen</small></span><span><strong>{station.directionLabel}</strong><small>{station.direction}°</small></span></span>
-    <span className="wind-history-label">Letzte Messungen</span>
-    <span className="wind-history">{station.values.map((value) => <span key={value.time}><small>{value.time}</small><strong>{value.average}</strong><small>/{value.gust}</small></span>)}</span>
-    <span className="wind-card-foot">Aktualisiert {station.age}<span>Details ansehen</span></span>
+    {!compact && <><span className="wind-history-label">Letzte Messungen</span><span className="wind-history">{station.values.map((value) => <span key={value.time}><small>{value.time}</small><strong>{value.average}</strong><small>/{value.gust}</small></span>)}</span></>}
+    <span className="wind-card-foot">Mockwert · {station.provider}<span>Details ansehen</span></span>
   </button>;
 }
 
 function MeteoPage() {
   const [activeId, setActiveId] = useState(meteoStations[0].id);
+  const [showRegionalStations, setShowRegionalStations] = useState(false);
   const activeStation = meteoStations.find((station) => station.id === activeId) || meteoStations[0];
+  const primaryStations = meteoStations.slice(0, 5);
+  const regionalStations = meteoStations.slice(5);
   return <div className="meteo-page">
     <section className="page-banner meteo-intro" style={{ "--page-banner-image": `url("${images.meteoHeader}")`, "--page-banner-position": "center 48%" }}>
       <div className="shell meteo-intro-grid">
@@ -49,11 +51,13 @@ function MeteoPage() {
     </section>
     <aside className="mock-notice" aria-label="Hinweis zu den Wetterdaten"><div className="shell"><strong>Demonstration:</strong> Alle Werte, Bilder und Sicherheitsmeldungen auf dieser Seite sind simuliert und nicht für Flugentscheidungen geeignet.</div></aside>
     <section className="shell meteo-overview" aria-labelledby="wind-heading">
-      <div className="meteo-section-head"><div><p className="eyebrow">Messstationen</p><h2 id="wind-heading">Wind jetzt</h2></div><div className="meteo-legend"><span><i className="legend-good" />Ruhig</span><span><i className="legend-watch" />Beobachten</span><span><i className="legend-strong" />Stark</span></div></div>
-      <div className="wind-grid" role="tablist" aria-label="Messstation auswählen">{meteoStations.map((station) => <StationCard key={station.id} station={station} selected={station.id === activeStation.id} onSelect={() => setActiveId(station.id)} />)}</div>
+      <div className="meteo-section-head"><div><p className="eyebrow">Messstationen rund um Grindelwald</p><h2 id="wind-heading">Die fünf nächsten Stationen</h2><p>Nach Luftlinie ab Grindelwald, mit Stationsdaten von winds.mobi.</p></div><div className="meteo-section-tools"><span className="station-count">5 von {meteoStations.length}</span><div className="meteo-legend"><span><i className="legend-good" />Ruhig</span><span><i className="legend-watch" />Beobachten</span><span><i className="legend-strong" />Stark</span></div></div></div>
+      <div className="wind-grid" role="tablist" aria-label="Nahe Messstation auswählen">{primaryStations.map((station) => <StationCard key={station.id} station={station} selected={station.id === activeStation.id} onSelect={() => setActiveId(station.id)} />)}</div>
+      <button className="station-expand" type="button" aria-expanded={showRegionalStations} aria-controls="regional-wind-stations" onClick={() => setShowRegionalStations((visible) => !visible)}><span><strong>{showRegionalStations ? "Regionale Stationen ausblenden" : `${regionalStations.length} weitere Stationen anzeigen`}</strong><small>Interlaken · Lauterbrunnen · Meiringen und Umgebung</small></span><span className="station-expand-icon" aria-hidden="true">{showRegionalStations ? "−" : "+"}</span></button>
+      {showRegionalStations && <section className="regional-stations" id="regional-wind-stations" aria-labelledby="regional-stations-title"><header><div><p className="eyebrow">Erweiterte Region</p><h3 id="regional-stations-title">Alle weiteren Stationen</h3></div><p>Sortiert nach Entfernung zu Grindelwald. Antippen, um Verlauf und Details unten anzuzeigen.</p></header><div className="wind-grid is-regional" role="tablist" aria-label="Regionale Messstation auswählen">{regionalStations.map((station) => <StationCard compact key={station.id} station={station} selected={station.id === activeStation.id} onSelect={() => setActiveId(station.id)} />)}</div></section>}
     </section>
     <section className="shell meteo-detail" id="meteo-station-detail" role="tabpanel" aria-label={`Details für ${activeStation.name}`}>
-      <div className="station-detail-main"><p className="eyebrow">Ausgewählte Station</p><h2>{activeStation.name}</h2><p>{activeStation.place} · {activeStation.altitude} m · aktualisiert {activeStation.age}</p><div className="detail-reading"><span><strong>{activeStation.average}</strong><small>km/h Mittel</small></span><span><strong>{activeStation.gust}</strong><small>km/h Böen</small></span><span><strong>{activeStation.directionLabel}</strong><small>{activeStation.direction}°</small></span><span><strong>{activeStation.temperature}°</strong><small>Temperatur</small></span></div></div>
+      <div className="station-detail-main"><p className="eyebrow">Ausgewählte Station</p><h2>{activeStation.name}</h2><p>{activeStation.provider} · {activeStation.altitude} m · {activeStation.distanceKm.toFixed(1)} km ab Grindelwald</p><div className="detail-reading"><span><strong>{activeStation.average}</strong><small>km/h Mittel</small></span><span><strong>{activeStation.gust}</strong><small>km/h Böen</small></span><span><strong>{activeStation.directionLabel}</strong><small>{activeStation.direction}°</small></span><span><strong>{activeStation.temperature}°</strong><small>Temperatur</small></span></div></div>
       <div className="station-trend"><p className="eyebrow">Entwicklung</p><strong>{activeStation.trend}</strong><p>Die letzten vier gemeldeten Werte bleiben auf jeder Stationskarte direkt sichtbar.</p><div className="trend-values">{activeStation.values.slice().reverse().map((value) => <span key={value.time}><small>{value.time}</small><i style={{ height: `${Math.max(22, value.gust * 1.5)}px` }} /><strong>{value.average}/{value.gust}</strong></span>)}</div><small>Ø / Böe in km/h</small></div>
     </section>
     <section className="meteo-secondary"><div className="shell meteo-secondary-grid">
