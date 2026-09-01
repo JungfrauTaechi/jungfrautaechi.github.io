@@ -43,9 +43,15 @@ function PlannedStationCard({ station }) {
   </article>;
 }
 
-function WebcamCard({ camera, refreshToken }) {
+function WebcamCard({ camera, refreshToken, index, total, onPrevious, onNext }) {
   const [capturedAt, setCapturedAt] = useState("");
+  const viewportRef = useRef(null);
   const imageUrl = `${camera.image}${refreshToken ? `?refresh=${refreshToken}` : ""}`;
+  const focusPanorama = () => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    viewport.scrollLeft = Math.max(0, (viewport.scrollWidth - viewport.clientWidth) * camera.focus);
+  };
   useEffect(() => {
     const controller = new AbortController();
     setCapturedAt("");
@@ -60,16 +66,29 @@ function WebcamCard({ camera, refreshToken }) {
       .catch((error) => { if (error.name !== "AbortError") setCapturedAt("Zeit nicht verfügbar"); });
     return () => controller.abort();
   }, [imageUrl]);
-  return <article><ExternalLink className="webcam-panorama-link" href={camera.viewerUrl}><img src={imageUrl} alt={camera.alt} loading="lazy" /></ExternalLink><div><strong>{camera.title}</strong><span aria-live="polite">{capturedAt || "Stand wird geladen…"}</span></div></article>;
+  return <article className="webcam-gallery">
+    <div className="webcam-panorama-viewport" ref={viewportRef} tabIndex="0" role="region" aria-label={`Panorama ${camera.title}; horizontal verschiebbar`}>
+      <img src={imageUrl} alt={camera.alt} loading="lazy" draggable="false" onLoad={focusPanorama} />
+    </div>
+    <div className="webcam-gallery-nav">
+      <button type="button" onClick={onPrevious} aria-label="Vorherige Webcam">←</button>
+      <div className="webcam-gallery-meta"><small>{index + 1} / {total}</small><span><strong>{camera.title}</strong><em aria-live="polite">{capturedAt || "Stand wird geladen…"}</em></span></div>
+      <button type="button" onClick={onNext} aria-label="Nächste Webcam">→</button>
+    </div>
+    <div className="webcam-gallery-links"><span>Panorama horizontal verschieben</span><ExternalLink href={camera.viewerUrl}>Interaktive Webcam öffnen →</ExternalLink></div>
+  </article>;
 }
 
 function MeteoPage() {
   const [activeId, setActiveId] = useState(meteoStations[0].id);
   const [showRegionalStations, setShowRegionalStations] = useState(false);
   const [webcamRefresh, setWebcamRefresh] = useState(0);
+  const [activeWebcamIndex, setActiveWebcamIndex] = useState(0);
   const activeStation = meteoStations.find((station) => station.id === activeId) || meteoStations[0];
+  const activeWebcam = meteoWebcams[activeWebcamIndex];
   const primaryStations = meteoStations.slice(0, 5);
   const regionalStations = meteoStations.slice(5);
+  const moveWebcam = (step) => setActiveWebcamIndex((current) => (current + step + meteoWebcams.length) % meteoWebcams.length);
   return <div className="meteo-page">
     <section className="page-banner meteo-intro" style={{ "--page-banner-image": `url("${images.meteoHeader}")`, "--page-banner-position": "center 48%" }}>
       <div className="shell meteo-intro-grid">
@@ -90,7 +109,7 @@ function MeteoPage() {
       <div className="station-trend"><p className="eyebrow">Entwicklung</p><strong>{activeStation.trend}</strong><p>Die letzten vier gemeldeten Werte bleiben auf jeder Stationskarte direkt sichtbar.</p><div className="trend-values">{activeStation.values.slice().reverse().map((value) => <span key={value.time}><small>{value.time}</small><i style={{ height: `${Math.max(22, value.gust * 1.5)}px` }} /><strong>{value.average}/{value.gust}</strong></span>)}</div><small>Ø / Böe in km/h</small></div>
     </section>
     <section className="meteo-secondary"><div className="shell meteo-secondary-grid">
-      <div className="webcam-panel"><div className="meteo-section-head"><div><p className="eyebrow">Sicht vor Ort</p><h2>Live-Webcams</h2></div><button className="webcam-refresh" type="button" onClick={() => setWebcamRefresh(Date.now())}>Bilder neu laden</button></div><div className="webcam-grid">{meteoWebcams.map((camera) => <WebcamCard key={camera.id} camera={camera} refreshToken={webcamRefresh} />)}</div><p className="webcam-credit">Unveränderte Livebilder: © Jungfraubahnen · Roundshot. Bild anklicken für die interaktive Original-Webcam.</p></div>
+      <div className="webcam-panel"><div className="meteo-section-head"><div><p className="eyebrow">Sicht vor Ort</p><h2>Live-Webcams</h2></div><button className="webcam-refresh" type="button" onClick={() => setWebcamRefresh(Date.now())}>Bilder neu laden</button></div><WebcamCard camera={activeWebcam} refreshToken={webcamRefresh} index={activeWebcamIndex} total={meteoWebcams.length} onPrevious={() => moveWebcam(-1)} onNext={() => moveWebcam(1)} /><p className="webcam-credit">Unveränderte Livebilder: © Jungfraubahnen · Roundshot. Der Rahmen zeigt einen Ausschnitt; das vollständige Panorama bleibt horizontal verschiebbar.</p></div>
       <aside className="dabs-panel"><p className="eyebrow">Luftraum · Mockanzeige</p><h2>DABS</h2><div className="dabs-status"><span>!</span><div><strong>LS-R6 als aktiv simuliert</strong><p>Demonstrationszeit 13:00–15:00. Verbindliche Angaben immer im offiziellen Daily Airspace Bulletin prüfen.</p></div></div><ExternalLink className="button dabs-button" href="https://www.skybriefing.com/de/">Offizielles DABS öffnen</ExternalLink><p className="dabs-footnote">Externer Link · Skybriefing</p></aside>
     </div></section>
   </div>;

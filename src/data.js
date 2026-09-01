@@ -108,11 +108,11 @@ export const meteoStations = windStationCatalog.map((station, index) => {
   };
 });
 export const meteoWebcams = [
-  { id: "first", title: "Grindelwald-First", image: "https://backend.roundshot.com/cams/c7f0edeec13d52b6c3cf91485d982548/archiveprev", viewerUrl: "https://webcams.jungfrau.ch/first-schreckfeld/", alt: "Aktuelles Panoramabild der Webcam Grindelwald-First" },
-  { id: "eigergletscher", title: "Eigergletscher", image: "https://backend.roundshot.com/cams/486d6b1c471c581a99233dc3e4cc3ab7/archiveprev", viewerUrl: "https://webcams.jungfrau.ch/eigergletscher/#/", alt: "Aktuelles Panoramabild der Webcam Eigergletscher" },
-  { id: "maennlichen", title: "Männlichen", image: "https://backend.roundshot.com/cams/877919abdb23eb59f63908ab8b300f1f/archiveprev", viewerUrl: "https://maennlichen.roundshot.com/bergstation-wengen/", alt: "Aktuelles Panoramabild der Webcam Männlichen" },
-  { id: "kleine-scheidegg", title: "Kleine Scheidegg", image: "https://backend.roundshot.com/cams/527f953c3776c0552355d4a154c2b4e8/archiveprev", viewerUrl: "https://webcams.jungfrau.ch/lauberhorn/#/", alt: "Aktuelles Panoramabild der Webcam Kleine Scheidegg" },
-  { id: "terminal", title: "Grindelwald Terminal", image: "https://backend.roundshot.com/cams/034de41e47b30dde0362b86b42d9fb61/archiveprev", viewerUrl: "https://webcams.jungfrau.ch/grindelwald-terminal/", alt: "Aktuelles Panoramabild der Webcam Grindelwald Terminal" },
+  { id: "first", title: "Grindelwald-First", focus: 0.52, image: "https://backend.roundshot.com/cams/c7f0edeec13d52b6c3cf91485d982548/archiveprev", viewerUrl: "https://webcams.jungfrau.ch/first-schreckfeld/", alt: "Aktuelles Panoramabild der Webcam Grindelwald-First" },
+  { id: "eigergletscher", title: "Eigergletscher", focus: 0.5, image: "https://backend.roundshot.com/cams/486d6b1c471c581a99233dc3e4cc3ab7/archiveprev", viewerUrl: "https://webcams.jungfrau.ch/eigergletscher/#/", alt: "Aktuelles Panoramabild der Webcam Eigergletscher" },
+  { id: "maennlichen", title: "Männlichen", focus: 0.46, image: "https://backend.roundshot.com/cams/877919abdb23eb59f63908ab8b300f1f/archiveprev", viewerUrl: "https://maennlichen.roundshot.com/bergstation-wengen/", alt: "Aktuelles Panoramabild der Webcam Männlichen" },
+  { id: "kleine-scheidegg", title: "Kleine Scheidegg", focus: 0.34, image: "https://backend.roundshot.com/cams/527f953c3776c0552355d4a154c2b4e8/archiveprev", viewerUrl: "https://webcams.jungfrau.ch/lauberhorn/#/", alt: "Aktuelles Panoramabild der Webcam Kleine Scheidegg" },
+  { id: "terminal", title: "Grindelwald Terminal", focus: 0.5, image: "https://backend.roundshot.com/cams/034de41e47b30dde0362b86b42d9fb61/archiveprev", viewerUrl: "https://webcams.jungfrau.ch/grindelwald-terminal/", alt: "Aktuelles Panoramabild der Webcam Grindelwald Terminal" },
 ];
 export const news = generatedNews.map((item) => ({ ...item, dateLabel: formatDate(item.date), image: contentAsset(item.coverImage) || images.hero, alt: item.gallery?.[0]?.alt || item.title, path: `/news/${item.slug}`, gallery: (item.gallery || []).map((image, index) => ({ ...image, src: contentAsset(image.src), alt: image.alt || `${item.title} – Bild ${index + 1}` })) }));
 export const clubPurposes = [

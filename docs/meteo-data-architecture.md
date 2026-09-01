@@ -12,12 +12,13 @@ The public website never calls `winds.mobi` or Supabase directly.
 
 Webcams remain a frontend-only integration and do not pass through Thermalbase. The club site loads five selected public panorama images directly from the Jungfraubahnen/Roundshot image endpoints: Grindelwald-First, Eigergletscher, Männlichen, Kleine Scheidegg and Grindelwald Terminal.
 
-- Do not download, proxy, persist, crop or otherwise alter the images.
+- Do not download, proxy, persist or otherwise alter the images. A responsive viewport may frame a useful section provided the complete source panorama remains horizontally accessible.
 - Show visible `© Jungfraubahnen · Roundshot` attribution.
 - Link every image to its official interactive webcam.
 - Keep the images lazy-loaded and refresh them only after an explicit visitor action.
 - Read each source image's `Last-Modified` header once and display it in `Europe/Zurich` next to the station name. Repeat that metadata request only when the visitor explicitly reloads the images.
-- On narrow screens, preserve the panorama's natural proportions at a useful fixed height and expose horizontal touch scrolling instead of cropping it.
+- Render one station at a time. Previous/next controls change station; horizontal touch gestures pan across the active panorama.
+- Use a responsive framed viewport (wider on desktop, 16:9 on mobile) and expose the panorama's complete width through horizontal scrolling.
 - Treat webcam availability and timestamps as informational; they are not a flight-safety data source.
 
 This follows the [Jungfraubahnen website usage conditions](https://www.jungfrau.ch/de-ch/anb/), which permit publication of images in connection with tourist offerings while requiring original, unmodified use, and the separate [media usage terms](https://www.jungfrau.ch/de-ch/unternehmen/medien/bilder/nutzungsbestimmungen/). Recheck these conditions if ownership, monetization or the image endpoints change.
