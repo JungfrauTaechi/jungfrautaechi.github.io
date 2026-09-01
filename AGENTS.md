@@ -1,0 +1,24 @@
+# Prototype Instructions
+
+Run the local server yourself and open the preview in the browser available to this environment. Do not give the user server-start instructions when you can run it.
+
+Before making substantial visual changes, use the Product Design plugin's `get-context` skill when the visual source is unclear or no longer matches the current goal. When the user gives durable prototype-specific design feedback, preferences, or decisions, record them in `AGENTS.md`.
+
+When implementing from a selected generated mock, treat that image as the source of truth for layout, component anatomy, density, spacing, color, typography, visible content, and hierarchy.
+
+Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts/prepare-sites-build.mjs`, and `tests/sites-worker.test.mjs` intact so the same local prototype can be handed to Sites. Before a Sites handoff, run `npm run build` and `npm run test:sites`; the build must leave `dist/client/index.html`, `dist/server/index.js`, and `dist/.openai/hosting.json`.
+
+## Durable implementation decisions
+
+- The 50th-anniversary layer is controlled solely by `CONFIG.showAnniversary` in `src/data.js`; it defaults to `true` and does not define primary information architecture.
+- Current-source images remain remote only where local downloading cannot be completed; their sources are recorded by the inventory.
+- Public pages must read as the finished club website: keep migration provenance in `content/inventory/`, but do not render `Quelle`, `Zum Original`, or similar source-attribution links in the site UI.
+- The flight-area experience uses one modern local Pannellum component with selectable start and landing sites. Keep all eight cubemaps under `public/assets/panoramas/`; the public viewer must never depend on the legacy `jungfrau-taechi.ch` iframe. The unverified landing, folding and fence coordinates remain stored locally, but `CONFIG.showPanoramaAreas` must stay `false` until their geometry has been reconstructed and reviewed against the source tour.
+- Treat the Fluggebiet section as the site's primary visitor card. Use the official SHV Grindelwald information board for stable facts about First, Grund and Bodmi, preserve the club's complete start/landing panoramas, and direct changing operational information to current DABS and SHV airspace publications.
+- Use the Meteo page as the density reference across primary pages: compact page headers, shared responsive section spacing, restrained card heights, and earlier exposure of useful content. Preserve stronger visual hierarchy for Fluggebiet without oversized empty bands.
+- Every route family uses a compact navy, image-backed opening, including Start, Meteo, Club, News/Fotos details and flight-area pages. Use relevant local archive images and avoid tall empty editorial heroes.
+- Maintain the board's publicly listed address, mobile and email data in `boardMembers` in `src/data.js`. Each board card has a replaceable portrait path; use the clearly anonymous placeholder until an approved portrait is supplied.
+- The meteo prototype is a mobile-first working surface: show latest wind plus the four most recent measurements for configured sites, and keep webcams and DABS in the same page. Until Thermalbase is connected, label all readings and safety states unmistakably as mock data.
+- News and photo reports are repository-managed content, not hard-coded page components. Preserve the complete imported archive as Markdown records with reusable detail templates; future club admins add entries by copying the templates and uploading local media, with `stage` review before production.
+- Treat `/club` as the consolidated public story of the association rather than recreating the legacy submenu. It must retain the original portrait, statutory purposes, current programme, supporter context and three archive-story eras on one page; `/chronik` is the sole deeper history route and keeps all 30 migrated chronology entries.
+- Publish one production Pages site from the public repository `JungfrauTaechi/jungfrautaechi.github.io`. `main` is production; `dev` may be used as an undeployed working branch and must be validated locally before a fast-forward merge into `main`.
