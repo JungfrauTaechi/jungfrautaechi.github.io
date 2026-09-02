@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { access, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const scenes = {
@@ -10,10 +10,25 @@ const scenes = {
   bodmi: "landeplatz_grindelwa_20641",
   stechelberg: "stechelberg_schiltho_20344",
   lauterbrunnen: "landeplatz_lauterbru_20643",
+  "airtime-west": "grindelwald_airtime_6666",
+  "airtime-ost": "grindelwald_airtime__11658",
+  "airtime-winter": "grindelwald_airtime__12421",
+  "airtime-max": "grindelwald_airtime__21159",
+  "airtime-stechelberg": "stechelberg_airtime_20982",
 };
 
 const outputRoot = path.resolve("public/assets/panoramas");
-const sourceRoot = "jungfrau-taechi.ch/sites/dcjt360_bootstrapdata";
+const sourceRoot = "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata";
+const refreshExisting = process.argv.includes("--refresh");
+
+async function exists(filePath) {
+  try {
+    await access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 async function fetchImage(sourcePath) {
   const sourceUrl = `${sourceRoot}/${sourcePath}`;
@@ -35,8 +50,13 @@ for (const [sceneId, sourceDirectory] of Object.entries(scenes)) {
   ];
 
   for (const file of files) {
+    const targetPath = path.join(sceneDirectory, file.target);
+    if (!refreshExisting && await exists(targetPath)) {
+      process.stdout.write(`Kept ${sceneId}/${file.target}\n`);
+      continue;
+    }
     const image = await fetchImage(file.source);
-    await writeFile(path.join(sceneDirectory, file.target), image);
+    await writeFile(targetPath, image);
     process.stdout.write(`Saved ${sceneId}/${file.target} (${Math.round(image.length / 1024)} KB)\n`);
   }
 }

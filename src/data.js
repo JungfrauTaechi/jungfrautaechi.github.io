@@ -1,5 +1,6 @@
 import { assetUrl } from "./site-paths.js";
 import { generatedNews, generatedPhotoReports } from "./generated-content.js";
+import { panoramaAreas, panoramaLandmarks, panoramaLinks } from "./panorama-links.js";
 
 const siteBase = import.meta.env.BASE_URL;
 const localAsset = (path) => assetUrl(path, siteBase);
@@ -9,7 +10,7 @@ const formatDate = (date) => {
   return new Intl.DateTimeFormat("de-CH", { day: "2-digit", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00`));
 };
 
-export const CONFIG = { showAnniversary: true, showPanoramaAreas: false };
+export const CONFIG = { showAnniversary: true, showPanoramaAreas: true };
 export const source = (url) => `https://www.jungfrau-taechi.ch${url}`;
 export const images = {
   hero: localAsset("/assets/source/hero-flight.jpg"),
@@ -108,11 +109,11 @@ export const meteoStations = windStationCatalog.map((station, index) => {
   };
 });
 export const meteoWebcams = [
-  { id: "first", title: "Grindelwald-First", focus: 0.52, image: "https://backend.roundshot.com/cams/c7f0edeec13d52b6c3cf91485d982548/archiveprev", viewerUrl: "https://webcams.jungfrau.ch/first-schreckfeld/", alt: "Aktuelles Panoramabild der Webcam Grindelwald-First" },
-  { id: "eigergletscher", title: "Eigergletscher", focus: 0.5, image: "https://backend.roundshot.com/cams/486d6b1c471c581a99233dc3e4cc3ab7/archiveprev", viewerUrl: "https://webcams.jungfrau.ch/eigergletscher/#/", alt: "Aktuelles Panoramabild der Webcam Eigergletscher" },
-  { id: "maennlichen", title: "Männlichen", focus: 0.46, image: "https://backend.roundshot.com/cams/877919abdb23eb59f63908ab8b300f1f/archiveprev", viewerUrl: "https://maennlichen.roundshot.com/bergstation-wengen/", alt: "Aktuelles Panoramabild der Webcam Männlichen" },
-  { id: "kleine-scheidegg", title: "Kleine Scheidegg", focus: 0.34, image: "https://backend.roundshot.com/cams/527f953c3776c0552355d4a154c2b4e8/archiveprev", viewerUrl: "https://webcams.jungfrau.ch/lauberhorn/#/", alt: "Aktuelles Panoramabild der Webcam Kleine Scheidegg" },
-  { id: "terminal", title: "Grindelwald Terminal", focus: 0.5, image: "https://backend.roundshot.com/cams/034de41e47b30dde0362b86b42d9fb61/archiveprev", viewerUrl: "https://webcams.jungfrau.ch/grindelwald-terminal/", alt: "Aktuelles Panoramabild der Webcam Grindelwald Terminal" },
+  { id: "first", title: "Grindelwald-First", focus: 0.52, image: "https://jungfrau.roundshot.com/cams/1515/medium", viewerUrl: "https://webcams.jungfrau.ch/first-schreckfeld/", alt: "Aktuelles Panoramabild der Webcam Grindelwald-First" },
+  { id: "eigergletscher", title: "Eigergletscher", focus: 0.5, image: "https://jungfrau.roundshot.com/cams/756/medium", viewerUrl: "https://webcams.jungfrau.ch/eigergletscher/#/", alt: "Aktuelles Panoramabild der Webcam Eigergletscher" },
+  { id: "maennlichen", title: "Männlichen", focus: 0.46, image: "https://maennlichen.roundshot.com/cams/1060/medium", viewerUrl: "https://maennlichen.roundshot.com/bergstation-wengen/", alt: "Aktuelles Panoramabild der Webcam Männlichen" },
+  { id: "kleine-scheidegg", title: "Kleine Scheidegg", focus: 0.34, image: "https://jungfrau.roundshot.com/cams/1514/medium", viewerUrl: "https://webcams.jungfrau.ch/lauberhorn/#/", alt: "Aktuelles Panoramabild der Webcam Kleine Scheidegg" },
+  { id: "terminal", title: "Grindelwald Terminal", focus: 0.5, image: "https://jungfrau.roundshot.com/cams/750/medium", viewerUrl: "https://webcams.jungfrau.ch/grindelwald-terminal/", alt: "Aktuelles Panoramabild der Webcam Grindelwald Terminal" },
 ];
 export const news = generatedNews.map((item) => ({ ...item, dateLabel: formatDate(item.date), image: contentAsset(item.coverImage) || images.hero, alt: item.gallery?.[0]?.alt || item.title, path: `/news/${item.slug}`, gallery: (item.gallery || []).map((image, index) => ({ ...image, src: contentAsset(image.src), alt: image.alt || `${item.title} – Bild ${index + 1}` })) }));
 export const clubPurposes = [
@@ -262,30 +263,46 @@ export const chronology = [
   { year: "2009", text: "Christian Maurer gewinnt die X-Alps, Alex Hofer erreicht als einziger weiterer Pilot das Ziel in Monaco. Stefan Wyss wird Vizeweltmeister und Schweizer Meister. Das Tächi-Team bestätigt den dritten Rang im OLC." },
   { year: "2010–2014", text: "Christian Maurer gewinnt die X-Alps 2011 und 2013. Auch weitere Clubmitglieder überzeugen in nationalen und internationalen Wettkämpfen." },
 ];
-export const flightFacts = [{ title: "4 Startplätze", body: "First · Waldspitz · Männlichen · Mürren", path: routes.startSites.path }, { title: "4 Landeplätze", body: "Grund · Bodmi · Stechelberg · Lauterbrunnen", path: routes.landingSites.path }, { title: "Sicherheit", body: "Lokale Regeln, Lufträume und DABS vor jedem Flug", path: routes.safety.path }];
+export const flightFacts = [{ title: "13 Panorama-Standorte", body: "5 Übersichten · 4 Startplätze · 4 Landeplätze", path: routes.flightArea.path }, { title: "360° vor Ort", body: "Start- und Landeplätze vor dem Flug erkunden", path: routes.landingSites.path }, { title: "Sicherheit", body: "Lokale Regeln, Lufträume und DABS vor jedem Flug", path: routes.safety.path }];
 export const photoReports = generatedPhotoReports.map((item) => ({ ...item, dateLabel: formatDate(item.date), image: contentAsset(item.coverImage) || images.hero, alt: item.gallery?.[0]?.alt || item.title, path: `/fotos/${item.slug}`, gallery: (item.gallery || []).map((image, index) => ({ ...image, src: contentAsset(image.src), alt: image.alt || `${item.title} – Bild ${index + 1}` })) }));
 export const shvGrindelwaldDocument = localAsset("/assets/documents/shv-fluggebiet-grindelwald.pdf");
 export const shvAirspaceUrl = "https://airspace.shv-fsvl.ch/";
-const panoArea = (label, kind, yaw, pitch, width, height, rotation = 0) => ({ label, kind, yaw, pitch, width, height, rotation });
-const panorama = (scene, yaw, pitch, hfov, overlays = []) => ({
+const panorama = (scene, yaw, pitch, hfov) => ({
   cubeMap: Array.from({ length: 6 }, (_, face) => localAsset(`/assets/panoramas/${scene}/${face}.jpg`)),
   preview: localAsset(`/assets/panoramas/${scene}/thumbnail.jpg`),
   yaw,
   pitch,
   hfov,
-  overlays,
 });
 export const landingSites = [
-  { id: "grund", label: "Grindelwald, Grund", area: "Grindelwald", panorama: panorama("grund", -79.7, 5.7, 80, [panoArea("Landeplatz Grund", "landing", -70, -11, 260, 112, -5), panoArea("Faltplatz", "folding", -98, -7, 150, 48, -12), panoArea("Achtung Zaun", "danger", -101, -13, 150, 34, -18)]), shv: { altitude: "950 m ü. M.", coordinates: "46.6202, 8.0294", category: "Gleitschirm", difficulty: "Einfach bis mittel", access: "Zu Fuss: ca. 5 Min. ab Bahnhof Grund oder 10 Min. ab Grindelwald Terminal", status: "Ganzjährig", notes: ["Zaun beachten.", "Bei starkem Talwind Queranflug nicht hinter der Strasse.", "Landeplatz nicht überqueren."] } },
-  { id: "bodmi", label: "Grindelwald, Bodmi", area: "Grindelwald", panorama: panorama("bodmi", -31.9, 20.4, 80, [panoArea("Landeplatz Bodmi", "landing", -13, -7, 210, 94, -5), panoArea("Faltplatz", "folding", -51, -7, 140, 48, 8)]), shv: { altitude: "1100 m ü. M.", coordinates: "46.6287, 8.0436", category: "Gleitschirm", difficulty: "Schwer (im Winter einfach)", access: "Zu Fuss: ca. 5 Min. ab Talstation Firstbahn", status: "Ganzjährig", notes: ["Anspruchsvoller, kleiner, kupierter Landeplatz mit zahlreichen Hindernissen.", "Im Winter unterhalb des Kinderskischulgeländes landen.", "Landeplatz nicht überqueren."] } },
-  { id: "stechelberg", label: "Stechelberg, Schilthornbahn", area: "Lauterbrunnental", panorama: panorama("stechelberg", 0, 0, 90, [panoArea("Landeplatz Stechelberg", "landing", 8, -12, 300, 140, -2), panoArea("Faltplatz", "folding", -28, -5, 130, 48, 4)]) },
-  { id: "lauterbrunnen", label: "Lauterbrunnen", area: "Lauterbrunnental", panorama: panorama("lauterbrunnen", -31.5, 10.6, 80, [panoArea("Landeplatz Lauterbrunnen", "landing", -28, -3, 320, 150, -4)]) },
+  { id: "grund", label: "Grindelwald, Grund", area: "Grindelwald", panorama: panorama("grund", -79.7, 5.7, 80), shv: { altitude: "950 m ü. M.", coordinates: "46.6202, 8.0294", category: "Gleitschirm", difficulty: "Einfach bis mittel", access: "Zu Fuss: ca. 5 Min. ab Bahnhof Grund oder 10 Min. ab Grindelwald Terminal", status: "Ganzjährig", notes: ["Zaun beachten.", "Bei starkem Talwind Queranflug nicht hinter der Strasse.", "Landeplatz nicht überqueren."] } },
+  { id: "bodmi", label: "Grindelwald, Bodmi", area: "Grindelwald", panorama: panorama("bodmi", -31.9, 20.4, 80), shv: { altitude: "1100 m ü. M.", coordinates: "46.6287, 8.0436", category: "Gleitschirm", difficulty: "Schwer (im Winter einfach)", access: "Zu Fuss: ca. 5 Min. ab Talstation Firstbahn", status: "Ganzjährig", notes: ["Anspruchsvoller, kleiner, kupierter Landeplatz mit zahlreichen Hindernissen.", "Im Winter unterhalb des Kinderskischulgeländes landen.", "Landeplatz nicht überqueren."] } },
+  { id: "stechelberg", label: "Stechelberg, Schilthornbahn", area: "Lauterbrunnental", panorama: panorama("stechelberg", 0, 0, 90) },
+  { id: "lauterbrunnen", label: "Lauterbrunnen", area: "Lauterbrunnental", panorama: panorama("lauterbrunnen", -31.5, 10.6, 80) },
 ];
 export const startSites = [
   { id: "first", label: "Grindelwald, First", area: "Grindelwald", panorama: panorama("first", 1.6, -2.7, 60), shv: { altitude: "2120 m ü. M.", coordinates: "46.6575, 8.0551", category: "Gleitschirm und Delta", wind: "Ost bis Südwest", difficulty: "Einfach", access: "Gondelbahn Grindelwald–First, danach ca. 5 Min. zu Fuss", status: "Ganzjährig" } },
   { id: "waldspitz", label: "Grindelwald, Waldspitz", area: "Grindelwald", panorama: panorama("waldspitz", -53.8, 1.6, 85) },
   { id: "maennlichen", label: "Grindelwald, Männlichen", area: "Grindelwald", panorama: panorama("maennlichen", -15.2, 1.5, 50) },
   { id: "muerren", label: "Mürren", area: "Lauterbrunnental", panorama: panorama("muerren", 0, 0, 90) },
+];
+const overviewSites = [
+  { id: "airtime-west", label: "Grindelwald · Blick West", area: "Grindelwald", panorama: panorama("airtime-west", 27.046, -41.5054, 50) },
+  { id: "airtime-ost", label: "Grindelwald · Blick Ost", area: "Grindelwald", panorama: panorama("airtime-ost", 110.683, -49.184, 46.1842) },
+  { id: "airtime-winter", label: "Grindelwald · Winter", area: "Grindelwald", panorama: panorama("airtime-winter", -18.8959, -2.34583, 77.2727) },
+  { id: "airtime-max", label: "Grindelwald · Airtime Max", area: "Grindelwald", panorama: panorama("airtime-max", 12.4666, -23.1034, 70) },
+  { id: "airtime-stechelberg", label: "Stechelberg · Luftpanorama", area: "Lauterbrunnental", panorama: panorama("airtime-stechelberg", -70.3972, -40.4921, 70) },
+];
+const withSceneMeta = (site, sceneType) => ({ ...site, sceneType, links: panoramaLinks[site.id] || [], landmarks: panoramaLandmarks[site.id] || [], areas: panoramaAreas[site.id] || [] });
+export const flightScenes = [
+  ...overviewSites.map((site) => withSceneMeta(site, "overview")),
+  ...startSites.map((site) => withSceneMeta(site, "start")),
+  ...landingSites.map((site) => withSceneMeta(site, "landing")),
+];
+export const flightSceneGroups = [
+  { id: "overview", label: "Übersicht", count: overviewSites.length },
+  { id: "start", label: "Startplätze", count: startSites.length },
+  { id: "landing", label: "Landeplätze", count: landingSites.length },
 ];
 export const safetyAreas = [
   { id: "grindelwald", title: "Fluggebiet Grindelwald", detail: "LS-R6 Axalp und lokale Vereinbarung", body: "DABS zwingend beachten. Südlich SwissGrid 169000 gilt lokal eine maximale Höhe von 2250 m ü. M. statt 1850 m ü. M. Während der Axalp-Fliegerdemo kann die grössere temporäre LS-R13 gelten.", images: [images.safetyGrindelwald, images.safetyEigergletscher, images.safetyMaennlichen] },

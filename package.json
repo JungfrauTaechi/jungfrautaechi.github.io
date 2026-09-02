@@ -7,6 +7,8 @@
     "dev": "npm run content:build && vite",
     "inventory": "node scripts/inventory-site.mjs",
     "assets": "node scripts/fetch-selected-assets.mjs",
+    "panorama:assets": "node scripts/localize-panoramas.mjs",
+    "panorama:links": "node scripts/import-panorama-links.mjs",
     "content:import": "node scripts/import-current-content.mjs",
     "content:build": "node scripts/compile-content.mjs",
     "build": "npm run content:build && vite build && node scripts/prepare-sites-build.mjs",

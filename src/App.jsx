@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import "pannellum";
-import { CONFIG, boardMembers, chronology, clubPortrait, clubProgramme, clubPurposes, clubStories, flightFacts, images, landingSites, membershipFormUrl, meteoStations, meteoWebcams, news, photoReports, plannedMeteoStation, routes, safetyAreas, shvAirspaceUrl, shvGrindelwaldDocument, startSites, utilityLinks } from "./data.js";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { CONFIG, boardMembers, chronology, clubPortrait, clubProgramme, clubPurposes, clubStories, flightFacts, flightSceneGroups, flightScenes, images, membershipFormUrl, meteoStations, meteoWebcams, news, photoReports, plannedMeteoStation, routes, safetyAreas, shvAirspaceUrl, shvGrindelwaldDocument, utilityLinks } from "./data.js";
 import { appPath, routeFromPathname } from "./site-paths.js";
 const navItems = [routes.flightArea, routes.meteo, routes.club, routes.news, routes.photos]; const routeList = Object.values(routes);
 const siteBase = import.meta.env.BASE_URL;
@@ -46,6 +45,7 @@ function PlannedStationCard({ station }) {
 function WebcamCard({ camera, refreshToken, index, total, onPrevious, onNext }) {
   const [capturedAt, setCapturedAt] = useState("");
   const viewportRef = useRef(null);
+  const dragRef = useRef(null);
   const imageUrl = `${camera.image}${refreshToken ? `?refresh=${refreshToken}` : ""}`;
   const focusPanorama = () => {
     const viewport = viewportRef.current;
@@ -66,8 +66,35 @@ function WebcamCard({ camera, refreshToken, index, total, onPrevious, onNext }) 
       .catch((error) => { if (error.name !== "AbortError") setCapturedAt("Zeit nicht verfügbar"); });
     return () => controller.abort();
   }, [imageUrl]);
+  const startDrag = (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    dragRef.current = { pointerId: event.pointerId, startX: event.clientX, scrollLeft: viewport.scrollLeft };
+    viewport.setPointerCapture(event.pointerId);
+    viewport.classList.add("is-dragging");
+  };
+  const moveDrag = (event) => {
+    const viewport = viewportRef.current;
+    const drag = dragRef.current;
+    if (!viewport || !drag || drag.pointerId !== event.pointerId) return;
+    viewport.scrollLeft = drag.scrollLeft - (event.clientX - drag.startX);
+    event.preventDefault();
+  };
+  const endDrag = (event) => {
+    const viewport = viewportRef.current;
+    if (!viewport || dragRef.current?.pointerId !== event.pointerId) return;
+    if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId);
+    viewport.classList.remove("is-dragging");
+    dragRef.current = null;
+  };
+  const moveWithKeyboard = (event) => {
+    if (!viewportRef.current || !["ArrowLeft", "ArrowRight"].includes(event.key)) return;
+    viewportRef.current.scrollBy({ left: (event.key === "ArrowLeft" ? -1 : 1) * viewportRef.current.clientWidth * 0.65, behavior: "smooth" });
+    event.preventDefault();
+  };
   return <article className="webcam-gallery">
-    <div className="webcam-panorama-viewport" ref={viewportRef} tabIndex="0" role="region" aria-label={`Panorama ${camera.title}; horizontal verschiebbar`}>
+    <div className="webcam-panorama-viewport" ref={viewportRef} tabIndex="0" role="region" aria-label={`Panorama ${camera.title}; ziehen oder mit Pfeiltasten horizontal verschieben`} onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={endDrag} onPointerCancel={endDrag} onKeyDown={moveWithKeyboard}>
       <img src={imageUrl} alt={camera.alt} loading="lazy" draggable="false" onLoad={focusPanorama} />
     </div>
     <div className="webcam-gallery-nav">
@@ -75,7 +102,7 @@ function WebcamCard({ camera, refreshToken, index, total, onPrevious, onNext }) 
       <div className="webcam-gallery-meta"><small>{index + 1} / {total}</small><span><strong>{camera.title}</strong><em aria-live="polite">{capturedAt || "Stand wird geladen…"}</em></span></div>
       <button type="button" onClick={onNext} aria-label="Nächste Webcam">→</button>
     </div>
-    <div className="webcam-gallery-links"><span>Panorama horizontal verschieben</span><ExternalLink href={camera.viewerUrl}>Interaktive Webcam öffnen →</ExternalLink></div>
+    <div className="webcam-gallery-links"><span>Bild ziehen oder Scrollbalken nutzen</span><ExternalLink className="webcam-original-link" href={camera.viewerUrl}>Original-Webcam im Vollbild ↗</ExternalLink></div>
   </article>;
 }
 
@@ -110,7 +137,7 @@ function MeteoPage() {
     </section>
     <section className="meteo-secondary"><div className="shell meteo-secondary-grid">
       <div className="webcam-panel"><div className="meteo-section-head"><div><p className="eyebrow">Sicht vor Ort</p><h2>Live-Webcams</h2></div><button className="webcam-refresh" type="button" onClick={() => setWebcamRefresh(Date.now())}>Bilder neu laden</button></div><WebcamCard camera={activeWebcam} refreshToken={webcamRefresh} index={activeWebcamIndex} total={meteoWebcams.length} onPrevious={() => moveWebcam(-1)} onNext={() => moveWebcam(1)} /><p className="webcam-credit">Unveränderte Livebilder: © Jungfraubahnen · Roundshot. Der Rahmen zeigt einen Ausschnitt; das vollständige Panorama bleibt horizontal verschiebbar.</p></div>
-      <aside className="dabs-panel"><p className="eyebrow">Luftraum · Mockanzeige</p><h2>DABS</h2><div className="dabs-status"><span>!</span><div><strong>LS-R6 als aktiv simuliert</strong><p>Demonstrationszeit 13:00–15:00. Verbindliche Angaben immer im offiziellen Daily Airspace Bulletin prüfen.</p></div></div><ExternalLink className="button dabs-button" href="https://www.skybriefing.com/de/">Offizielles DABS öffnen</ExternalLink><p className="dabs-footnote">Externer Link · Skybriefing</p></aside>
+      <aside className="dabs-panel"><div className="dabs-heading"><p className="eyebrow">Luftraum · Mockanzeige</p><h2>DABS</h2></div><div className="dabs-status"><span>!</span><div><strong>LS-R6 als aktiv simuliert</strong><p>Demonstrationszeit 13:00–15:00. Verbindliche Angaben immer im offiziellen Daily Airspace Bulletin prüfen.</p></div></div><div className="dabs-actions"><ExternalLink className="button dabs-button" href="https://www.skybriefing.com/de/">Offizielles DABS öffnen</ExternalLink><p className="dabs-footnote">Externer Link · Skybriefing</p></div></aside>
     </div></section>
   </div>;
 }
@@ -136,16 +163,188 @@ function ClubPage() {
 }
 function ChronologyPage() { return <><SectionIntro eyebrow="Seit 1976" title="Chronik" body={`${chronology.length} Stationen aus der Chronik Jungfrau-Tächi Grindelwald von Urs Dubach.`} image={images.clubXAlps} position="center 42%" /><section className="shell timeline">{chronology.map((entry) => <article key={entry.year}><time>{entry.year}</time><p>{entry.text}</p></article>)}</section></>; }
 function MembershipPage() { return <><SectionIntro eyebrow="Club" title="Werde Teil der Jungfrau-Tächi" body="Ob aktiv in der Luft oder verbunden mit dem Club: Wir freuen uns über neue Mitglieder." image={images.hero} position="center 42%" /><section className="shell membership-layout"><div><p className="eyebrow">So funktioniert es</p><h2>In wenigen Schritten dabei</h2><ol><li><strong>Anmeldeformular öffnen</strong><span>Persönliche Angaben und gewünschte Mitgliedschaft eintragen.</span></li><li><strong>Formular absenden</strong><span>Der Vorstand prüft deine Anmeldung und meldet sich bei dir.</span></li><li><strong>Willkommen im Club</strong><span>Du erhältst die Informationen zum Clubleben und zu den nächsten Anlässen.</span></li></ol></div><aside><p className="eyebrow">Externer Dienst</p><h2>Anmeldung</h2><p>Das bestehende Anmeldeformular wird sicher bei Google Forms geöffnet.</p><ExternalLink className="button primary" href={membershipFormUrl}>Anmeldeformular öffnen</ExternalLink></aside></section></>; }
-function FlightAreaPage() { return <div className="flight-area-page"><section className="flight-hero"><img src={images.flightAreaHero} alt="Gleitschirm über der Grossen Scheidegg in der Jungfrauregion" /><div className="shell"><p className="eyebrow">Fluggebiet Jungfrauregion</p><h1 tabIndex="-1">Fliegen zwischen Eiger, Mönch und Jungfrau</h1><p>Start- und Landeplätze, virtuelle Rundgänge und die wichtigsten Sicherheitsinformationen für deine Flugplanung.</p></div></section><section className="flight-action-bar"><div className="shell"><AppLink to={routes.meteo.path}><span>01</span><strong>Meteo prüfen</strong></AppLink><ExternalLink href="https://www.skybriefing.com/de/"><span>02</span><strong>DABS öffnen</strong></ExternalLink><ExternalLink href="https://www.burnair.cloud/"><span>03</span><strong>Burnair Map</strong></ExternalLink></div></section><section className="shell flight-overview"><header><p className="eyebrow">Orientierung</p><h2>Alles für den nächsten Flug</h2><p>Die wichtigsten Bereiche sind direkt erreichbar und auf Mobilgeräten schnell erfassbar.</p></header><div className="flight-fact-grid">{flightFacts.map((fact, index) => <AppLink key={fact.title} to={fact.path}><span>0{index + 1}</span><h3>{fact.title}</h3><p>{fact.body}</p><strong>Öffnen →</strong></AppLink>)}</div></section><section className="flight-preview"><div className="shell flight-preview-grid"><div><p className="eyebrow">Virtuell vor Ort</p><h2>Das Fluggebiet in 360° erkunden</h2><p>Besichtige die vier Startplätze und vier Landeplätze bereits zuhause. Die bestehenden Panorama-Aufnahmen bleiben vollständig erhalten.</p><div className="button-row"><AppLink className="button primary" to={routes.startSites.path}>Startplätze</AppLink><AppLink className="button secondary" to={routes.landingSites.path}>Landeplätze</AppLink></div></div><img src={images.flightAreaHero} alt="Blick auf das Fluggebiet der Jungfrauregion" /></div></section><section className="safety-callout"><div className="shell"><div><p className="eyebrow">Vor jedem Flug</p><h2>Lokale Regeln und Luftraum prüfen</h2><p>DABS, LS-R6/LS-R13, HX Meiringen sowie die Regeln für Mürren und Interlaken gehören zur Flugvorbereitung.</p></div><AppLink className="button primary" to={routes.safety.path}>Sicherheitsübersicht</AppLink></div></section></div>; }
+function FlightAreaPage() { return <div className="flight-area-page"><section className="flight-explorer-intro"><div className="shell"><div><p className="eyebrow">Fluggebiet Jungfrauregion · 360°</p><h1 tabIndex="-1">Das Fluggebiet aus der Luft und am Boden</h1><p>Wechsle direkt zwischen fünf Übersichten, vier Startplätzen und vier Landeplätzen. Die Panoramen erleichtern die Orientierung vor dem Flug.</p></div><div className="flight-intro-actions"><AppLink to={routes.meteo.path}>Meteo prüfen</AppLink><ExternalLink href="https://www.skybriefing.com/de/">DABS öffnen</ExternalLink><AppLink to={routes.safety.path}>Sicherheit</AppLink></div></div></section><FlightExplorer /><section className="shell flight-overview"><div className="flight-fact-grid">{flightFacts.map((fact, index) => <AppLink key={fact.title} to={fact.path}><span>0{index + 1}</span><h3>{fact.title}</h3><p>{fact.body}</p><strong>Öffnen →</strong></AppLink>)}</div></section></div>; }
 function SiteFacts({ site }) { const facts = site.shv; if (!facts) return <aside className="site-facts is-club"><div><p className="eyebrow">Jungfrau-Tächi Fluggebiet</p><h3>Lokale Platzinformationen</h3><p>Für diesen Platz zeigt der Rundgang die Orientierung vor Ort. Beachte zusätzlich die publizierten lokalen Hinweise und die Beschilderung am Platz.</p></div></aside>; const rows = [["Höhe", facts.altitude], ["Koordinaten", facts.coordinates], ["Kategorie", facts.category], [facts.wind ? "Windrichtung" : "Schwierigkeit", facts.wind || facts.difficulty], ...(facts.wind ? [["Schwierigkeit", facts.difficulty]] : []), ["Zugang", facts.access], ["Betrieb", facts.status]]; return <aside className="site-facts"><div className="site-facts-heading"><div><p className="eyebrow">SHV Infotafel Grindelwald · 06/2024</p><h3>Offizielle Platzangaben</h3></div><ExternalLink href={shvGrindelwaldDocument}>Infotafel als PDF</ExternalLink></div><dl>{rows.map(([term, value]) => <div className={term === "Zugang" ? "site-fact-wide" : ""} key={term}><dt>{term}</dt><dd>{value}</dd></div>)}</dl>{facts.notes?.length > 0 && <div className="site-hazards"><strong>Besonderheiten</strong><ul>{facts.notes.map((note) => <li key={note}>{note}</li>)}</ul></div>}</aside>; }
-function createAreaHotspot(element, area) { element.style.width = `${area.width}px`; element.style.height = `${area.height}px`; element.setAttribute("role", "note"); element.setAttribute("aria-label", area.label); const surface = document.createElement("span"); surface.className = "pano-area-surface"; surface.style.transform = `rotate(${area.rotation}deg)`; const label = document.createElement("strong"); label.textContent = area.label; surface.appendChild(label); element.appendChild(surface); }
-function LocalPanorama({ site, reloadKey }) { const containerRef = useRef(null); useEffect(() => { if (!containerRef.current || !window.pannellum) return undefined; const hotSpots = CONFIG.showPanoramaAreas ? (site.panorama.overlays || []).map((area) => ({ pitch: area.pitch, yaw: area.yaw, cssClass: `pano-area-hotspot is-${area.kind}`, createTooltipFunc: createAreaHotspot, createTooltipArgs: area, scale: true })) : []; const viewer = window.pannellum.viewer(containerRef.current, { type: "cubemap", cubeMap: site.panorama.cubeMap, preview: site.panorama.preview, hotSpots, autoLoad: true, yaw: site.panorama.yaw, pitch: site.panorama.pitch, hfov: site.panorama.hfov, minHfov: 45, maxHfov: 115, showFullscreenCtrl: false, compass: false, escapeHTML: true, strings: { loadButtonLabel: "Panorama laden", loadingLabel: "Panorama wird geladen …", bylineLabel: "von %s", noPanoramaError: "Panorama konnte nicht geladen werden.", fileAccessError: "Das Panorama muss über den Webserver geöffnet werden.", malformedURLError: "Ungültige Panorama-Adresse.", iOS8WebGLError: "Der Browser unterstützt die 360°-Ansicht nicht.", genericWebGLError: "Der Browser unterstützt die 360°-Ansicht nicht.", textureSizeError: "Das Panorama ist für dieses Gerät zu gross.", unknownError: "Unbekannter Fehler.", twoTouchActivate: "Mit zwei Fingern bewegen", twoTouchXActivate: "Mit zwei Fingern seitlich bewegen", twoTouchYActivate: "Mit zwei Fingern vertikal bewegen", ctrlZoomActivate: "Strg + Scrollen zum Zoomen" } }); return () => viewer.destroy(); }, [site, reloadKey]); return <div className="panorama-canvas" ref={containerRef} role="img" aria-label={`Interaktives 360°-Panorama: ${site.label}`} />; }
-function PanoramaViewer({ sites, label }) { const [activeId, setActiveId] = useState(sites[0].id); const [reloadKey, setReloadKey] = useState(0); const stageRef = useRef(null); useEffect(() => { setActiveId(sites[0].id); setReloadKey(0); }, [sites]); const activeSite = sites.find((site) => site.id === activeId) || sites[0]; const openFullscreen = () => stageRef.current?.requestFullscreen?.(); return <section className="shell tour"><div className="tour-tabs" role="tablist" aria-label={`${label} auswählen`}>{sites.map((site) => <button key={site.id} type="button" role="tab" aria-selected={site.id === activeSite.id} aria-controls="site-panorama" onClick={() => setActiveId(site.id)}><span>{site.area}</span><strong>{site.label}</strong></button>)}</div><div className="tour-viewer"><div className="tour-toolbar"><div><p className="eyebrow">360°-Panorama · lokal</p><h2>{activeSite.label}</h2></div><div className="tour-actions"><button type="button" onClick={() => setReloadKey((value) => value + 1)}>Neu laden</button><button type="button" onClick={openFullscreen}>Vollbild</button></div></div><SiteFacts site={activeSite} /><div className="tour-stage" id="site-panorama" ref={stageRef}><LocalPanorama key={`${activeSite.id}-${reloadKey}`} site={activeSite} reloadKey={reloadKey} /></div><div className="tour-footer"><p>Ziehen zum Drehen · Mausrad oder Gesten zum Zoomen</p><span>Panoramadaten lokal gespeichert</span></div></div></section>; }
-function StartSitesPage() { return <><SectionIntro eyebrow="Fluggebiet · 360°" title="Startplätze" body="First, Waldspitz, Männlichen und Mürren im virtuellen Rundgang. Prüfe vor Ort immer Wind, Gelände, lokale Hinweise und Luftraum." /><PanoramaViewer sites={startSites} label="Startplatz" /><FlightPageNav /></>; }
-function LandingSitesPage() { return <><SectionIntro eyebrow="Fluggebiet · 360°" title="Landeplätze" body="Grund, Bodmi, Stechelberg und Lauterbrunnen im virtuellen Rundgang. Mache dich vor dem ersten Anflug mit Platz, Hindernissen und lokalen Regeln vertraut." /><PanoramaViewer sites={landingSites} label="Landeplatz" /><FlightPageNav /></>; }
+function createSceneLinkHotspot(element, link) { element.setAttribute("role", "button"); element.setAttribute("tabindex", "0"); element.setAttribute("aria-label", `Panorama ${link.label} öffnen`); const marker = document.createElement("span"); marker.textContent = "↗"; const label = document.createElement("strong"); label.textContent = link.label; element.append(marker, label); element.addEventListener("keydown", (event) => { if (["Enter", " "].includes(event.key)) { event.preventDefault(); element.click(); } }); }
+function createLandmarkHotspot(element, landmark) { element.setAttribute("role", "note"); element.setAttribute("aria-label", landmark.label); element.textContent = landmark.label; }
+function createAreaLabelHotspot(element, area) { element.setAttribute("role", "note"); element.setAttribute("aria-label", area.label); element.textContent = area.label; }
+function createInfoHotspot(element, marker) {
+  element.setAttribute("role", "button");
+  element.setAttribute("tabindex", "0");
+  element.setAttribute("aria-label", marker.ariaLabel);
+  const symbol = document.createElement("span");
+  symbol.className = "pano-info-symbol";
+  symbol.setAttribute("aria-hidden", "true");
+  symbol.textContent = marker.kind === "webcam" ? "CAM" : "W";
+  const popover = document.createElement("span");
+  popover.className = "pano-info-popover";
+  const eyebrow = document.createElement("small");
+  eyebrow.textContent = marker.eyebrow;
+  const title = document.createElement("strong");
+  title.textContent = marker.title;
+  const detail = document.createElement("span");
+  detail.textContent = marker.detail;
+  popover.append(eyebrow, title, detail);
+  element.append(symbol, popover);
+  element.addEventListener("keydown", (event) => { if (["Enter", " "].includes(event.key)) { event.preventDefault(); element.click(); } });
+}
+function areaCentre(vertices) { const radians = vertices.map((vertex) => vertex.yaw * Math.PI / 180); return { yaw: Math.atan2(radians.reduce((sum, value) => sum + Math.sin(value), 0), radians.reduce((sum, value) => sum + Math.cos(value), 0)) * 180 / Math.PI, pitch: vertices.reduce((sum, vertex) => sum + vertex.pitch, 0) / vertices.length }; }
+function clipPolygon(points, inside, intersect) {
+  const clipped = [];
+  for (let index = 0; index < points.length; index += 1) {
+    const start = points[index];
+    const end = points[(index + 1) % points.length];
+    const startInside = inside(start);
+    const endInside = inside(end);
+    if (startInside && endInside) clipped.push(end);
+    else if (startInside) clipped.push(intersect(start, end));
+    else if (endInside) clipped.push(intersect(start, end), end);
+  }
+  return clipped;
+}
+function projectSphericalPolygon(vertices, viewer, width, height) {
+  const degrees = Math.PI / 180;
+  const viewYaw = viewer.getYaw() * degrees;
+  const viewPitch = viewer.getPitch() * degrees;
+  const pitchSin = Math.sin(viewPitch);
+  const pitchCos = Math.cos(viewPitch);
+  const cameraPoints = vertices.map((vertex) => {
+    const pointPitch = vertex.pitch * degrees;
+    const deltaYaw = viewYaw - vertex.yaw * degrees;
+    const pointPitchSin = Math.sin(pointPitch);
+    const pointPitchCos = Math.cos(pointPitch);
+    const deltaYawCos = Math.cos(deltaYaw);
+    return {
+      x: -Math.sin(deltaYaw) * pointPitchCos,
+      y: pointPitchSin * pitchCos - pointPitchCos * deltaYawCos * pitchSin,
+      z: pointPitchSin * pitchSin + pointPitchCos * deltaYawCos * pitchCos,
+    };
+  });
+  const near = 0.02;
+  const front = clipPolygon(cameraPoints, (point) => point.z >= near, (start, end) => {
+    const ratio = (near - start.z) / (end.z - start.z);
+    return { x: start.x + (end.x - start.x) * ratio, y: start.y + (end.y - start.y) * ratio, z: near };
+  });
+  if (front.length < 3) return [];
+  const scale = width / (2 * Math.tan(viewer.getHfov() * degrees / 2));
+  let projected = front.map((point) => ({ x: width / 2 + scale * point.x / point.z, y: height / 2 - scale * point.y / point.z }));
+  const boundaries = [
+    { inside: (point) => point.x >= 0, intersect: (start, end) => { const ratio = -start.x / (end.x - start.x); return { x: 0, y: start.y + (end.y - start.y) * ratio }; } },
+    { inside: (point) => point.x <= width, intersect: (start, end) => { const ratio = (width - start.x) / (end.x - start.x); return { x: width, y: start.y + (end.y - start.y) * ratio }; } },
+    { inside: (point) => point.y >= 0, intersect: (start, end) => { const ratio = -start.y / (end.y - start.y); return { x: start.x + (end.x - start.x) * ratio, y: 0 }; } },
+    { inside: (point) => point.y <= height, intersect: (start, end) => { const ratio = (height - start.y) / (end.y - start.y); return { x: start.x + (end.x - start.x) * ratio, y: height }; } },
+  ];
+  for (const boundary of boundaries) {
+    if (projected.length < 3) return [];
+    projected = clipPolygon(projected, boundary.inside, boundary.intersect);
+  }
+  return projected.filter((point) => Number.isFinite(point.x) && Number.isFinite(point.y));
+}
+const webcamSceneIds = new Set(["first", "maennlichen"]);
+const stationSceneIds = { first: "windline-4104", maennlichen: "slf-MAN1", stechelberg: "holfuy-1989" };
+function panoramaInfoMarkers(site) {
+  const markers = [];
+  const addMarkers = (targetId, yaw, pitch, prefix) => {
+    const camera = webcamSceneIds.has(targetId) ? meteoWebcams.find((item) => item.id === targetId) : null;
+    const station = meteoStations.find((item) => item.id === stationSceneIds[targetId]);
+    if (camera) markers.push({ id: `${prefix}-webcam-${camera.id}`, kind: "webcam", yaw: yaw - 2.2, pitch: pitch + 4, eyebrow: "Live-Webcam", title: camera.title, detail: "Original-Panorama öffnen ↗", ariaLabel: `Live-Webcam ${camera.title} öffnen`, camera });
+    if (station) markers.push({ id: `${prefix}-station-${station.id}`, kind: "meteo", yaw: yaw + 2.2, pitch: pitch + 4, eyebrow: "Demo-Messwert", title: station.name, detail: `${station.average} km/h Ø · ${station.gust} km/h Böen · ${station.directionLabel}`, ariaLabel: `Meteo ${station.name}: Demo-Messwert ${station.average} Kilometer pro Stunde, Meteo-Seite öffnen`, station });
+    if (targetId === "grund") markers.push({ id: `${prefix}-station-${plannedMeteoStation.id}`, kind: "meteo", yaw: yaw + 2.2, pitch: pitch + 4, eyebrow: "Messstation geplant", title: plannedMeteoStation.name, detail: "Noch keine Messwerte · Meteo öffnen", ariaLabel: `Geplante Messstation ${plannedMeteoStation.name}, Meteo-Seite öffnen`, station: plannedMeteoStation });
+  };
+  site.links.forEach((link, index) => addMarkers(link.targetId, link.yaw, link.pitch, `${site.id}-link-${index}`));
+  if (site.id === "first") {
+    const anchor = site.landmarks.find((item) => item.label.includes("Bergstation Firstbahn"));
+    if (anchor) addMarkers("first", anchor.yaw, anchor.pitch, "local-first");
+  }
+  if (site.id === "stechelberg") {
+    const anchor = site.landmarks.find((item) => item.label.includes("Schilthornbahn"));
+    if (anchor) addMarkers("stechelberg", anchor.yaw, anchor.pitch, "local-stechelberg");
+  }
+  if (site.id === "grund") {
+    const landingArea = site.areas.find((area) => area.kind === "landing");
+    if (landingArea) { const anchor = areaCentre(landingArea.vertices); addMarkers("grund", anchor.yaw, anchor.pitch, "local-grund"); }
+  }
+  return markers;
+}
+function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas }) {
+  const containerRef = useRef(null);
+  const areaOverlayRef = useRef(null);
+  useEffect(() => {
+    let viewer;
+    let areaFrame;
+    let cancelled = false;
+    const mountViewer = async () => {
+      await import("pannellum");
+      if (cancelled || !containerRef.current || !window.pannellum) return;
+      const areaHotSpots = showAreas ? site.areas.flatMap((area) => {
+        const centre = areaCentre(area.vertices);
+        return site.sceneType === "overview" ? [] : [{ pitch: centre.pitch, yaw: centre.yaw, cssClass: `pano-area-label is-${area.kind}`, createTooltipFunc: createAreaLabelHotspot, createTooltipArgs: area }];
+      }) : [];
+      const sceneHotSpots = site.links.map((link) => { const target = flightScenes.find((scene) => scene.id === link.targetId); const args = { ...link, label: target?.label || link.targetId, onSelectScene }; return { pitch: link.pitch, yaw: link.yaw, cssClass: "pano-link-hotspot", createTooltipFunc: createSceneLinkHotspot, createTooltipArgs: args, clickHandlerFunc: (_event, handlerArgs) => handlerArgs.onSelectScene(handlerArgs.targetId), clickHandlerArgs: args }; });
+      const landmarkHotSpots = site.landmarks.map((landmark) => ({ pitch: landmark.pitch, yaw: landmark.yaw, cssClass: "pano-landmark-hotspot", createTooltipFunc: createLandmarkHotspot, createTooltipArgs: landmark }));
+      const infoHotSpots = panoramaInfoMarkers(site).map((marker) => ({ pitch: marker.pitch, yaw: marker.yaw, cssClass: `pano-info-hotspot is-${marker.kind}`, createTooltipFunc: createInfoHotspot, createTooltipArgs: marker, clickHandlerFunc: (_event, handlerArgs) => { if (handlerArgs.kind === "webcam") window.open(handlerArgs.camera.viewerUrl, "_blank", "noopener,noreferrer"); else handlerArgs.onOpenMeteo(); }, clickHandlerArgs: { ...marker, onOpenMeteo } }));
+      viewer = window.pannellum.viewer(containerRef.current, { type: "cubemap", cubeMap: site.panorama.cubeMap, preview: site.panorama.preview, hotSpots: [...areaHotSpots, ...sceneHotSpots, ...landmarkHotSpots, ...infoHotSpots], autoLoad: true, yaw: site.panorama.yaw, pitch: site.panorama.pitch, hfov: site.panorama.hfov, minHfov: 45, maxHfov: 115, showFullscreenCtrl: false, compass: false, escapeHTML: true, strings: { loadButtonLabel: "Panorama laden", loadingLabel: "Panorama wird geladen …", bylineLabel: "von %s", noPanoramaError: "Panorama konnte nicht geladen werden.", fileAccessError: "Das Panorama muss über den Webserver geöffnet werden.", malformedURLError: "Ungültige Panorama-Adresse.", iOS8WebGLError: "Der Browser unterstützt die 360°-Ansicht nicht.", genericWebGLError: "Der Browser unterstützt die 360°-Ansicht nicht.", textureSizeError: "Das Panorama ist für dieses Gerät zu gross.", unknownError: "Unbekannter Fehler.", twoTouchActivate: "Mit zwei Fingern bewegen", twoTouchXActivate: "Mit zwei Fingern seitlich bewegen", twoTouchYActivate: "Mit zwei Fingern vertikal bewegen", ctrlZoomActivate: "Strg + Scrollen zum Zoomen" } });
+      if (showAreas) {
+        const overlay = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        overlay.classList.add("pano-area-overlay");
+        overlay.setAttribute("aria-hidden", "true");
+        for (const area of site.areas) {
+          const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+          polygon.dataset.areaShape = area.id;
+          polygon.classList.add(`is-${area.kind}`);
+          polygon.setAttribute("hidden", "");
+          overlay.appendChild(polygon);
+        }
+        containerRef.current.appendChild(overlay);
+        areaOverlayRef.current = overlay;
+      }
+      const updateAreas = () => {
+        if (cancelled || !showAreas || !containerRef.current || !areaOverlayRef.current) return;
+        const containerBounds = containerRef.current.getBoundingClientRect();
+        for (const area of site.areas) {
+          const shape = areaOverlayRef.current.querySelector(`[data-area-shape="${area.id}"]`);
+          const points = projectSphericalPolygon(area.vertices, viewer, containerBounds.width, containerBounds.height);
+          const xValues = points.map((point) => point.x);
+          const yValues = points.map((point) => point.y);
+          const hasVisibleSurface = points.length >= 3 && Math.max(...xValues) - Math.min(...xValues) >= 5 && Math.max(...yValues) - Math.min(...yValues) >= 5;
+          shape?.toggleAttribute("hidden", !hasVisibleSurface);
+          if (hasVisibleSurface) shape?.setAttribute("points", points.map((point) => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(" "));
+        }
+        areaFrame = requestAnimationFrame(updateAreas);
+      };
+      if (showAreas) areaFrame = requestAnimationFrame(updateAreas);
+    };
+    mountViewer();
+    return () => { cancelled = true; if (areaFrame) cancelAnimationFrame(areaFrame); viewer?.destroy(); areaOverlayRef.current = null; };
+  }, [site, reloadKey, onSelectScene, onOpenMeteo, showAreas]);
+  return <div className="panorama-layer"><div className="panorama-canvas" ref={containerRef} role="region" aria-label={`Interaktives 360°-Panorama: ${site.label}`} /></div>;
+}
+function FlightExplorer({ initialGroup = "overview", initialSceneId = "" }) {
+  const firstScene = flightScenes.find((scene) => scene.id === initialSceneId) || flightScenes.find((scene) => scene.sceneType === initialGroup) || flightScenes[0];
+  const [activeGroup, setActiveGroup] = useState(firstScene.sceneType);
+  const [activeId, setActiveId] = useState(firstScene.id);
+  const [reloadKey, setReloadKey] = useState(0);
+  const [showAreas, setShowAreas] = useState(CONFIG.showPanoramaAreas);
+  const stageRef = useRef(null);
+  const visibleScenes = flightScenes.filter((scene) => scene.sceneType === activeGroup);
+  const activeSite = flightScenes.find((scene) => scene.id === activeId) || visibleScenes[0];
+  const selectGroup = (groupId) => { setActiveGroup(groupId); setActiveId(flightScenes.find((scene) => scene.sceneType === groupId)?.id); setReloadKey(0); };
+  const selectScene = useCallback((sceneId) => { const scene = flightScenes.find((item) => item.id === sceneId); if (!scene) return; setActiveGroup(scene.sceneType); setActiveId(scene.id); setReloadKey(0); }, []);
+  const openMeteo = useCallback(() => { history.pushState({}, "", appPath(routes.meteo.path, siteBase)); dispatchEvent(new PopStateEvent("popstate")); }, []);
+  return <section className="shell flight-explorer" aria-labelledby="flight-explorer-title">
+    <header className="flight-explorer-heading"><div><p className="eyebrow">Interaktiver Gebiets-Explorer</p><h2 id="flight-explorer-title">13 Standorte in einer Ansicht</h2></div><p>Zur Orientierung vor dem Flug. Prüfe die aktuelle Situation und lokale Hinweise immer vor Ort.</p></header>
+    <div className="flight-explorer-groups" role="tablist" aria-label="Panorama-Kategorie">{flightSceneGroups.map((group) => <button key={group.id} type="button" role="tab" aria-selected={group.id === activeGroup} onClick={() => selectGroup(group.id)}><span>{group.count}</span>{group.label}</button>)}</div>
+    <div className="flight-explorer-layout">
+      <nav className="flight-scene-list" aria-label="Panorama auswählen">{visibleScenes.map((scene) => <button key={scene.id} type="button" className={scene.id === activeSite.id ? "is-active" : ""} aria-current={scene.id === activeSite.id ? "true" : undefined} onClick={() => selectScene(scene.id)}><img src={scene.panorama.preview} alt="" /><span><small>{scene.area}</small><strong>{scene.label}</strong></span></button>)}</nav>
+      <div className="tour-viewer"><div className="tour-toolbar"><div><p className="eyebrow">360°-Panorama · lokal</p><h2>{activeSite.label}</h2></div><div className="tour-actions">{activeSite.areas.length > 0 && <button type="button" aria-pressed={showAreas} onClick={() => setShowAreas((visible) => !visible)}>{showAreas ? "Flächen aus" : "Flächen ein"}</button>}<button type="button" onClick={() => setReloadKey((value) => value + 1)}>Neu laden</button><button type="button" onClick={() => stageRef.current?.requestFullscreen?.()}>Vollbild</button></div></div>{activeSite.sceneType !== "overview" && <SiteFacts site={activeSite} />}<div className="tour-stage" id="site-panorama" ref={stageRef}><LocalPanorama key={`${activeSite.id}-${reloadKey}`} site={activeSite} reloadKey={reloadKey} onSelectScene={selectScene} onOpenMeteo={openMeteo} showAreas={showAreas} /></div><div className="tour-footer"><p>Ziehen zum Drehen · Pfeile wechseln das Panorama · CAM und W öffnen Livebild oder Meteo</p>{showAreas && activeSite.areas.length > 0 ? <span>Grün: Start/Landung · Gelb: Falten · Rot: Hindernis</span> : <span>Nur gewählte Szene geladen</span>}</div></div>
+    </div>
+  </section>;
+}
+function StartSitesPage() { return <><SectionIntro eyebrow="Fluggebiet · 360°" title="Startplätze" body="First, Waldspitz, Männlichen und Mürren im gemeinsamen Gebiets-Explorer." /><FlightExplorer initialGroup="start" /><FlightPageNav /></>; }
+function LandingSitesPage() { return <><SectionIntro eyebrow="Fluggebiet · 360°" title="Landeplätze" body="Grund, Bodmi, Stechelberg und Lauterbrunnen im gemeinsamen Gebiets-Explorer." /><FlightExplorer initialGroup="landing" /><FlightPageNav /></>; }
 function FlightPageNav() { return <nav className="shell flight-subnav" aria-label="Fluggebiet Seiten"><AppLink to={routes.flightArea.path}>Übersicht</AppLink><AppLink to={routes.startSites.path}>Startplätze</AppLink><AppLink to={routes.landingSites.path}>Landeplätze</AppLink><AppLink to={routes.safety.path}>Sicherheit</AppLink></nav>; }
 function SafetyPage() { return <div className="safety-page"><SectionIntro eyebrow="Fluggebiet" title="Sicherheit und lokale Regeln" body="Diese Übersicht erleichtert die Vorbereitung. Verbindlich bleiben die aktuellen offiziellen Luftfahrtinformationen, DABS und Hinweise vor Ort." /><section className="shell safety-priority"><div><span>!</span><div><strong>DABS vor jedem Flug prüfen</strong><p>Aktivierungen und temporäre Lufträume können sich kurzfristig ändern.</p></div></div><ExternalLink className="button primary" href="https://www.skybriefing.com/de/">Offizielles DABS öffnen</ExternalLink></section><section className="shell shv-reference"><div><p className="eyebrow">Offizielle Fluggebietsinformation · 06/2024</p><h2>SHV Infotafel Grindelwald</h2><p>Übersichtskarte mit Startplatz First, Landeplätzen Grund und Bodmi, Sonderregelungen, Wildschutzgebieten, Kabeln und angrenzenden Lufträumen.</p></div><div className="button-row"><ExternalLink className="button secondary" href={shvGrindelwaldDocument}>PDF öffnen</ExternalLink><ExternalLink className="button secondary" href={shvAirspaceUrl}>SHV Airspace Map</ExternalLink></div></section><section className="shell safety-layout"><aside><p className="eyebrow">Bereiche</p>{safetyAreas.map((area) => <a key={area.id} href={`#${area.id}`}>{area.title}</a>)}</aside><div className="safety-content">{safetyAreas.map((area) => <article id={area.id} key={area.id}><header><p className="eyebrow">{area.detail}</p><h2>{area.title}</h2><p>{area.body}</p></header><div className={`safety-images${area.images.length > 1 ? " is-multiple" : ""}`}>{area.images.map((image, index) => <a key={image} href={image} target="_blank" rel="noreferrer"><img src={image} alt={`${area.title} – Regelkarte ${index + 1}`} loading="lazy" /><span>Vergrössern</span></a>)}</div></article>)}</div></section><FlightPageNav /></div>; }
-function GrundPage() { return <LandingSitesPage />; }
+function GrundPage() { return <><SectionIntro eyebrow="Fluggebiet · 360°" title="Landeplatz Grund" body="Interaktive Orientierung am Landeplatz Grund mit lokalen Platzinformationen." /><FlightExplorer initialGroup="landing" initialSceneId="grund" /><FlightPageNav /></>; }
 function PhotosPage() { return <><SectionIntro eyebrow="Fotos" title="Fotoreports Jungfrau-Tächi Grindelwald" body={`${photoReports.length} vollständige Galerien aus dem Clubarchiv.`} image={photoReports[0]?.image || images.hero} position="center 42%" /><section className="shell cards photo-grid">{photoReports.map((item) => <Card key={item.slug} item={item} />)}</section></>; }
 function PhotoReportPage({ report }) { if (!report) return <NotFound />; return <article className="photo-detail"><DetailIntro backTo={routes.photos.path} backLabel="Alle Fotoreports" eyebrow={`Fotoreport · ${report.dateLabel}`} title={report.title} body={report.detail} image={report.image} /><GalleryViewer images={report.gallery} title={report.title} className="shell" /></article>; }
 function ContactPage() { return <><SectionIntro eyebrow="Club" title="Vorstand und Kontakt" body="Die Ressorts der Jungfrau-Tächi. Direkte Kontaktangaben und Zuständigkeiten auf einen Blick." image={images.clubHeader} position="center 44%" /><section className="shell contact-actions"><AppLink to={routes.membership.path}><span>Mitglied werden</span><strong>Anmeldung öffnen →</strong></AppLink><AppLink to={routes.safety.path}><span>Fragen zum Fluggebiet</span><strong>Sicherheitsübersicht →</strong></AppLink></section><section className="shell board-section"><div className="section-heading"><p className="eyebrow">Jungfrau-Tächi</p><h2>Vorstand</h2></div><div className="board-grid">{boardMembers.map((member) => <article key={member.role}><img src={member.image} alt={`Platzhalter-Porträt für ${member.name}`} loading="lazy" /><div className="board-card-body"><p>{member.role}</p><h3>{member.name}</h3><address><span>{member.address}</span><a href={`tel:${member.phone.replaceAll(" ", "")}`}>{member.phone}</a><a href={`mailto:${member.email}`}>{member.email}</a>{member.secondaryEmail && <a href={`mailto:${member.secondaryEmail}`}>{member.secondaryEmail}</a>}</address></div></article>)}</div></section></>; }
