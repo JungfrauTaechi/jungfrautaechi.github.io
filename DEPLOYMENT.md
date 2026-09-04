@@ -27,8 +27,10 @@ After local review, promote the exact tested commit by fast-forwarding `main`:
 ```powershell
 git switch main
 git merge --ff-only dev
-git push origin main
+npm run publish:pages
 ```
+
+`publish:pages` pushes `main` and waits for GitHub's normal `push` event. If GitHub does not enqueue that event—for example, when a desktop integration uses an event-suppressed credential—the command dispatches the same workflow explicitly. It requires an authenticated GitHub CLI (`gh`) session.
 
 The production workflow runs `npm ci`, the application tests, Sites worker tests, Pages tests, and `npm run build:pages`. It passes the official `actions/configure-pages` base path to Vite, uploads `dist/client`, and creates a `404.html` copy of the SPA entry point for direct links. The normal `npm run build` path remains available for the local/Sites-compatible output.
 
@@ -39,7 +41,7 @@ Prefer reverting an unwanted production commit so the public history remains cle
 ```powershell
 git switch main
 git revert <unwanted-commit-sha>
-git push origin main
+npm run publish:pages
 ```
 
 Apply the same revert to `dev` if the change should also disappear from ongoing work.

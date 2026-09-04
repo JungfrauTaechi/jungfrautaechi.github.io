@@ -5,6 +5,7 @@ import { appPath, assetUrl, routeFromPathname } from "../src/site-paths.js";
 
 const workflow = await readFile(new URL("../.github/workflows/pages.yml", import.meta.url), "utf8");
 const packageJson = await readFile(new URL("../package.json", import.meta.url), "utf8");
+const publishScript = await readFile(new URL("../scripts/publish-pages.mjs", import.meta.url), "utf8");
 const viteConfig = await readFile(new URL("../vite.config.mjs", import.meta.url), "utf8");
 const gitignore = await readFile(new URL("../.gitignore", import.meta.url), "utf8");
 
@@ -47,4 +48,11 @@ test("Pages build script creates the SPA 404 fallback", async () => {
     readFile(new URL("../dist/client/404.html", import.meta.url), "utf8"),
   ]);
   assert.equal(fallback, index);
+});
+
+test("Pages publication falls back to an explicit dispatch when a push event is missing", () => {
+  assert.match(packageJson, /"publish:pages": "node scripts\/publish-pages\.mjs"/);
+  assert.match(publishScript, /"push", "origin", "main"/);
+  assert.match(publishScript, /"run", "list"/);
+  assert.match(publishScript, /"workflow", "run", "pages\.yml", "--ref", "main"/);
 });

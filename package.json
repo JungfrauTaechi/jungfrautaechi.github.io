@@ -13,6 +13,7 @@
     "content:build": "node scripts/compile-content.mjs",
     "build": "npm run content:build && vite build && node scripts/prepare-sites-build.mjs",
     "build:pages": "npm run content:build && vite build && node scripts/create-pages-404.mjs",
+    "publish:pages": "node scripts/publish-pages.mjs",
     "preview": "vite preview",
     "test:sites": "node --test tests/sites-worker.test.mjs",
     "test": "node --test tests/app.test.mjs",
