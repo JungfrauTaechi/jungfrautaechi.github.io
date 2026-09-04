@@ -74,14 +74,16 @@ export const windStationCatalog = [
   { id: "windline-4109", name: "Niederhorn", altitude: 1960, provider: "windline.ch", latitude: 46.711389, longitude: 7.776667, distanceKm: 22.4 },
 ];
 
-export const plannedMeteoStation = {
-  id: "planned-grindelwald-grund",
+export const grundMeteoStation = {
+  id: "fanet-BA-4",
   name: "Grindelwald Grund",
   detail: "Landeplatz",
   altitude: 950,
   latitude: 46.6202,
   longitude: 8.0294,
-  statusLabel: "Geplant",
+  provider: "burnair",
+  apiUrl: "https://api.burnair.cloud/v2/service/dynamic?type=wind&ids=fanet-BA-4",
+  mapUrl: "https://map.burnair.cloud/?layer=mw&id=fanet-BA-4",
 };
 
 const compassLabel = (degrees) => ["N", "NE", "E", "SE", "S", "SW", "W", "NW"][Math.round(degrees / 45) % 8];

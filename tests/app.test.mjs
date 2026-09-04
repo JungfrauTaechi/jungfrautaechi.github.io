@@ -1,6 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { isBurnairReadingStale, parseBurnairWindPayload } from "../src/burnair-wind.js";
+import { isWindsMobiReadingStale, loadWindsMobiLatest, parseWindsMobiStations } from "../src/winds-mobi.js";
 const app = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
 const data = await readFile(new URL("../src/data.js", import.meta.url), "utf8");
 const panoramaLinks = await readFile(new URL("../src/panorama-links.js", import.meta.url), "utf8");
@@ -30,17 +32,30 @@ test("every page family uses a clear branded opening", () => { for (const expres
 test("board cards retain public contact details and replaceable portraits", () => { for (const value of ["dres.egger@gmail.com", "+41 79 722 86 65", "peter-zurbuchen@bluewin.ch", "jungfrautaechi@gmail.com", "info@pascalimhof.com"]) assert.ok(data.includes(value), `missing board contact: ${value}`); assert.match(data, /board-placeholder\.png/); assert.match(app, /mailto:/); assert.match(app, /tel:/); assert.doesNotMatch(app, /Persönliche Kontaktdaten werden vor der Veröffentlichung/); });
 test("inventory accepts both canonical host spellings for internal links", () => { assert.match(inventoryScript, /replace\(\/\^www\\\.\/, ""\)/); assert.match(inventoryScript, /filter\(isClubUrl\)/); });
 test("inventory distinguishes unavailable retained links from verified empty link sets", () => { assert.match(inventoryScript, /internalLinksStatus/); assert.match(inventoryScript, /availability: "unavailable"/); assert.match(inventoryScript, /page\.internalLinks = null/); assert.match(inventoryScript, /"unavailable"/); assert.match(inventoryScript, /availability: "complete"/); });
-test("public UI has no migration provenance or original-content links", () => { for (const phrase of ["Quelle:", "Zum Original", "Challenge im Original", "sourceUrl}>Zum Original"]) assert.doesNotMatch(app, new RegExp(phrase)); assert.doesNotMatch(data, /newsfeed\/(?:eigertour9a|fa2_26|hf26_1_5|challenge50)/); });
+test("public UI has no migration provenance or original-content links", () => { for (const phrase of ["Zum Original", "Challenge im Original", "sourceUrl}>Zum Original"]) assert.doesNotMatch(app, new RegExp(phrase)); assert.doesNotMatch(data, /newsfeed\/(?:eigertour9a|fa2_26|hf26_1_5|challenge50)/); });
 test("client navigation moves focus to the new page heading", () => { assert.match(app, /<h1 tabIndex="-1">/); assert.match(app, /document\.querySelector\("#inhalt h1"\)\?\.focus\(\)/); });
-test("meteo prototype exposes the reviewed station hierarchy, Grund placeholder, live webcams, mock history and safety labels", () => {
+test("meteo prototype exposes the reviewed station hierarchy, live burnair and winds.mobi feeds, webcams and safety labels", () => {
   for (const station of ["Grindelwald First", "Schmidigen-Bidmeren", "Itramen", "Männlichen", "Russisprung", "Interlaken", "Stechelberg", "Meiringen"]) assert.match(data, new RegExp(station));
   const catalog = data.match(/export const windStationCatalog = \[([\s\S]*?)\n\];/)?.[1] || "";
   assert.equal((catalog.match(/\{ id:/g) || []).length, 29);
-  for (const planned of ["planned-grindelwald-grund", "Grindelwald Grund", "Landeplatz", "Geplant"]) assert.ok(data.includes(planned));
+  for (const grund of ["fanet-BA-4", "Grindelwald Grund", "Landeplatz", "api.burnair.cloud", "map.burnair.cloud"]) assert.ok(data.includes(grund));
   for (const camera of ["Grindelwald-First", "Eigergletscher", "Männlichen", "Kleine Scheidegg", "Grindelwald Terminal"]) assert.ok(data.includes(camera));
   assert.equal((data.match(/roundshot\.com\/cams\/\d+\/medium/g) || []).length, 5);
   assert.equal((data.match(/focus: 0\./g) || []).length, 5);
-  assert.match(app, /function PlannedStationCard/);
+  assert.match(app, /function BurnairStationCard/);
+  assert.match(app, /parseBurnairWindPayload/);
+  assert.match(app, /loadWindsMobiLatest/);
+  assert.match(app, /readWindsMobiCache/);
+  assert.match(app, /withWindsMobiReadings/);
+  assert.match(app, /Browser-Cache 5 Min/);
+  assert.match(app, /29 winds\.mobi · 1 burnair/);
+  assert.match(app, /Quelle: burnair/);
+  assert.match(app, /burnair Map öffnen/);
+  assert.doesNotMatch(app, /setRequestKey|burnair-station-actions|>Aktualisieren</);
+  assert.match(app, /showStationDetails/);
+  assert.match(app, /scrollIntoView/);
+  assert.match(app, /prefers-reduced-motion: reduce/);
+  assert.match(app, /onReadingsChange=\{setGrundReadings\}/);
   assert.match(app, /function WebcamCard/);
   assert.match(app, /method: "HEAD"/);
   assert.match(app, /Last-Modified/);
@@ -59,20 +74,18 @@ test("meteo prototype exposes the reviewed station hierarchy, Grund placeholder,
   assert.ok(app.indexOf('className="webcam-panel"') < app.indexOf('className="dabs-panel"'), "DABS must follow the full-width webcam panel");
   assert.match(styles, /\.meteo-secondary-grid\{display:grid;grid-template-columns:minmax\(0,1fr\)/);
   assert.doesNotMatch(app, />Live-Panorama</);
-  assert.match(app, /Noch keine Messwerte/);
-  assert.match(app, /5 aktiv · 1 geplant/);
+  assert.doesNotMatch(app, /5 Demo · 1 live|Mockdaten aktualisiert/);
   assert.match(app, /Bilder neu laden/);
   assert.match(app, /© Jungfraubahnen · Roundshot/);
-  assert.match(app, /primaryStations = meteoStations\.slice\(0, 5\)/);
-  assert.match(app, /regionalStations = meteoStations\.slice\(5\)/);
+  assert.match(app, /primaryStations = liveMeteoStations\.slice\(0, 5\)/);
+  assert.match(app, /regionalStations = liveMeteoStations\.slice\(5\)/);
   assert.match(app, /24 weitere Stationen anzeigen|regionalStations\.length/);
   assert.match(app, /aria-expanded=\{showRegionalStations\}/);
   assert.match(app, /aria-controls="regional-wind-stations"/);
-  assert.match(app, /Letzte Messungen/);
-  assert.match(app, /Mockdaten aktualisiert/);
+  assert.match(app, /Aktueller Messwert/);
   assert.match(app, /nicht für Flugentscheidungen geeignet/);
   assert.match(app, /Offizielles DABS öffnen/);
-  assert.match(styles, /\.planned-station-card/);
+  assert.match(styles, /\.burnair-station-card/);
   assert.match(styles, /\.wind-history\{display:grid;grid-template-columns:repeat\(4/);
   assert.match(styles, /\.wind-grid\.is-regional/);
   assert.match(styles, /\.webcam-panorama-viewport\{[^}]*aspect-ratio:16\/7;[^}]*overflow-x:auto/);
@@ -81,6 +94,46 @@ test("meteo prototype exposes the reviewed station hierarchy, Grund placeholder,
   assert.match(styles, /\.webcam-panorama-viewport\{[^}]*width:100%;[^}]*max-width:100%/);
   assert.match(styles, /\.webcam-panorama-viewport img\{[^}]*width:auto;[^}]*max-width:none;[^}]*height:100%/);
   assert.match(styles, /\.webcam-panorama-viewport\{aspect-ratio:16\/9\}/);
+});
+test("burnair parser follows the response dictionary and preserves zero wind values", () => {
+  const payload = {
+    dict: ["wMax", "epoch", "temp", "wAvg", "wDir"],
+    data: { "fanet-ba-4": [[3, 1_788_500_000, null, 0, 253], [5, 1_788_500_600, 12.4, 2, 270]] },
+  };
+  const readings = parseBurnairWindPayload(payload, "fanet-BA-4");
+  assert.equal(readings.length, 2);
+  assert.deepEqual(readings[0], { epoch: 1_788_500_600, direction: 270, directionLabel: "W", average: 2, gust: 5, temperature: 12.4 });
+  assert.equal(readings[1].average, 0);
+  assert.equal(isBurnairReadingStale(readings[0], readings[0].epoch * 1000 + 9 * 60 * 1000), false);
+  assert.equal(isBurnairReadingStale(readings[0], readings[0].epoch * 1000 + 11 * 60 * 1000), true);
+});
+test("winds.mobi parser normalizes the current station batch and preserves zero wind values", () => {
+  const readings = parseWindsMobiStations([{ _id: "windline-4104", "pv-name": "windline.ch", last: { _id: 1_788_500_000, "w-dir": 234, "w-avg": 0, "w-max": 9, temp: 19.8 } }]);
+  assert.deepEqual(readings, [{ id: "windline-4104", epoch: 1_788_500_000, average: 0, gust: 9, direction: 234, directionLabel: "SW", temperature: 19.8, provider: "windline.ch" }]);
+  assert.equal(isWindsMobiReadingStale(readings[0], readings[0].epoch * 1000 + 29 * 60 * 1000), false);
+  assert.equal(isWindsMobiReadingStale(readings[0], readings[0].epoch * 1000 + 31 * 60 * 1000), true);
+  assert.throws(() => parseWindsMobiStations({}), /Ungültige winds\.mobi-Antwort/);
+});
+test("winds.mobi latest batch is kept in the five-minute browser cache", async () => {
+  const originalWindow = globalThis.window;
+  const values = new Map();
+  globalThis.window = { localStorage: { getItem: (key) => values.get(key) || null, setItem: (key, value) => values.set(key, value) } };
+  let calls = 0;
+  const stationIds = ["windline-4104"];
+  const fetchStub = async (url) => {
+    calls += 1;
+    assert.equal(url.searchParams.getAll("ids")[0], "windline-4104");
+    return { ok: true, json: async () => [{ _id: "windline-4104", "pv-name": "windline.ch", last: { _id: 1_788_500_000, "w-dir": 234, "w-avg": 7, "w-max": 9 } }] };
+  };
+  try {
+    const first = await loadWindsMobiLatest(stationIds, fetchStub);
+    const second = await loadWindsMobiLatest(stationIds, fetchStub);
+    assert.equal(first.fromCache, false);
+    assert.equal(second.fromCache, true);
+    assert.equal(calls, 1);
+  } finally {
+    globalThis.window = originalWindow;
+  }
 });
 test("inventory rejects missing canonicals and clears legacy undefined values", () => { assert.match(inventoryScript, /if \(!value\) return null/); assert.match(inventoryScript, /page\.canonical\?\.endsWith\("\/undefined"\)/); assert.match(inventoryScript, /page\.canonical = null/); assert.match(inventoryScript, /canonicalStatus/); });
 test("complete news and photo archives use reusable internal detail routes", () => { assert.match(app, /function NewsArticlePage/); assert.match(app, /function PhotoReportPage/); assert.match(app, /path\.startsWith\("\/news\/"\)/); assert.match(app, /path\.startsWith\("\/fotos\/"\)/); assert.match(app, /dangerouslySetInnerHTML/); assert.match(app, /photo-thumbnails/); assert.match(importer, /newsPages/); assert.match(importer, /\.photogalleryTable/); assert.match(compiler, /generatedNews/); });

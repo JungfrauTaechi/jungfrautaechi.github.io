@@ -8,6 +8,10 @@ Thermalbase owns provider access and normalization. `winds.mobi` is the first pr
 
 The public website never calls `winds.mobi` or Supabase directly.
 
+## Unpublished browser prototype boundary
+
+Until burnair offers a supported data interface, the unpublished prototype may request station `fanet-BA-4` directly from burnair in the visitor's browser. It may also request the fixed Jungfrau station allowlist directly from winds.mobi and cache the normalized latest batch locally for five minutes. These exceptions exist only to validate the card experience: they perform no scheduled polling or server-side persistence, label each provider visibly and never replace a supported Thermalbase provider adapter. Remove both direct browser integrations before publication unless the relevant provider has given written permission.
+
 ## Webcam boundary
 
 Webcams remain a frontend-only integration and do not pass through Thermalbase. The club site loads five selected public panorama images directly from the Jungfraubahnen/Roundshot image endpoints: Grindelwald-First, Eigergletscher, Männlichen, Kleine Scheidegg and Grindelwald Terminal.
