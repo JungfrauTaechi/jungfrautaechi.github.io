@@ -84,7 +84,7 @@ Für einen Fotoreport lautet derselbe Pfad entsprechend `/media/photos/<slug>/<d
 - `kind`: Inhaltstyp; in der Vorlage unverändert lassen.
 - `slug`: dauerhafte URL; muss dem Dateinamen und Bilderordner entsprechen.
 - `title`: sichtbarer Seitentitel.
-- `date`: Datum im Format `YYYY-MM-DD`.
+- `date`: Datum im Format `'YYYY-MM-DD'` (mit einfachen Anführungszeichen).
 - `category`: Rubrik eines Newsbeitrags.
 - `summary`: kurzer Anrisstext einer News für die Übersicht.
 - `detail`: kurze Einordnung eines Fotoreports.
@@ -97,7 +97,7 @@ Unterhalb des zweiten `---` steht bei News der vollständige Beitrag. Übliche M
 
 - Branch `main` ist ausgewählt.
 - Dateiname, `slug` und Bilderordner verwenden exakt denselben Slug.
-- `date` hat das Format `YYYY-MM-DD`.
+- `date` hat das Format `'YYYY-MM-DD'` inklusive einfacher Anführungszeichen.
 - Alle Bildpfade beginnen mit `/media/news/` oder `/media/photos/` und enthalten die richtige Dateiendung.
 - `coverImage` steht auch in `gallery`, normalerweise an erster Stelle.
 - Jedes Bild hat einen beschreibenden `alt`-Text; ein Kameradateiname wie `IMG_1234` ist kein Alt-Text.

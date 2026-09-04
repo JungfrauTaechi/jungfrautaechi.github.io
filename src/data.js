@@ -1,14 +1,12 @@
 import { assetUrl } from "./site-paths.js";
+import { formatContentDate } from "./content-date.js";
 import { generatedNews, generatedPhotoReports } from "./generated-content.js";
 import { panoramaAreas, panoramaLandmarks, panoramaLinks } from "./panorama-links.js";
 
 const siteBase = import.meta.env.BASE_URL;
 const localAsset = (path) => assetUrl(path, siteBase);
 const contentAsset = (path) => !path ? "" : /^https?:\/\//i.test(path) ? path : localAsset(path);
-const formatDate = (date) => {
-  if (!date || date === "1970-01-01") return "Archiv";
-  return new Intl.DateTimeFormat("de-CH", { day: "2-digit", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00`));
-};
+const formatDate = formatContentDate;
 
 export const CONFIG = { showAnniversary: true, showPanoramaAreas: true };
 export const source = (url) => `https://www.jungfrau-taechi.ch${url}`;

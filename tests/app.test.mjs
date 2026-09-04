@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { isBurnairReadingStale, parseBurnairWindPayload } from "../src/burnair-wind.js";
 import { isWindsMobiReadingStale, loadWindsMobiLatest, parseWindsMobiStations } from "../src/winds-mobi.js";
+import { formatContentDate, normalizeContentDate } from "../src/content-date.js";
 const app = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
 const data = await readFile(new URL("../src/data.js", import.meta.url), "utf8");
 const panoramaLinks = await readFile(new URL("../src/panorama-links.js", import.meta.url), "utf8");
@@ -13,6 +14,12 @@ const importer = await readFile(new URL("../scripts/import-current-content.mjs",
 const compiler = await readFile(new URL("../scripts/compile-content.mjs", import.meta.url), "utf8");
 const adminGuide = await readFile(new URL("../docs/content-admin-guide.md", import.meta.url), "utf8");
 const multiImageArticle = await readFile(new URL("../content/news/fa2-26.md", import.meta.url), "utf8");
+test("content dates are normalized and invalid values cannot crash the page", () => {
+  assert.equal(normalizeContentDate(new Date("2026-09-04T00:00:00Z")), "2026-09-04");
+  assert.equal(normalizeContentDate("2026-09-04T00:00:00.000Z"), "2026-09-04");
+  assert.equal(formatContentDate("not-a-date"), "Archiv");
+  assert.equal(formatContentDate("2026-09-04T00:00:00.000Z"), "04. September 2026");
+});
 test("all required client routes are declared", () => { for (const route of ["/meteo", "/news", "/club", "/chronik", "/mitglied", "/fluggebiet", "/fluggebiet/startplaetze", "/fluggebiet/landeplaetze", "/fluggebiet/sicherheit", "/fluggebiet/grund", "/fotos", "/kontakt"]) assert.match(app, new RegExp(`"${route}"`)); });
 test("anniversary UI is controlled by one named config flag", () => { assert.match(data, /showAnniversary: true/); assert.match(app, /if \(!CONFIG\.showAnniversary\) return null/); assert.match(app, /CONFIG\.showAnniversary &&/); assert.doesNotMatch(app, /toplogo|toplogo-trimmed|<img src=\{images\.logo\}/); const wordmark = app.match(/className="wordmark">([\s\S]*?)<\/AppLink>/)?.[1] || ""; assert.match(wordmark, /Jungfrau-Tächi/); assert.match(wordmark, /GRINDELWALD/); assert.doesNotMatch(wordmark, /(?:\b50\b|1976–2026|<img)/); });
 test("shared flight-site viewer is local and preserves all panorama interactions", () => { for (const scene of ["first", "waldspitz", "maennlichen", "muerren", "grund", "bodmi", "stechelberg", "lauterbrunnen"]) assert.match(data, new RegExp(`panorama\\(\"${scene}\"`)); for (const label of ["Grindelwald, First", "Grindelwald, Grund", "Grindelwald, Bodmi", "Stechelberg, Schilthornbahn", "Lauterbrunnen"]) assert.match(data, new RegExp(label)); assert.match(data, /assets\/panoramas/); assert.doesNotMatch(data, /tourUrl:.*jungfrau-taechi\.ch/); assert.match(app, /function LocalPanorama/); assert.match(app, /window\.pannellum\.viewer/); assert.match(app, /type: "cubemap"/); assert.match(app, /role="tablist"/); assert.match(app, /aria-selected=/); assert.match(app, /requestFullscreen/); assert.match(app, /Neu laden/); assert.doesNotMatch(app, /<iframe/); });

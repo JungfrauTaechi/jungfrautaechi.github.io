@@ -6,6 +6,10 @@ import sanitizeHtml from "sanitize-html";
 
 const root = path.resolve(".");
 const output = path.join(root, "src/generated-content.js");
+const normalizeDate = (value) => {
+  if (value instanceof Date) return Number.isNaN(value.valueOf()) ? "" : value.toISOString().slice(0, 10);
+  return /^(\d{4}-\d{2}-\d{2})(?:T.*)?$/.exec(String(value || ""))?.[1] || "";
+};
 const cleanHtml = (markdown) => sanitizeHtml(marked.parse(markdown || ""), {
   allowedTags: ["p", "br", "strong", "em", "b", "i", "h2", "h3", "h4", "ul", "ol", "li", "blockquote", "a", "hr"],
   allowedAttributes: { a: ["href", "title"] },
@@ -17,7 +21,7 @@ const readCollection = async (directory) => {
   const files = (await readdir(directory)).filter((file) => file.endsWith(".md")).sort();
   return Promise.all(files.map(async (file) => {
     const parsed = matter(await readFile(path.join(directory, file), "utf8"));
-    return { ...parsed.data, bodyHtml: cleanHtml(parsed.content) };
+    return { ...parsed.data, date: normalizeDate(parsed.data.date), bodyHtml: cleanHtml(parsed.content) };
   }));
 };
 const newsArticles = (await readCollection(path.join(root, "content/news"))).sort((a, b) => String(b.date).localeCompare(String(a.date)) || a.title.localeCompare(b.title, "de"));

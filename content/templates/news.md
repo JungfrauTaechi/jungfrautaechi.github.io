@@ -2,7 +2,7 @@
 kind: news
 slug: mein-beitrag
 title: Mein Beitrag
-date: 2026-09-01
+date: '2026-09-01'
 category: Clubleben
 summary: Ein kurzer Satz für die Übersicht.
 coverImage: /media/news/mein-beitrag/titelbild.jpg
