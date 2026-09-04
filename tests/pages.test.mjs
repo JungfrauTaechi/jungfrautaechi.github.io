@@ -21,8 +21,8 @@ test("Pages workflow uses the official Actions deployment contract", () => {
   for (const permission of ["contents: read", "pages: write", "id-token: write"]) assert.ok(workflow.includes(permission));
   assert.match(workflow, /SITE_BASE: \$\{\{ steps\.pages\.outputs\.base_path \}\}/);
   assert.match(workflow, /path: dist\/client/);
-  assert.match(workflow, /workflow_dispatch:/);
-  assert.match(workflow, /branches: \[main\]/);
+  assert.match(workflow, /workflow_dispatch: \{\}/);
+  assert.match(workflow, /branches:\s+\- main/);
   assert.match(workflow, /npm ci/);
   assert.match(workflow, /npm run build/);
   assert.match(workflow, /npm run build:pages/);
