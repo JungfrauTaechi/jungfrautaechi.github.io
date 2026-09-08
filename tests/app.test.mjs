@@ -5,7 +5,7 @@ import { isBurnairReadingStale, parseBurnairWindPayload } from "../src/burnair-w
 import { isWindsMobiReadingStale, loadWindsMobiLatest, parseWindsMobiStations } from "../src/winds-mobi.js";
 import { formatContentDate, normalizeContentDate } from "../src/content-date.js";
 const app = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
-const data = await readFile(new URL("../src/data.js", import.meta.url), "utf8");
+const data = (await readFile(new URL("../src/data.js", import.meta.url), "utf8")).replace(/\r\n/g, "\n");
 const panoramaLinks = await readFile(new URL("../src/panorama-links.js", import.meta.url), "utf8");
 const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const styles = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
@@ -47,8 +47,8 @@ test("meteo prototype exposes the reviewed station hierarchy, live burnair and w
   assert.equal((catalog.match(/\{ id:/g) || []).length, 29);
   for (const grund of ["fanet-BA-4", "Grindelwald Grund", "Landeplatz", "api.burnair.cloud", "map.burnair.cloud"]) assert.ok(data.includes(grund));
   for (const camera of ["Grindelwald-First", "Eigergletscher", "Männlichen", "Kleine Scheidegg", "Grindelwald Terminal"]) assert.ok(data.includes(camera));
-  assert.equal((data.match(/roundshot\.com\/cams\/\d+\/medium/g) || []).length, 5);
-  assert.equal((data.match(/focus: 0\./g) || []).length, 5);
+  assert.equal((data.match(/roundshot\.com\/cams\/\d+\/medium/g) || []).length, 7);
+  assert.equal((data.match(/focus: 0\./g) || []).length, 8);
   assert.match(app, /function BurnairStationCard/);
   assert.match(app, /parseBurnairWindPayload/);
   assert.match(app, /loadWindsMobiLatest/);
