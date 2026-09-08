@@ -10,7 +10,7 @@ function ForecastChart({ src, title }) {
   const [failed, setFailed] = useState(false);
   return <figure className="forecast-chart">
     <div className="forecast-chart-heading"><h3>{title}</h3><a href={src.includes("mos_") ? `https://profiwetter.ch/fetch_svg.php?nr=${src.split("mos_")[1].split(".svg")[0]}` : src} target="_blank" rel="noreferrer">Grafik vergrössern ↗</a></div>
-    {failed ? <p role="status">Die Grafik ist momentan nicht verfügbar. Bitte später erneut laden.</p> : <div className="forecast-scroll" role="region" aria-label={title} tabIndex="0"><img src={src} alt={`${title} – Wettervorhersage von Profiwetter.ch`} loading="lazy" onError={() => setFailed(true)} /></div>}
+    {failed ? <p role="status">Die Grafik ist momentan nicht verfügbar. Bitte später erneut laden.</p> : <div className="forecast-scroll"><img src={src} alt={`${title} – Wettervorhersage von Profiwetter.ch`} loading="lazy" onError={() => setFailed(true)} /></div>}
     <figcaption>Bildquelle: <a href="https://profiwetter.ch/" target="_blank" rel="noreferrer">Profiwetter.ch</a>, Deutscher Wetterdienst</figcaption>
   </figure>;
 }
@@ -24,6 +24,6 @@ export function WeatherForecast() {
     <ForecastChart key={`foehn-${refresh}`} title="Föhndiagramm · Druckdifferenz Lugano–Zürich" src={`https://profiwetter.ch/wind_foehn_ch_de.png${suffix}`} />
     <div className="weather-selector" role="group" aria-label="Prognoseort auswählen">{locations.map((item) => <button key={item.id} type="button" aria-pressed={location.id === item.id} onClick={() => setLocation(item)}>{item.name}</button>)}</div>
     <ForecastChart key={`${location.id}-${refresh}`} title={`Wetterprognose ${location.name}`} src={`https://profiwetter.ch/mos_${location.id}.svg${suffix}`} />
-    <p className="forecast-hint">Auf kleinen Bildschirmen lassen sich die Grafiken seitlich verschieben. Ausgabezeit und Prognosezeitraum stehen in der Grafik.</p>
+    <p className="forecast-hint">Für Details die Grafik vergrössern. Ausgabezeit und Prognosezeitraum stehen in der Grafik.</p>
   </section>;
 }
