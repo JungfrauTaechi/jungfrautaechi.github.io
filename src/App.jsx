@@ -1,3 +1,4 @@
+import { WeatherForecast } from "./WeatherForecast.jsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CONFIG, boardMembers, chronology, clubPortrait, clubProgramme, clubPurposes, clubStories, flightFacts, flightSceneGroups, flightScenes, grundMeteoStation, images, membershipFormUrl, meteoStations, meteoWebcams, news, photoReports, routes, safetyAreas, shvAirspaceUrl, shvGrindelwaldDocument, utilityLinks } from "./data.js";
 import { isBurnairReadingStale, parseBurnairWindPayload } from "./burnair-wind.js";
@@ -33,7 +34,7 @@ function StationCard({ station, selected, onSelect, compact = false }) {
   const hasLiveValue = Boolean(station.observedAt);
   return <button className={`wind-card status-${station.status}${selected ? " is-selected" : ""}${compact ? " is-compact" : ""}`} type="button" role="tab" aria-selected={selected} aria-controls="meteo-station-detail" onClick={onSelect}>
     <span className="wind-card-head"><span><strong>{station.name}</strong><small>{station.altitude} m · {station.distanceKm.toFixed(1)} km ab Grindelwald</small></span><span className="station-status">{liveStatus}</span></span>
-    <span className="wind-current"><span className="wind-direction" style={{ transform: `rotate(${station.direction ?? 0}deg)` }} aria-label={station.direction === null ? "Windrichtung nicht verfügbar" : `Wind aus ${station.directionLabel}`}>↑</span><span><strong>{readingValue(station.average)}</strong><small>km/h Ø</small></span><span><strong>{readingValue(station.gust)}</strong><small>Böen</small></span><span><strong>{station.directionLabel}</strong><small>{station.direction === null ? "–" : `${Math.round(station.direction)}°`}</small></span></span>
+    <span className="wind-current"><span className="wind-direction" style={{ transform: `rotate(${(station.direction ?? 0) + 180}deg)` }} aria-label={station.direction === null ? "Windrichtung nicht verfügbar" : `Wind aus ${station.directionLabel}`}>↑</span><span><strong>{readingValue(station.average)}</strong><small>km/h Ø</small></span><span><strong>{readingValue(station.gust)}</strong><small>Böen</small></span><span><strong>{station.directionLabel}</strong><small>{station.direction === null ? "–" : `${Math.round(station.direction)}°`}</small></span></span>
     {!compact && <>{hasLiveValue ? <><span className="wind-history-label">Aktueller Messwert · Ø / Böe in km/h</span><span className="wind-history is-single"><span><small>{formatBurnairTime(station.observedAt)}</small><strong>{readingValue(station.average)}</strong><small>/{readingValue(station.gust)}</small></span></span></> : <span className="wind-history-label">{station.liveState === "loading" ? "Livewerte werden geladen…" : "Livewerte momentan nicht verfügbar"}</span>}</>}
     <span className="wind-card-foot">Quelle: winds.mobi · {station.provider}<span>Details ansehen</span></span>
   </button>;
@@ -112,7 +113,7 @@ function BurnairStationCard({ station, selected, onSelect, onReadingsChange }) {
   return <article className={`burnair-station-card${selected ? " is-selected" : ""}${stale ? " is-stale" : ""}${feed.status === "error" ? " has-error" : ""}`} aria-label={`${station.name}, Live-Windwerte von burnair`} aria-live="polite">
     <div className="burnair-station-head"><span className="burnair-station-marker" aria-hidden="true">L</span><span className="wind-card-head"><span><strong>{station.name}</strong><small>{station.detail} · {station.altitude} m</small></span><span className="station-status">{statusLabel}</span></span></div>
     {latest ? <>
-      <div className="wind-current"><span className="wind-direction" style={{ transform: `rotate(${latest.direction ?? 0}deg)` }} aria-label={latest.direction === null ? "Windrichtung nicht verfügbar" : `Wind aus ${latest.directionLabel}`}>↑</span><span><strong>{readingValue(latest.average)}</strong><small>km/h Ø</small></span><span><strong>{readingValue(latest.gust)}</strong><small>km/h Böen</small></span><span><strong>{latest.directionLabel}</strong><small>{latest.direction === null ? "–" : `${Math.round(latest.direction)}°`}</small></span></div>
+      <div className="wind-current"><span className="wind-direction" style={{ transform: `rotate(${(latest.direction ?? 0) + 180}deg)` }} aria-label={latest.direction === null ? "Windrichtung nicht verfügbar" : `Wind aus ${latest.directionLabel}`}>↑</span><span><strong>{readingValue(latest.average)}</strong><small>km/h Ø</small></span><span><strong>{readingValue(latest.gust)}</strong><small>km/h Böen</small></span><span><strong>{latest.directionLabel}</strong><small>{latest.direction === null ? "–" : `${Math.round(latest.direction)}°`}</small></span></div>
       <span className="wind-history-label">Letzte Messungen · Ø / Böe in km/h</span>
       <span className="wind-history">{visibleHistory.map((reading) => <span key={reading.epoch}><small>{formatBurnairTime(reading.epoch)}</small><strong>{readingValue(reading.average)}</strong><small>/{readingValue(reading.gust)}</small></span>)}</span>
     </> : <div className="burnair-station-message"><strong>{feed.status === "error" ? feed.error : "Livewerte werden geladen…"}</strong><small>Falls der Abruf nicht funktioniert, öffne die Station direkt in der burnair Map.</small></div>}
@@ -123,6 +124,7 @@ function BurnairStationCard({ station, selected, onSelect, onReadingsChange }) {
 
 function WebcamCard({ camera, refreshToken, index, total, onPrevious, onNext }) {
   const [capturedAt, setCapturedAt] = useState("");
+  const [imageFailed, setImageFailed] = useState(false);
   const viewportRef = useRef(null);
   const dragRef = useRef(null);
   const imageUrl = `${camera.image}${refreshToken ? `?refresh=${refreshToken}` : ""}`;
@@ -134,6 +136,8 @@ function WebcamCard({ camera, refreshToken, index, total, onPrevious, onNext }) 
   useEffect(() => {
     const controller = new AbortController();
     setCapturedAt("");
+    setImageFailed(false);
+    if (camera.still) { setCapturedAt("Aufnahmezeit im Bild"); return () => controller.abort(); }
     fetch(imageUrl, { method: "HEAD", cache: "no-store", signal: controller.signal })
       .then((response) => response.ok ? response.headers.get("Last-Modified") : null)
       .then((value) => {
@@ -173,15 +177,15 @@ function WebcamCard({ camera, refreshToken, index, total, onPrevious, onNext }) 
     event.preventDefault();
   };
   return <article className="webcam-gallery">
-    <div className="webcam-panorama-viewport" ref={viewportRef} tabIndex="0" role="region" aria-label={`Panorama ${camera.title}; ziehen oder mit Pfeiltasten horizontal verschieben`} onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={endDrag} onPointerCancel={endDrag} onKeyDown={moveWithKeyboard}>
-      <img src={imageUrl} alt={camera.alt} loading="lazy" draggable="false" onLoad={focusPanorama} />
+    <div className={`webcam-panorama-viewport${camera.still ? " is-still" : ""}`} ref={viewportRef} tabIndex="0" role="region" aria-label={camera.still ? `Webcambild ${camera.title}` : `Panorama ${camera.title}; ziehen oder mit Pfeiltasten horizontal verschieben`} onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={endDrag} onPointerCancel={endDrag} onKeyDown={moveWithKeyboard}>
+      {imageFailed ? <p role="status">Webcambild momentan nicht verfügbar. Die Original-Webcam ist unten verlinkt.</p> : <img src={imageUrl} alt={camera.alt} loading="lazy" draggable="false" onLoad={focusPanorama} onError={() => setImageFailed(true)} />}
     </div>
     <div className="webcam-gallery-nav">
       <button type="button" onClick={onPrevious} aria-label="Vorherige Webcam">←</button>
       <div className="webcam-gallery-meta"><small>{index + 1} / {total}</small><span><strong>{camera.title}</strong><em aria-live="polite">{capturedAt || "Stand wird geladen…"}</em></span></div>
       <button type="button" onClick={onNext} aria-label="Nächste Webcam">→</button>
     </div>
-    <div className="webcam-gallery-links"><span>Bild ziehen oder Scrollbalken nutzen</span><ExternalLink className="webcam-original-link" href={camera.viewerUrl}>Original-Webcam im Vollbild ↗</ExternalLink></div>
+    <div className="webcam-gallery-links"><span>{camera.still ? "Blick nach Westen" : "Bild ziehen oder Scrollbalken nutzen"}</span><ExternalLink className="webcam-original-link" href={camera.viewerUrl}>Original-Webcam im Vollbild ↗</ExternalLink></div>
   </article>;
 }
 
@@ -244,8 +248,9 @@ function MeteoPage() {
       <div className="station-detail-main"><p className="eyebrow">Ausgewählte Station</p><h2>{activeStation.name}</h2><p>{activeStation.source === "winds.mobi" ? `Quelle: winds.mobi · ${activeStation.provider}` : activeStation.provider} · {activeStation.altitude} m · {activeStation.id === grundMeteoStation.id ? activeStation.detail : `${activeStation.distanceKm.toFixed(1)} km ab Grindelwald`}</p><div className="detail-reading"><span><strong>{readingValue(activeStation.average)}</strong><small>km/h Mittel</small></span><span><strong>{readingValue(activeStation.gust)}</strong><small>km/h Böen</small></span><span><strong>{activeStation.directionLabel}</strong><small>{activeStation.direction === null ? "–" : `${Math.round(activeStation.direction)}°`}</small></span><span><strong>{activeStation.temperature === null ? "–" : `${Math.round(activeStation.temperature)}°`}</strong><small>Temperatur</small></span></div></div>
       <div className="station-trend"><p className="eyebrow">Entwicklung</p><strong>{activeStation.trend}</strong><p>{activeStation.source === "winds.mobi" ? "Dieser Test zeigt den aktuellen winds.mobi-Messwert; die Verlaufshistorie folgt mit der serverseitigen Anbindung." : "Die letzten vier gemeldeten Werte bleiben auf der Stationskarte direkt sichtbar."}</p><div className="trend-values">{activeStation.values.slice().reverse().map((value) => <span key={value.time}><small>{value.time}</small><i style={{ height: `${Math.max(22, (value.gust ?? 0) * 1.5)}px` }} /><strong>{readingValue(value.average)}/{readingValue(value.gust)}</strong></span>)}</div><small>Ø / Böe in km/h</small></div>
     </section>
+    <WeatherForecast />
     <section className="meteo-secondary"><div className="shell meteo-secondary-grid">
-      <div className="webcam-panel"><div className="meteo-section-head"><div><p className="eyebrow">Sicht vor Ort</p><h2>Live-Webcams</h2></div><button className="webcam-refresh" type="button" onClick={() => setWebcamRefresh(Date.now())}>Bilder neu laden</button></div><WebcamCard camera={activeWebcam} refreshToken={webcamRefresh} index={activeWebcamIndex} total={meteoWebcams.length} onPrevious={() => moveWebcam(-1)} onNext={() => moveWebcam(1)} /><p className="webcam-credit">Unveränderte Livebilder: © Jungfraubahnen · Roundshot. Der Rahmen zeigt einen Ausschnitt; das vollständige Panorama bleibt horizontal verschiebbar.</p></div>
+      <div className="webcam-panel"><div className="meteo-section-head"><div><p className="eyebrow">Sicht vor Ort</p><h2>Live-Webcams</h2></div><button className="webcam-refresh" type="button" onClick={() => setWebcamRefresh(Date.now())}>Bilder neu laden</button></div><label className="webcam-select">Webcam auswählen <select value={activeWebcamIndex} onChange={(event) => setActiveWebcamIndex(Number(event.target.value))}>{meteoWebcams.map((camera, index) => <option key={camera.id} value={index}>{camera.title}</option>)}</select></label><WebcamCard key={activeWebcam.id} camera={activeWebcam} refreshToken={webcamRefresh} index={activeWebcamIndex} total={meteoWebcams.length} onPrevious={() => moveWebcam(-1)} onNext={() => moveWebcam(1)} /><p className="webcam-credit">{activeWebcam.credit || "© Jungfraubahnen · Roundshot"}</p></div>
       <aside className="dabs-panel"><div className="dabs-heading"><p className="eyebrow">Luftraum · Mockanzeige</p><h2>DABS</h2></div><div className="dabs-status"><span>!</span><div><strong>LS-R6 als aktiv simuliert</strong><p>Demonstrationszeit 13:00–15:00. Verbindliche Angaben immer im offiziellen Daily Airspace Bulletin prüfen.</p></div></div><div className="dabs-actions"><ExternalLink className="button dabs-button" href="https://www.skybriefing.com/de/">Offizielles DABS öffnen</ExternalLink><p className="dabs-footnote">Externer Link · Skybriefing</p></div></aside>
     </div></section>
   </div>;
@@ -372,6 +377,20 @@ function panoramaInfoMarkers(site) {
   if (site.id === "grund") {
     const landingArea = site.areas.find((area) => area.kind === "landing");
     if (landingArea) { const anchor = areaCentre(landingArea.vertices); addMarkers("grund", anchor.yaw, anchor.pitch, "local-grund"); }
+  }
+  // Provisional visual anchors in the three labelled Grindelwald overviews.
+  // These offsets indicate the webcam area; they are not surveyed camera positions.
+  if (["airtime-west", "airtime-ost", "airtime-winter"].includes(site.id)) {
+    const webcamAnchors = [
+      { id: "kirchbuehl", anchor: site.links.find((link) => link.targetId === "bodmi"), yawOffset: -12, pitchOffset: 7 },
+      { id: "baeregg", anchor: site.landmarks.find((item) => /Mätten+n?berg/.test(item.label)), yawOffset: 10, pitchOffset: -17 },
+      { id: "glecksteinhuette", anchor: site.landmarks.find((item) => item.label.startsWith("Wetterhorn")), yawOffset: 9, pitchOffset: -10 },
+    ];
+    webcamAnchors.forEach(({ id, anchor, yawOffset, pitchOffset }) => {
+      const camera = meteoWebcams.find((item) => item.id === id);
+      if (!anchor || !camera) return;
+      markers.push({ id: `${site.id}-webcam-${id}`, kind: "webcam", yaw: anchor.yaw + yawOffset, pitch: anchor.pitch + pitchOffset, eyebrow: "Live-Webcam", title: camera.title, detail: "Original-Webcam öffnen ↗", ariaLabel: `Live-Webcam ${camera.title} öffnen`, camera });
+    });
   }
   return markers;
 }
