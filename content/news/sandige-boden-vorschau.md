@@ -2,7 +2,7 @@
 kind: news
 slug: sandige-boden-vorschau
 title: Clubfliegen Sandige Boden
-date: '2026-09-01'
+date: '2026-09-09'
 category: Clubleben
 summary: Vorschau zum Jubiläums Clubfliegen 2026
 coverImage: /media/news/sandige-boden-vorschau/titelbild.jpg
