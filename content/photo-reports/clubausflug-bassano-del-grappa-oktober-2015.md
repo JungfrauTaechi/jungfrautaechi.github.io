@@ -4,7 +4,7 @@ slug: clubausflug-bassano-del-grappa-oktober-2015
 title: 'Clubausflug Bassano del Grappa, Oktober 2015'
 date: '1970-01-01'
 detail: Fotoreport
-coverImage: /assets/archive/photos/clubausflug-bassano-del-grappa-oktober-2015/001.jpg
+coverImage: /assets/archive/photos/clubausflug-bassano-del-grappa-oktober-2015/004.jpg
 gallery:
   - src: /assets/archive/photos/clubausflug-bassano-del-grappa-oktober-2015/001.jpg
     alt: ''
