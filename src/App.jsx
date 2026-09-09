@@ -1,4 +1,5 @@
 import { upcomingEvents } from "./club-events.js";
+import { FullscreenFrame } from "./FullscreenFrame.jsx";
 import { Imprint } from "./Imprint.jsx";
 import { WeatherForecast } from "./WeatherForecast.jsx";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -90,9 +91,11 @@ function WebcamCard({ camera, refreshToken, index, total, onPrevious, onNext }) 
     event.preventDefault();
   };
   return <article className="webcam-gallery">
+    <FullscreenFrame className="webcam-fullscreen" label={camera.title}>
     <div className={`webcam-panorama-viewport${camera.still ? " is-still" : ""}`} ref={viewportRef} tabIndex="0" role="region" aria-label={camera.still ? `Webcambild ${camera.title}` : `Panorama ${camera.title}; ziehen oder mit Pfeiltasten horizontal verschieben`} onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={endDrag} onPointerCancel={endDrag} onKeyDown={moveWithKeyboard}>
       {imageFailed ? <p role="status">Webcambild momentan nicht verfügbar. Die Original-Webcam ist unten verlinkt.</p> : <img src={imageUrl} alt={camera.alt} loading="lazy" draggable="false" onLoad={focusPanorama} onError={() => setImageFailed(true)} />}
     </div>
+    <span className="fullscreen-credit">{camera.credit || "© Jungfraubahnen · Roundshot"}</span></FullscreenFrame>
     <div className="webcam-gallery-nav">
       <button type="button" onClick={onPrevious} aria-label="Vorherige Webcam">←</button>
       <div className="webcam-gallery-meta"><small>{index + 1} / {total}</small><span><strong>{camera.title}</strong><em aria-live="polite">{capturedAt || "Stand wird geladen…"}</em></span></div>
@@ -340,7 +343,7 @@ function FlightExplorer({ initialGroup = "overview", initialSceneId = "" }) {
   const [activeId, setActiveId] = useState(firstScene.id);
   const [reloadKey, setReloadKey] = useState(0);
   const [showAreas, setShowAreas] = useState(CONFIG.showPanoramaAreas);
-  const stageRef = useRef(null);
+
   const visibleScenes = flightScenes.filter((scene) => scene.sceneType === activeGroup);
   const activeSite = flightScenes.find((scene) => scene.id === activeId) || visibleScenes[0];
   const selectGroup = (groupId) => { setActiveGroup(groupId); setActiveId(flightScenes.find((scene) => scene.sceneType === groupId)?.id); setReloadKey(0); };
@@ -351,7 +354,7 @@ function FlightExplorer({ initialGroup = "overview", initialSceneId = "" }) {
     <div className="flight-explorer-groups" role="tablist" aria-label="Panorama-Kategorie">{flightSceneGroups.map((group) => <button key={group.id} type="button" role="tab" aria-selected={group.id === activeGroup} onClick={() => selectGroup(group.id)}><span>{group.count}</span>{group.label}</button>)}</div>
     <div className="flight-explorer-layout">
       <nav className="flight-scene-list" aria-label="Panorama auswählen">{visibleScenes.map((scene) => <button key={scene.id} type="button" className={scene.id === activeSite.id ? "is-active" : ""} aria-current={scene.id === activeSite.id ? "true" : undefined} onClick={() => selectScene(scene.id)}><img src={scene.panorama.preview} alt="" /><span><small>{scene.area}</small><strong>{scene.label}</strong></span></button>)}</nav>
-      <div className="tour-viewer"><div className="tour-toolbar"><div><p className="eyebrow">360°-Panorama · lokal</p><h2>{activeSite.label}</h2></div><div className="tour-actions">{activeSite.areas.length > 0 && <button type="button" aria-pressed={showAreas} onClick={() => setShowAreas((visible) => !visible)}>{showAreas ? "Flächen aus" : "Flächen ein"}</button>}<button type="button" onClick={() => setReloadKey((value) => value + 1)}>Neu laden</button><button type="button" onClick={() => stageRef.current?.requestFullscreen?.()}>Vollbild</button></div></div>{activeSite.sceneType !== "overview" && <SiteFacts site={activeSite} />}<div className="tour-stage" id="site-panorama" ref={stageRef}><LocalPanorama key={`${activeSite.id}-${reloadKey}`} site={activeSite} reloadKey={reloadKey} onSelectScene={selectScene} onOpenMeteo={openMeteo} showAreas={showAreas} /></div><div className="tour-footer"><p>Ziehen zum Drehen · Pfeile wechseln das Panorama · CAM und W öffnen Livebild oder Meteo</p>{showAreas && activeSite.areas.length > 0 ? <span>Grün: Start/Landung · Gelb: Falten · Rot: Hindernis</span> : <span>Nur gewählte Szene geladen</span>}</div></div>
+      <div className="tour-viewer"><div className="tour-toolbar"><div><p className="eyebrow">360°-Panorama · lokal</p><h2>{activeSite.label}</h2></div><div className="tour-actions">{activeSite.areas.length > 0 && <button type="button" aria-pressed={showAreas} onClick={() => setShowAreas((visible) => !visible)}>{showAreas ? "Flächen aus" : "Flächen ein"}</button>}<button type="button" onClick={() => setReloadKey((value) => value + 1)}>Neu laden</button></div></div>{activeSite.sceneType !== "overview" && <SiteFacts site={activeSite} />}<FullscreenFrame className="tour-stage" id="site-panorama" label={activeSite.label}><LocalPanorama key={`${activeSite.id}-${reloadKey}`} site={activeSite} reloadKey={reloadKey} onSelectScene={selectScene} onOpenMeteo={openMeteo} showAreas={showAreas} /></FullscreenFrame><div className="tour-footer"><p>Ziehen zum Drehen · Pfeile wechseln das Panorama · CAM und W öffnen Livebild oder Meteo</p>{showAreas && activeSite.areas.length > 0 ? <span>Grün: Start/Landung · Gelb: Falten · Rot: Hindernis</span> : <span>Nur gewählte Szene geladen</span>}</div></div>
     </div>
   </section>;
 }
