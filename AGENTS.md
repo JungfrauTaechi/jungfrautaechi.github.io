@@ -18,6 +18,9 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Durable implementation decisions
 
+- Pascal’s approved September follow-up: show First first, Grund second and the remaining four primary wind stations in a two-column, three-row desktop grid (one column on mobile). Integrate available recent readings oldest-to-newest directly in every station card, alongside current wind, gusts, direction, temperature, timestamp and a provider station link; remove the duplicate detail panel. This supersedes the earlier Grund-first/initial-selection decision. Never invent missing history readings.
+- Photo galleries support scoped left/right keyboard navigation and use a stable image stage so controls do not jump between landscape and portrait photos. News galleries include the explicit cover image once automatically. The current membership count is 361 and the shared header shortcut is “Wind, Meteo & Webcams”. Safety navigation, editing workflow, chronology changes and board portraits remain deferred.
+
 - The 50th-anniversary layer is controlled solely by `CONFIG.showAnniversary` in `src/data.js`; it defaults to `true` and does not define primary information architecture.
 - Current-source images remain remote only where local downloading cannot be completed; their sources are recorded by the inventory.
 - Public pages must read as the finished club website: keep migration provenance in `content/inventory/`, but do not render `Quelle`, `Zum Original`, or similar source-attribution links in the site UI.

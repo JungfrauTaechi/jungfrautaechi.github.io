@@ -99,7 +99,7 @@ Unterhalb des zweiten `---` steht bei News der vollständige Beitrag. Übliche M
 - Dateiname, `slug` und Bilderordner verwenden exakt denselben Slug.
 - `date` hat das Format `'YYYY-MM-DD'` inklusive einfacher Anführungszeichen.
 - Alle Bildpfade beginnen mit `/media/news/` oder `/media/photos/` und enthalten die richtige Dateiendung.
-- `coverImage` steht auch in `gallery`, normalerweise an erster Stelle.
+- Bei News erscheint `coverImage` automatisch einmal als erstes Galeriebild. Es muss nicht zusätzlich in `gallery` eingetragen werden. Bei Fotoberichten das Titelbild weiterhin in `gallery` aufnehmen, wenn es dort erscheinen soll.
 - Jedes Bild hat einen beschreibenden `alt`-Text; ein Kameradateiname wie `IMG_1234` ist kein Alt-Text.
 - Es wurden keine Passwörter, internen Dokumente oder personenbezogenen Daten hochgeladen, die nicht öffentlich sein dürfen.
 
