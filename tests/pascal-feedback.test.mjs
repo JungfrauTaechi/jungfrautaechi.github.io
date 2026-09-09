@@ -7,6 +7,20 @@ import { generatedNews, generatedPhotoReports } from "../src/generated-content.j
 import { readFile, access } from "node:fs/promises";
 const shvWeatherSource = await readFile(new URL("../src/ShvWeather.jsx", import.meta.url), "utf8");
 
+test("each of the thirteen panoramas has one configurable position for all eight webcams", async () => {
+  const positions = JSON.parse(await readFile(new URL("../src/panorama-webcams.json", import.meta.url), "utf8"));
+  const expected = ["first", "eigergletscher", "maennlichen", "kleine-scheidegg", "terminal", "kirchbuehl", "baeregg", "glecksteinhuette"].sort();
+  assert.equal(Object.keys(positions).length, 13);
+  for (const [scene, cameras] of Object.entries(positions)) {
+    assert.deepEqual(Object.keys(cameras).sort(), expected, scene);
+    for (const point of Object.values(cameras)) {
+      assert.ok(Number.isFinite(point.yaw) && point.yaw >= -180 && point.yaw <= 180, scene);
+      assert.ok(Number.isFinite(point.pitch) && point.pitch >= -90 && point.pitch <= 90, scene);
+      assert.equal(typeof point.provisional, "boolean");
+    }
+  }
+});
+
 test("all thirteen panorama pyramids have every expected local tile and original crop limits", async () => {
   const root = new URL("../public/assets/panoramas/", import.meta.url);
   const manifest = JSON.parse(await readFile(new URL("multires-manifest.json", root), "utf8"));

@@ -1,5 +1,7 @@
 import { upcomingEvents } from "./club-events.js";
 import { FullscreenFrame } from "./FullscreenFrame.jsx";
+import { PanoramaPositionPicker } from "./PanoramaPositionPicker.jsx";
+import panoramaWebcams from "./panorama-webcams.json";
 import { Imprint } from "./Imprint.jsx";
 import { WeatherForecast } from "./WeatherForecast.jsx";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -179,7 +181,17 @@ function createInfoHotspot(element, marker) {
   const symbol = document.createElement("span");
   symbol.className = "pano-info-symbol";
   symbol.setAttribute("aria-hidden", "true");
-  symbol.textContent = marker.kind === "webcam" ? "CAM" : "W";
+  const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  icon.setAttribute("viewBox", "0 0 24 24");
+  icon.setAttribute("fill", "none");
+  icon.setAttribute("stroke", "currentColor");
+  icon.setAttribute("stroke-width", "1.8");
+  icon.setAttribute("stroke-linecap", "round");
+  icon.setAttribute("stroke-linejoin", "round");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("d", marker.kind === "webcam" ? "M8 5l1-2h6l1 2h4a2 2 0 0 1 2 2v12H2V7a2 2 0 0 1 2-2h4Z M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" : "M2 8h11a3 3 0 1 0-3-3 M2 12h17a3 3 0 1 0-3-3 M2 16h10a3 3 0 1 1-3 3");
+  icon.append(path);
+  symbol.append(icon);
   const popover = document.createElement("span");
   popover.className = "pano-info-popover";
   const eyebrow = document.createElement("small");
@@ -244,14 +256,14 @@ function projectSphericalPolygon(vertices, viewer, width, height) {
   }
   return projected.filter((point) => Number.isFinite(point.x) && Number.isFinite(point.y));
 }
-const webcamSceneIds = new Set(["first", "maennlichen"]);
+
 const stationSceneIds = { first: "windline-4104", maennlichen: "slf-MAN1", stechelberg: "holfuy-1989" };
 function panoramaInfoMarkers(site) {
   const markers = [];
   const addMarkers = (targetId, yaw, pitch, prefix) => {
-    const camera = webcamSceneIds.has(targetId) ? meteoWebcams.find((item) => item.id === targetId) : null;
+
     const station = meteoStations.find((item) => item.id === stationSceneIds[targetId]);
-    if (camera) markers.push({ id: `${prefix}-webcam-${camera.id}`, kind: "webcam", yaw: yaw - 2.2, pitch: pitch + 4, eyebrow: "Live-Webcam", title: camera.title, detail: "Original-Panorama öffnen ↗", ariaLabel: `Live-Webcam ${camera.title} öffnen`, camera });
+
     if (station) markers.push({ id: `${prefix}-station-${station.id}`, kind: "meteo", yaw: yaw + 2.2, pitch: pitch + 4, eyebrow: "Demo-Messwert", title: station.name, detail: `${station.average} km/h Ø · ${station.gust} km/h Böen · ${station.directionLabel}`, ariaLabel: `Meteo ${station.name}: Demo-Messwert ${station.average} Kilometer pro Stunde, Meteo-Seite öffnen`, station });
     if (targetId === "grund") markers.push({ id: `${prefix}-station-${grundMeteoStation.id}`, kind: "meteo", yaw: yaw + 2.2, pitch: pitch + 4, eyebrow: "Live-Wind · burnair", title: grundMeteoStation.name, detail: "Aktuelle Messwerte · Meteo öffnen", ariaLabel: `Live-Windstation ${grundMeteoStation.name}, Meteo-Seite öffnen`, station: grundMeteoStation });
   };
@@ -268,25 +280,30 @@ function panoramaInfoMarkers(site) {
     const landingArea = site.areas.find((area) => area.kind === "landing");
     if (landingArea) { const anchor = areaCentre(landingArea.vertices); addMarkers("grund", anchor.yaw, anchor.pitch, "local-grund"); }
   }
-  // Provisional visual anchors in the three labelled Grindelwald overviews.
-  // These offsets indicate the webcam area; they are not surveyed camera positions.
-  if (["airtime-west", "airtime-ost", "airtime-winter"].includes(site.id)) {
-    const webcamAnchors = [
-      { id: "kirchbuehl", anchor: site.links.find((link) => link.targetId === "bodmi"), yawOffset: -12, pitchOffset: 7 },
-      { id: "baeregg", anchor: site.landmarks.find((item) => /Mätten+n?berg/.test(item.label)), yawOffset: 10, pitchOffset: -17 },
-      { id: "glecksteinhuette", anchor: site.landmarks.find((item) => item.label.startsWith("Wetterhorn")), yawOffset: 9, pitchOffset: -10 },
-    ];
-    webcamAnchors.forEach(({ id, anchor, yawOffset, pitchOffset }) => {
-      const camera = meteoWebcams.find((item) => item.id === id);
-      if (!anchor || !camera) return;
-      markers.push({ id: `${site.id}-webcam-${id}`, kind: "webcam", yaw: anchor.yaw + yawOffset, pitch: anchor.pitch + pitchOffset, eyebrow: "Live-Webcam", title: camera.title, detail: "Original-Webcam öffnen ↗", ariaLabel: `Live-Webcam ${camera.title} öffnen`, camera });
-    });
+  for (const camera of meteoWebcams) {
+    const position = panoramaWebcams[site.id]?.[camera.id];
+    if (!position) continue;
+    markers.push({ id: `${site.id}-webcam-${camera.id}`, kind: "webcam", yaw: position.yaw, pitch: position.pitch, eyebrow: "Live-Webcam", title: camera.title, detail: "Original-Webcam öffnen ↗", ariaLabel: `Live-Webcam ${camera.title} öffnen`, camera });
   }
   return markers;
 }
 function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas }) {
   const containerRef = useRef(null);
   const areaOverlayRef = useRef(null);
+  const viewerRef = useRef(null);
+  const [selectingPosition, setSelectingPosition] = useState(false);
+  const [pickedPosition, setPickedPosition] = useState(null);
+  const pickPosition = (event) => {
+    if (!selectingPosition || event.target.closest(".pano-marker-editor") || !viewerRef.current) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const [pitch, yaw] = viewerRef.current.mouseEventToCoords(event.nativeEvent);
+    const position = { yaw: Number(yaw.toFixed(3)), pitch: Number(pitch.toFixed(3)), provisional: false };
+    setPickedPosition(position);
+    setSelectingPosition(false);
+    viewerRef.current.removeHotSpot("marker-position-preview");
+    viewerRef.current.addHotSpot({ id: "marker-position-preview", yaw, pitch, cssClass: "pano-position-preview", createTooltipFunc: (element) => { element.textContent = "+"; element.setAttribute("aria-hidden", "true"); } });
+  };
   useEffect(() => {
     let viewer;
     let areaFrame;
@@ -302,6 +319,7 @@ function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas 
       const landmarkHotSpots = site.landmarks.map((landmark) => ({ pitch: landmark.pitch, yaw: landmark.yaw, cssClass: "pano-landmark-hotspot", createTooltipFunc: createLandmarkHotspot, createTooltipArgs: landmark }));
       const infoHotSpots = panoramaInfoMarkers(site).map((marker) => ({ pitch: marker.pitch, yaw: marker.yaw, cssClass: `pano-info-hotspot is-${marker.kind}`, createTooltipFunc: createInfoHotspot, createTooltipArgs: marker, clickHandlerFunc: (_event, handlerArgs) => { if (handlerArgs.kind === "webcam") window.open(handlerArgs.camera.viewerUrl, "_blank", "noopener,noreferrer"); else handlerArgs.onOpenMeteo(); }, clickHandlerArgs: { ...marker, onOpenMeteo } }));
       viewer = window.pannellum.viewer(containerRef.current, { type: "multires", multiRes: site.panorama.multiRes, minPitch: site.panorama.minPitch, maxPitch: site.panorama.maxPitch, avoidShowingBackground: true, multiResMinHfov: false, preview: site.panorama.preview, hotSpots: [...areaHotSpots, ...sceneHotSpots, ...landmarkHotSpots, ...infoHotSpots], autoLoad: true, yaw: site.panorama.yaw, pitch: site.panorama.pitch, hfov: site.panorama.hfov, minHfov: 45, maxHfov: 115, showFullscreenCtrl: false, compass: false, escapeHTML: true, strings: { loadButtonLabel: "Panorama laden", loadingLabel: "Panorama wird geladen …", bylineLabel: "von %s", noPanoramaError: "Panorama konnte nicht geladen werden.", fileAccessError: "Das Panorama muss über den Webserver geöffnet werden.", malformedURLError: "Ungültige Panorama-Adresse.", iOS8WebGLError: "Der Browser unterstützt die 360°-Ansicht nicht.", genericWebGLError: "Der Browser unterstützt die 360°-Ansicht nicht.", textureSizeError: "Das Panorama ist für dieses Gerät zu gross.", unknownError: "Unbekannter Fehler.", twoTouchActivate: "Mit zwei Fingern bewegen", twoTouchXActivate: "Mit zwei Fingern seitlich bewegen", twoTouchYActivate: "Mit zwei Fingern vertikal bewegen", ctrlZoomActivate: "Strg + Scrollen zum Zoomen" } });
+      viewerRef.current = viewer;
       if (showAreas) {
         const overlay = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         overlay.classList.add("pano-area-overlay");
@@ -333,9 +351,9 @@ function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas 
       if (showAreas) areaFrame = requestAnimationFrame(updateAreas);
     };
     mountViewer();
-    return () => { cancelled = true; if (areaFrame) cancelAnimationFrame(areaFrame); viewer?.destroy(); areaOverlayRef.current = null; };
+    return () => { cancelled = true; if (areaFrame) cancelAnimationFrame(areaFrame); viewer?.destroy(); viewerRef.current = null; areaOverlayRef.current = null; };
   }, [site, reloadKey, onSelectScene, onOpenMeteo, showAreas]);
-  return <div className="panorama-layer"><div className="panorama-canvas" ref={containerRef} role="region" aria-label={`Interaktives 360°-Panorama: ${site.label}`} /></div>;
+  return <div className={`panorama-layer${selectingPosition ? " is-picking" : ""}`} onClickCapture={pickPosition}><div className="panorama-canvas" ref={containerRef} role="region" aria-label={`Interaktives 360°-Panorama: ${site.label}`} />{import.meta.env.DEV && <PanoramaPositionPicker site={site} cameras={meteoWebcams} point={pickedPosition} selecting={selectingPosition} onSelect={setSelectingPosition} />}</div>;
 }
 function FlightExplorer({ initialGroup = "overview", initialSceneId = "" }) {
   const firstScene = flightScenes.find((scene) => scene.id === initialSceneId) || flightScenes.find((scene) => scene.sceneType === initialGroup) || flightScenes[0];
@@ -354,7 +372,7 @@ function FlightExplorer({ initialGroup = "overview", initialSceneId = "" }) {
     <div className="flight-explorer-groups" role="tablist" aria-label="Panorama-Kategorie">{flightSceneGroups.map((group) => <button key={group.id} type="button" role="tab" aria-selected={group.id === activeGroup} onClick={() => selectGroup(group.id)}><span>{group.count}</span>{group.label}</button>)}</div>
     <div className="flight-explorer-layout">
       <nav className="flight-scene-list" aria-label="Panorama auswählen">{visibleScenes.map((scene) => <button key={scene.id} type="button" className={scene.id === activeSite.id ? "is-active" : ""} aria-current={scene.id === activeSite.id ? "true" : undefined} onClick={() => selectScene(scene.id)}><img src={scene.panorama.preview} alt="" /><span><small>{scene.area}</small><strong>{scene.label}</strong></span></button>)}</nav>
-      <div className="tour-viewer"><div className="tour-toolbar"><div><p className="eyebrow">360°-Panorama · lokal</p><h2>{activeSite.label}</h2></div><div className="tour-actions">{activeSite.areas.length > 0 && <button type="button" aria-pressed={showAreas} onClick={() => setShowAreas((visible) => !visible)}>{showAreas ? "Flächen aus" : "Flächen ein"}</button>}<button type="button" onClick={() => setReloadKey((value) => value + 1)}>Neu laden</button></div></div>{activeSite.sceneType !== "overview" && <SiteFacts site={activeSite} />}<FullscreenFrame className="tour-stage" id="site-panorama" label={activeSite.label}><LocalPanorama key={`${activeSite.id}-${reloadKey}`} site={activeSite} reloadKey={reloadKey} onSelectScene={selectScene} onOpenMeteo={openMeteo} showAreas={showAreas} /></FullscreenFrame><div className="tour-footer"><p>Ziehen zum Drehen · Pfeile wechseln das Panorama · CAM und W öffnen Livebild oder Meteo</p>{showAreas && activeSite.areas.length > 0 ? <span>Grün: Start/Landung · Gelb: Falten · Rot: Hindernis</span> : <span>Nur gewählte Szene geladen</span>}</div></div>
+      <div className="tour-viewer"><div className="tour-toolbar"><div><p className="eyebrow">360°-Panorama · lokal</p><h2>{activeSite.label}</h2></div><div className="tour-actions">{activeSite.areas.length > 0 && <button type="button" aria-pressed={showAreas} onClick={() => setShowAreas((visible) => !visible)}>{showAreas ? "Flächen aus" : "Flächen ein"}</button>}<button type="button" onClick={() => setReloadKey((value) => value + 1)}>Neu laden</button></div></div>{activeSite.sceneType !== "overview" && <SiteFacts site={activeSite} />}<FullscreenFrame className="tour-stage" id="site-panorama" label={activeSite.label}><LocalPanorama key={`${activeSite.id}-${reloadKey}`} site={activeSite} reloadKey={reloadKey} onSelectScene={selectScene} onOpenMeteo={openMeteo} showAreas={showAreas} /></FullscreenFrame><div className="tour-footer"><p>Ziehen zum Drehen · Pfeile wechseln das Panorama · Kamera- und Windsymbole öffnen Livebild oder Meteo</p>{showAreas && activeSite.areas.length > 0 ? <span>Grün: Start/Landung · Gelb: Falten · Rot: Hindernis</span> : <span>Nur gewählte Szene geladen</span>}</div></div>
     </div>
   </section>;
 }
