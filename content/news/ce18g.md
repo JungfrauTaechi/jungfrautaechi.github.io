@@ -8,9 +8,9 @@ summary: >-
   Sehr gemütlich haben sie es gehabt, die 32 Tächi im Hotel Eiger. Gutes Essen,
   Trinken und Beisammensein liess fast vergessen, noch ein paar Fotos für die
   Homepage zu knipsen. Gegen Schluss der Veranstaltung erinnerte…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/ce18g.jpg'
+coverImage: '/assets/legacy-images/611f32080abd59bc8090.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/ce18g.jpg'
+  - src: '/assets/legacy-images/611f32080abd59bc8090.jpg'
     alt: ''
   - src: /assets/archive/news/ce18g/002.jpg
     alt: ''

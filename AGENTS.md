@@ -28,8 +28,18 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Treat `/club` as the consolidated public story of the association rather than recreating the legacy submenu. Put the current programme directly below the opening banner. Retain the original portrait, statutory purposes, supporter context and all 15 individual archive stories, grouped under their three original eras, on this page; `/chronik` is the sole deeper history route and keeps all 30 migrated chronology entries.
 - Publish one production Pages site from the public repository `JungfrauTaechi/jungfrautaechi.github.io`. `main` is production; `dev` may be used as an undeployed working branch and must be validated locally before a fast-forward merge into `main`.
 
-- Meteo embeds Profiwetter charts directly, with the exact credit “Bildquelle: Profiwetter.ch, Deutscher Wetterdienst”. Show the Föhn pressure-difference chart followed by one selectable forecast for Grindelwald (P0402), Jungfraujoch (06730), or Interlaken (06734), before webcams.
+- Meteo embeds Profiwetter charts directly, with the exact credit “Bildquelle: Profiwetter.ch, Deutscher Wetterdienst”. Use the SHV app entry point followed by one selectable forecast for Grindelwald (P0402), Jungfraujoch (06730), or Interlaken (06734), before webcams.
 - Include Kirchbühl, Bäregg and Glecksteinhütte in the Meteo webcam gallery and as clickable CAM hotspots inside the three labelled Grindelwald overview panoramas. Keep remote images unmodified, show provider-specific attribution and retain original viewer links. Glecksteinhütte is a still image, not a 360° panorama. Use the existing Bodmi, Mättenberg and Wetterhorn anchors for provisional webcam placement; these offsets need visual fine-tuning and must not be described as surveyed coordinates. Do not add a separate webcam link strip.
 - Wind arrows show the direction the air travels: wind FROM S points up, FROM N down, FROM E left, FROM W right. Rotate the source bearing by 180 degrees for arrows; retain source bearings and compass labels in readings.
 
-- Föhn and forecast images must fit their container on mobile: width and max-width 100%, height auto, no minimum image width or horizontal chart scrolling. Keep the enlarge link for details.
+- Forecast images must fit their container on mobile: width and max-width 100%, height auto, no minimum image width or horizontal chart scrolling. Keep the enlarge link for details.
+
+- News and photo reports without an explicit coverImage automatically use their first gallery image for the hero and card. Use the generic site hero only when neither is available.
+
+- The old jungfrau-taechi.ch server will be discontinued. Store recovered archive images under public/assets and use local paths; preserve original URLs only as provenance. Track missing originals in content/inventory/localized-legacy-images.json.
+
+- Use Pascal’s official black-and-gold anniversary logo (`public/assets/brand/jungfrau-taechi-50.png`) in the header while CONFIG.showAnniversary is enabled; preserve the supplied artwork and aspect ratio.
+
+- Pascal’s September 2026 feedback: retain original vertical panorama limits and stream the recovered 4,096–8,192 px cube faces as local multiresolution tiles; keep the existing cross-links and polygons.
+- Remove the two `Test:` event articles. Homepage and club agenda select upcoming events by Europe/Zurich dates, including the last day of multi-day events.
+- SHV weather has no API integration. Desktop links to the official app page; mobile uses official platform store links until SHV publishes a verified app deep link. Never invent an app URL scheme. The Föhn pressure-difference chart is omitted.

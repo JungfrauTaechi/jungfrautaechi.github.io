@@ -8,9 +8,9 @@ summary: >-
   Bei besten Bedingungen konnte der Holzerbar-Landecup 2022 durchgeführt werden.
   Zusammen mit den Gästen der Flugschule und des Gleitschirmclubs
   Lauterbrunnental nahmen 25 Piloten aller Altersklassen teil. Nur zwei von…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/22landecup21.jpg'
+coverImage: '/assets/legacy-images/c8dab51d7fc965c661d2.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/22landecup21.jpg'
+  - src: '/assets/legacy-images/c8dab51d7fc965c661d2.jpg'
     alt: ''
   - src: /assets/archive/news/22landecup21/002.jpg
     alt: ''

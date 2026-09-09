@@ -1,0 +1,114 @@
+# Old-server image migration
+
+31 image URL references recovered to local files; 104 original URLs remain unavailable (404), including the image-cache fallback. Downloaded files were decoded and verified. Original URLs and retrieval paths are preserved in localized-legacy-images.json.
+
+The matching-filename alternative paths came from the old site inventory; they recover the likely original image but cannot be byte-compared with the missing hero URL.
+
+The unavailable URLs remain in content pending recovery from an old-server backup. This migration is not yet complete. Live third-party webcam and weather images are outside this migration. Old-server page and PDF links also still exist and need a separate retirement review.
+
+## Unavailable originals
+
+- https://jungfrau-taechi.ch/images/HV22Apero16.jpg
+- https://jungfrau-taechi.ch/images/KranGrund%20Kopie.jpg
+- https://jungfrau-taechi.ch/images/blogposts/11201615.jpg
+- https://jungfrau-taechi.ch/images/blogposts/2021clubessen9.jpg
+- https://jungfrau-taechi.ch/images/blogposts/40jahr.jpg
+- https://jungfrau-taechi.ch/images/blogposts/Schlitten16a.jpg
+- https://jungfrau-taechi.ch/images/blogposts/aace1922.jpg
+- https://jungfrau-taechi.ch/images/blogposts/absageswisscup.jpg
+- https://jungfrau-taechi.ch/images/blogposts/aca1910.jpg
+- https://jungfrau-taechi.ch/images/blogposts/aeschbacher.jpg
+- https://jungfrau-taechi.ch/images/blogposts/bassano17002.jpg
+- https://jungfrau-taechi.ch/images/blogposts/bawuepodest.jpg
+- https://jungfrau-taechi.ch/images/blogposts/boxx.jpg
+- https://jungfrau-taechi.ch/images/blogposts/cf17d.jpg
+- https://jungfrau-taechi.ch/images/blogposts/cf18gewinner1.jpg
+- https://jungfrau-taechi.ch/images/blogposts/cfeinundzwanzig38.jpg
+- https://jungfrau-taechi.ch/images/blogposts/clubausflug15.jpg
+- https://jungfrau-taechi.ch/images/blogposts/clubausflug18.jpg
+- https://jungfrau-taechi.ch/images/blogposts/clubessen15g.jpg
+- https://jungfrau-taechi.ch/images/blogposts/clubessen17a.jpg
+- https://jungfrau-taechi.ch/images/blogposts/clubessen18einladung.jpg
+- https://jungfrau-taechi.ch/images/blogposts/clubessen2022einladung.jpg
+- https://jungfrau-taechi.ch/images/blogposts/clubesseneinladung.jpg
+- https://jungfrau-taechi.ch/images/blogposts/clubfliegen22.jpg
+- https://jungfrau-taechi.ch/images/blogposts/clubschlitteln16.jpg
+- https://jungfrau-taechi.ch/images/blogposts/cschlitteln18.jpg
+- https://jungfrau-taechi.ch/images/blogposts/dietervonallmen.jpg
+- https://jungfrau-taechi.ch/images/blogposts/eigair.jpg
+- https://jungfrau-taechi.ch/images/blogposts/eigertour18.jpg
+- https://jungfrau-taechi.ch/images/blogposts/eigertour2019barflyer.jpg
+- https://jungfrau-taechi.ch/images/blogposts/einladunghv16.jpg
+- https://jungfrau-taechi.ch/images/blogposts/et191.jpg
+- https://jungfrau-taechi.ch/images/blogposts/fliegerbar16.jpg
+- https://jungfrau-taechi.ch/images/blogposts/fliegerbar17.jpg
+- https://jungfrau-taechi.ch/images/blogposts/flugverbotmuerren.jpg
+- https://jungfrau-taechi.ch/images/blogposts/gipfelflug.jpg
+- https://jungfrau-taechi.ch/images/blogposts/gkrafttraining.jpg
+- https://jungfrau-taechi.ch/images/blogposts/guide.jpg
+- https://jungfrau-taechi.ch/images/blogposts/hb2020.jpg
+- https://jungfrau-taechi.ch/images/blogposts/hoehenflug.jpg
+- https://jungfrau-taechi.ch/images/blogposts/holzerbar17a.jpg
+- https://jungfrau-taechi.ch/images/blogposts/holzerbar18.jpg
+- https://jungfrau-taechi.ch/images/blogposts/holzerbar18neu.jpg
+- https://jungfrau-taechi.ch/images/blogposts/holzerbar19.jpg
+- https://jungfrau-taechi.ch/images/blogposts/holzerbar23.jpg
+- https://jungfrau-taechi.ch/images/blogposts/holzerbarcup16a.jpg
+- https://jungfrau-taechi.ch/images/blogposts/holzerbarcup22.jpg
+- https://jungfrau-taechi.ch/images/blogposts/holzheizwerk.jpg
+- https://jungfrau-taechi.ch/images/blogposts/hv16.jpg
+- https://jungfrau-taechi.ch/images/blogposts/hv17.jpg
+- https://jungfrau-taechi.ch/images/blogposts/hv20titelbild.jpg
+- https://jungfrau-taechi.ch/images/blogposts/hv42d.jpg
+- https://jungfrau-taechi.ch/images/blogposts/img_1036.jpg
+- https://jungfrau-taechi.ch/images/blogposts/img_1801.jpg
+- https://jungfrau-taechi.ch/images/blogposts/jacke1.jpg
+- https://jungfrau-taechi.ch/images/blogposts/jb.jpg
+- https://jungfrau-taechi.ch/images/blogposts/kran.jpg
+- https://jungfrau-taechi.ch/images/blogposts/landecup-2015.jpg
+- https://jungfrau-taechi.ch/images/blogposts/maibachfoto1.jpg
+- https://jungfrau-taechi.ch/images/blogposts/maskenteddy.jpg
+- https://jungfrau-taechi.ch/images/blogposts/maskenteddy1.jpg
+- https://jungfrau-taechi.ch/images/blogposts/maskenteddy4.jpg
+- https://jungfrau-taechi.ch/images/blogposts/mh2018.jpg
+- https://jungfrau-taechi.ch/images/blogposts/mhc173.jpg
+- https://jungfrau-taechi.ch/images/blogposts/mhc18z.jpg
+- https://jungfrau-taechi.ch/images/blogposts/mheiger.jpg
+- https://jungfrau-taechi.ch/images/blogposts/mountainhostel.jpg
+- https://jungfrau-taechi.ch/images/blogposts/nanda.jpg
+- https://jungfrau-taechi.ch/images/blogposts/nandasm17.jpg
+- https://jungfrau-taechi.ch/images/blogposts/nandaswisscup1.jpg
+- https://jungfrau-taechi.ch/images/blogposts/pfarrschyr.jpg
+- https://jungfrau-taechi.ch/images/blogposts/piemont2018.jpg
+- https://jungfrau-taechi.ch/images/blogposts/podestopen1.jpg
+- https://jungfrau-taechi.ch/images/blogposts/protokoll44.jpg
+- https://jungfrau-taechi.ch/images/blogposts/protokollbild.jpg
+- https://jungfrau-taechi.ch/images/blogposts/pyr2016.jpg
+- https://jungfrau-taechi.ch/images/blogposts/regikaufmann.jpg
+- https://jungfrau-taechi.ch/images/blogposts/reinerneustadt.jpg
+- https://jungfrau-taechi.ch/images/blogposts/sc19a.jpg
+- https://jungfrau-taechi.ch/images/blogposts/sc2017.jpg
+- https://jungfrau-taechi.ch/images/blogposts/scg23.jpg
+- https://jungfrau-taechi.ch/images/blogposts/schlitteln21.jpg
+- https://jungfrau-taechi.ch/images/blogposts/schlitten16b.jpg
+- https://jungfrau-taechi.ch/images/blogposts/schlitten16c.jpg
+- https://jungfrau-taechi.ch/images/blogposts/schlitten16d.jpg
+- https://jungfrau-taechi.ch/images/blogposts/schlitten16e.jpg
+- https://jungfrau-taechi.ch/images/blogposts/schlitten16f.jpg
+- https://jungfrau-taechi.ch/images/blogposts/schlitten16g.jpg
+- https://jungfrau-taechi.ch/images/blogposts/schlitten19.jpg
+- https://jungfrau-taechi.ch/images/blogposts/schlittenfahrt.jpg
+- https://jungfrau-taechi.ch/images/blogposts/smfiesch21.jpg
+- https://jungfrau-taechi.ch/images/blogposts/sportdamen.jpg
+- https://jungfrau-taechi.ch/images/blogposts/stallbeizliclubessen21.jpg
+- https://jungfrau-taechi.ch/images/blogposts/stammtisch.jpg
+- https://jungfrau-taechi.ch/images/blogposts/supportdcjt.jpg
+- https://jungfrau-taechi.ch/images/blogposts/swisscup22.jpg
+- https://jungfrau-taechi.ch/images/blogposts/swisscupgrindelwald.jpg
+- https://jungfrau-taechi.ch/images/blogposts/umleitungkamel.jpg
+- https://jungfrau-taechi.ch/images/blogposts/vorstandsabschied.jpg
+- https://jungfrau-taechi.ch/images/blogposts/vortragsui.jpg
+- https://jungfrau-taechi.ch/images/blogposts/vortragsui3witschi.jpg
+- https://jungfrau-taechi.ch/images/blogposts/weidenkatzen.jpg
+- https://jungfrau-taechi.ch/images/blogposts/wintereigertour.jpg
+- https://jungfrau-taechi.ch/images/weitere_bilder_blog/UmleitungKamel.jpg

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ShvWeather } from "./ShvWeather.jsx";
 
 const locations = [
   { id: "P0402", name: "Grindelwald" },
@@ -20,8 +21,8 @@ export function WeatherForecast() {
   const [refresh, setRefresh] = useState(0);
   const suffix = refresh ? `?refresh=${refresh}` : "";
   return <section className="shell meteo-forecast" aria-labelledby="forecast-heading">
-    <div className="meteo-section-head"><div><p className="eyebrow">Ausblick auf die nächsten Tage</p><h2 id="forecast-heading">Föhn &amp; Prognosen</h2></div><button className="webcam-refresh" type="button" onClick={() => setRefresh(Date.now())}>Prognosen neu laden</button></div>
-    <ForecastChart key={`foehn-${refresh}`} title="Föhndiagramm · Druckdifferenz Lugano–Zürich" src={`https://profiwetter.ch/wind_foehn_ch_de.png${suffix}`} />
+    <div className="meteo-section-head"><div><p className="eyebrow">Ausblick auf die nächsten Tage</p><h2 id="forecast-heading">Flugwetter &amp; Prognosen</h2></div><button className="webcam-refresh" type="button" onClick={() => setRefresh(Date.now())}>Prognosen neu laden</button></div>
+    <ShvWeather />
     <div className="weather-selector" role="group" aria-label="Prognoseort auswählen">{locations.map((item) => <button key={item.id} type="button" aria-pressed={location.id === item.id} onClick={() => setLocation(item)}>{item.name}</button>)}</div>
     <ForecastChart key={`${location.id}-${refresh}`} title={`Wetterprognose ${location.name}`} src={`https://profiwetter.ch/mos_${location.id}.svg${suffix}`} />
     <p className="forecast-hint">Für Details die Grafik vergrössern. Ausgabezeit und Prognosezeitraum stehen in der Grafik.</p>

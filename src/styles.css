@@ -393,3 +393,33 @@
 @media(max-width:520px){.home-banner{min-height:310px}.home-banner-content{padding-block:2rem 1.8rem}.home-banner-content h1{font-size:2.45rem}.home-flightdesk-grid>a{min-height:102px;padding:.9rem .7rem}.home-flightdesk-grid>a:first-child,.home-flightdesk-grid>a:nth-child(3){padding-left:0}.home-flightdesk-grid strong{font-size:.86rem}.home-flightdesk-grid small{font-size:.68rem}.home-next-event-grid{grid-template-columns:1fr;padding-block:1.3rem}.home-next-event-grid>div:nth-child(2),.home-next-event-grid>.text-link{grid-column:1;grid-row:auto}.home-next-event .text-link{margin-top:.25rem}.home-section-heading{align-items:flex-start;flex-direction:column;gap:.5rem}.home-news{padding-block:2.6rem}.home-news-list{grid-template-columns:1fr}.home-news-list>a{grid-template-columns:116px minmax(0,1fr);grid-template-rows:minmax(150px,auto)}.home-news-list>a>span{padding:.85rem}.home-discover{padding-block:2.6rem}.home-discover-grid{grid-template-columns:1fr}.home-discover-card{min-height:250px}.detail-banner .article-header{width:calc(100% - 28px);padding-block:1.8rem 1.6rem}.tour-stage .panorama-canvas{min-height:300px;aspect-ratio:4/3}.board-grid article{grid-template-columns:116px 1fr;grid-template-rows:minmax(180px,auto)}.board-grid article>img{min-height:100%;object-position:center}}
 .meteo-forecast{padding-block:1rem 2.5rem}.forecast-chart{margin:0 0 1.5rem;border:1px solid var(--line);background:#fff}.forecast-chart-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem}.forecast-chart-heading h3{font-size:1rem;margin:0}.forecast-chart-heading a,.forecast-chart figcaption,.forecast-hint{font-size:.75rem;color:var(--muted)}.forecast-scroll{max-width:100%}.forecast-scroll img{display:block;width:100%;max-width:100%;height:auto}.forecast-chart figcaption{padding:.7rem 1rem}.forecast-chart>p{padding:1rem}.weather-selector{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}.weather-selector button{padding:.7rem 1rem;border:1px solid var(--line);background:#fff;color:var(--navy);font:inherit;cursor:pointer}.weather-selector button[aria-pressed=true]{background:var(--navy);color:#fff}.webcam-select{display:flex;align-items:center;gap:.75rem;margin-bottom:.8rem;font-size:.8rem}.webcam-select select{padding:.6rem;max-width:100%;min-width:0;font:inherit;border:1px solid var(--line);background:#fff}.webcam-panorama-viewport.is-still{aspect-ratio:3/2;cursor:default}.webcam-panorama-viewport.is-still img{width:100%;height:100%;object-fit:contain}.webcam-panorama-viewport>p{padding:1.2rem;color:#fff}
 @media(max-width:600px){.forecast-chart-heading{align-items:flex-start;flex-direction:column;gap:.4rem}.weather-selector button{flex:1;padding:.65rem .45rem;font-size:.8rem}.webcam-select{align-items:stretch;flex-direction:column;gap:.3rem}}
+
+/* Official anniversary artwork supplied by Pascal, September 2026. */
+.wordmark .anniversary-logo{display:block;width:176px;height:auto;max-width:100%;object-fit:contain;padding-block:4px}
+@media(max-width:900px){.wordmark .anniversary-logo{width:140px}}
+
+/* Compact anniversary identity and a practical visitor homepage. */
+.primary-nav{gap:1.25rem}.wordmark{flex-shrink:0}
+.header-anniversary{display:grid;gap:.1rem;font-size:.7rem;font-weight:700;color:#6f5700;line-height:1.4;white-space:nowrap}.header-anniversary small{font-size:.65rem;letter-spacing:.1em}
+.home-title-small{display:none}
+.home-banner:before{background-image:linear-gradient(90deg,#041425ed 0%,#041425b8 42%,#04142515 100%),var(--page-banner-image);background-position:center,var(--page-banner-position)}
+.page-banner .eyebrow,.flight-explorer-intro .eyebrow{color:#f2d485}
+.home-banner-content h1{max-width:750px}.home-banner-content>p:not(.eyebrow){max-width:560px}
+.home-news-grid{align-items:start}.home-news-list{align-content:start}
+.home-news-list>a{grid-template-columns:130px minmax(0,1fr);grid-template-rows:minmax(120px,auto);min-height:120px}.home-news-list img{height:120px}.home-news-list em{margin-top:.6rem}
+.home-welcome{display:flex;align-items:center;justify-content:space-between;gap:2rem;padding-block:var(--section-space)}.home-welcome>div{max-width:720px}.home-welcome h2{margin-bottom:.6rem}.home-welcome p{margin-bottom:0}.home-welcome .button{flex-shrink:0}
+.shv-weather{display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:1.5rem;margin-block:1rem 1.5rem;background:#f6f0e3;border-left:3px solid #ab9200}.shv-weather>div:first-child{max-width:720px}.shv-weather h3{margin:0 0 .4rem}.shv-weather p{margin-bottom:0}.shv-weather-actions{display:grid;gap:.75rem;flex-shrink:0}.shv-weather-actions .text-link{font-size:.8rem}
+.imprint-content{max-width:850px;padding-block:1rem var(--page-end-space)}.imprint-content h2{font-size:1.5rem;margin-top:2rem}.imprint-content address{font-style:normal}.imprint-content a{text-decoration:underline}
+#webcams,#clubleben,#flugvorbereitung{scroll-margin-top:1.5rem}
+@media(max-width:1150px){.header-anniversary{display:none}}
+@media(max-width:900px){.home-news-list{grid-template-columns:1fr;gap:0}.home-news-list>a{grid-template-columns:130px minmax(0,1fr);grid-template-rows:minmax(120px,auto)}.shv-weather,.home-welcome{align-items:flex-start;flex-direction:column;gap:1rem}}
+@media(max-width:520px){
+  .utility{display:none}.primary-nav{min-height:82px}.wordmark .anniversary-logo{width:145px}
+  .home-title-wide{display:none}.home-title-small{display:block}
+  .home-banner{min-height:220px}.home-banner-content{padding-block:1.4rem}.home-banner-content h1{font-size:2.2rem;line-height:1.08;margin-bottom:.65rem}.home-banner-content>.eyebrow{font-size:.63rem;margin-bottom:.55rem}.home-banner-content>p:not(.eyebrow){font-size:.92rem;max-width:290px}.home-banner-content .button-row{display:none}
+  .home-flightdesk-grid>a{min-height:80px;padding:.75rem .7rem;gap:.2rem}.home-flightdesk-grid span{display:none}
+  .home-next-event-grid{padding-block:1rem;gap:.45rem}.home-next-event h2{font-size:1.08rem}.home-next-event-grid>.text-link{font-size:.76rem}
+  .home-news-list>a{grid-template-columns:105px minmax(0,1fr)}.home-news-list img{height:120px}.home-news-list>a>span{padding:.75rem}
+  .home-welcome{padding-block:2rem}.shv-weather{padding:1.1rem}.shv-weather-actions{width:100%}.shv-weather-actions .button{white-space:normal;text-align:center}
+}
+@media(prefers-reduced-motion:reduce){.home-discover-card img{transition:none}}

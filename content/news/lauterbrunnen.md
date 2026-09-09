@@ -8,9 +8,9 @@ summary: >-
   Finde hier die neuesten Regeln für das Fluggebiet Lauterbrunnen / Mürren. Wir
   bitten Euch, die Regeln zu studieren und strikt einzuhalten. Das Ganze ist
   hier als PDF abrufbar!
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/lauterbrunnen.jpg'
+coverImage: '/assets/legacy-images/d4a13c577fd9adea1037.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/lauterbrunnen.jpg'
+  - src: '/assets/legacy-images/d4a13c577fd9adea1037.jpg'
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/lauterbrunnen'
 ---

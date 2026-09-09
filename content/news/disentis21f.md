@@ -8,9 +8,9 @@ summary: >-
   Am diesjährigen World Cup Superfinale in Disentis konnte Nanda Walliser
   abermals einen Podestplatz erreichen, Chrigel Maurer beendete den Wettkampf
   auf dem hervorragenden fünften Platz.Wir freuen uns mit Euch und…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/disentis21f.jpg'
+coverImage: '/assets/legacy-images/cd96b7699ccf4a7ee493.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/disentis21f.jpg'
+  - src: '/assets/legacy-images/cd96b7699ccf4a7ee493.jpg'
     alt: ''
   - src: /assets/archive/news/disentis21f/002.jpg
     alt: ''

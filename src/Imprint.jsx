@@ -1,0 +1,7 @@
+export function Imprint() {
+  return <section className="shell imprint-content">
+    <h2>Betreiber der Webseite</h2><p>Jungfrau-Tächi Grindelwald<br />3818 Grindelwald</p>
+    <h2>Webmaster</h2><address>Pascal Imhof · pascalimhof.com<br />Fotografie und digitale Lösungen<br />Schulgässli 10<br />3818 Grindelwald<br /><a href="mailto:pi@pascalimhof.com">pi@pascalimhof.com</a><br /><a href="https://www.pascalimhof.com/">www.pascalimhof.com</a></address>
+    <h2>Haftungsausschluss</h2><p>Auf dieser Web-Site befinden sich diverse Links zu anderen Web-Sites im Internet. Wir erklären hiermit, dass zum Zeitpunkt der Aufnahme eines Links zu einer anderen Web-Site diese nach unserem Kenntnisstand frei von illegalen Inhalten war. Wir weisen hiermit ausdrücklich darauf hin, dass wir keinerlei Einfluss auf die Gestaltung und den Inhalt der Web-Sites haben, zu denen wir einen Link anbieten. Wir übernehmen daher keine Gewähr für Inhalt, Aktualität, Vollständigkeit und Qualität der dort bereitgestellten Informationen. Aus diesen Gründen distanzieren wir uns hiermit ausdrücklich von allen Inhalten der Web-Sites, zu denen wir einen Link anbieten. Sollten Sie sich durch den Inhalt einer Web-Site, zu der wir einen Link anbieten, in Ihren Rechten verletzt sehen, so teilen Sie uns dies bitte mit. Wir werden dann die Angelegenheit umgehend prüfen und gegebenenfalls die entsprechenden Links entfernen. Sollte ein Link nicht mehr funktionieren, so teilen Sie dies bitte unserem Webmaster mit.</p>
+  </section>;
+}

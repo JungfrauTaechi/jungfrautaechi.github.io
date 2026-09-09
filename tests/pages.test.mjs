@@ -39,7 +39,7 @@ test("generated dependencies and build output stay out of the public repository"
 });
 
 test("Pages build script creates the SPA 404 fallback", async () => {
-  assert.match(packageJson, /"build:pages": "npm run content:build && vite build && node scripts\/create-pages-404\.mjs"/);
+  assert.match(packageJson, /"build:pages": "npm run content:build && vite build && node scripts\/create-pages-404\.mjs && node scripts\/check-pages-size\.mjs"/);
   assert.match(viteConfig, /process\.env\.SITE_BASE/);
   await access(new URL("../dist/client/index.html", import.meta.url));
   await access(new URL("../dist/client/404.html", import.meta.url));

@@ -8,9 +8,9 @@ summary: >-
   Aus Lauterbrunnen hat uns folgende Meldung erreicht. Mit vermehrtem
   Helikopterverkehr im markierten Bereich ist ab jetzt bis auf unbestimmte Zeit
   zu rechnen.
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/helistechelberg0.jpg'
+coverImage: '/assets/legacy-images/3c3545a01d80fb18cc13.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/helistechelberg0.jpg'
+  - src: '/assets/legacy-images/3c3545a01d80fb18cc13.jpg'
     alt: ''
   - src: /assets/archive/news/helistechelberg0/002.jpg
     alt: ''

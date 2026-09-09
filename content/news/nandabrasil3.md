@@ -8,9 +8,9 @@ summary: >-
   Nanda Walliser ist bereits wieder erfolgreich ins 2023 gestartet. Aus
   Brasilien erreicht uns folgender Bericht:Hallo liebe Jungfrau-Tächiwährend
   andere sich noch im Schnee rumgetummelt haben, sind Hansjörg und ich…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/nandabrasil3.jpg'
+coverImage: '/assets/legacy-images/4e71c646e8459440137b.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/nandabrasil3.jpg'
+  - src: '/assets/legacy-images/4e71c646e8459440137b.jpg'
     alt: ''
   - src: /assets/archive/news/nandabrasil3/002.jpg
     alt: ''

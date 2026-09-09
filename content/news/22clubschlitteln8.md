@@ -8,9 +8,9 @@ summary: >-
   Der Eigerrun präsentierte sich uns bei Sternenschein und bestens präpariert.
   Die Schlittenfahrten waren für alle ein Genuss, genau wie das anschliessende
   Fondue im neuen Bergrestaurant Brandegg. Hier einige Bilder…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/22clubschlitteln8.jpg'
+coverImage: '/assets/legacy-images/daa0ac1fab90d1a8449a.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/22clubschlitteln8.jpg'
+  - src: '/assets/legacy-images/daa0ac1fab90d1a8449a.jpg'
     alt: ''
   - src: /assets/archive/news/22clubschlitteln8/002.jpg
     alt: ''

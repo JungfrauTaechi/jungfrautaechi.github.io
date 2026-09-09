@@ -8,9 +8,9 @@ summary: >-
   Bereits am 7. Juli startet die diesjährige Ausgabe der Eigertour auf dem
   "Eiger Plus Platz" im Zentrum von Grindelwald. Folgendem Flyer entnimmst du
   die Eckdaten und gelangst via QR-Code auf die Homepage…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/eigertour21.jpg'
+coverImage: '/assets/legacy-images/0eef5ac001492dec345a.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/eigertour21.jpg'
+  - src: '/assets/legacy-images/0eef5ac001492dec345a.jpg'
     alt: ''
   - src: /assets/archive/news/eigertour21/002.jpg
     alt: ''

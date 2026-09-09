@@ -8,9 +8,9 @@ summary: >-
   Auch dieses Jahr führte uns der Clubausflug nach Bassano del Grappa, nördlich
   von Venedig. Der Wetterbericht war nicht allzu vielversprechend, die
   Verhältnisse präsentierten sich uns in Natura aber bestens. Die…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/2022bassano7.jpg'
+coverImage: '/assets/legacy-images/c8161213ac58dab162fa.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/2022bassano7.jpg'
+  - src: '/assets/legacy-images/c8161213ac58dab162fa.jpg'
     alt: ''
   - src: /assets/archive/news/2022bassano7/002.jpg
     alt: ''

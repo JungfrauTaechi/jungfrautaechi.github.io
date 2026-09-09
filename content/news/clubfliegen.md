@@ -8,9 +8,9 @@ summary: >-
   Liebe Jungfrau TächiAm kommenden Samstag, 18. September 2021, findet wieder
   unser Clubfliegen statt.Folgendes Programm ist vorgesehen:09:00 Uhr:
   Startplatz First, Gedenkflug für Rainer Neustadt. Es sind alle dazu…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/clubfliegen.jpg'
+coverImage: '/assets/legacy-images/70f34e79fef8dd25f841.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/clubfliegen.jpg'
+  - src: '/assets/legacy-images/70f34e79fef8dd25f841.jpg'
     alt: ''
   - src: /assets/archive/news/clubfliegen/002.jpg
     alt: ''

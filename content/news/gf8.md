@@ -8,9 +8,9 @@ summary: >-
   Anstelle des jährlichen Notschirmfaltens, organisierte Alain dieses Jahr ein
   G-Force Training. Über ein Duzend Tächi nahmen die Gelegenheit wahr, sich in
   Dallenwil an die Zentrifuge anhängen zu lassen. Das…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/gf8.jpg'
+coverImage: '/assets/legacy-images/41cd9426cd83c6254603.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/gf8.jpg'
+  - src: '/assets/legacy-images/41cd9426cd83c6254603.jpg'
     alt: ''
   - src: /assets/archive/news/gf8/002.jpg
     alt: ''

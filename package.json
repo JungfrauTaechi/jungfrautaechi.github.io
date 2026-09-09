@@ -12,11 +12,12 @@
     "content:import": "node scripts/import-current-content.mjs",
     "content:build": "node scripts/compile-content.mjs",
     "build": "npm run content:build && vite build && node scripts/prepare-sites-build.mjs",
-    "build:pages": "npm run content:build && vite build && node scripts/create-pages-404.mjs",
+    "build:pages": "npm run content:build && vite build && node scripts/create-pages-404.mjs && node scripts/check-pages-size.mjs",
     "publish:pages": "node scripts/publish-pages.mjs",
     "preview": "vite preview",
     "test:sites": "node --test tests/sites-worker.test.mjs",
-    "test": "node --test tests/app.test.mjs",
+    "pretest": "npm run content:build",
+    "test": "node --test tests/app.test.mjs tests/pascal-feedback.test.mjs",
     "test:pages": "node --test tests/pages.test.mjs"
   },
   "dependencies": {

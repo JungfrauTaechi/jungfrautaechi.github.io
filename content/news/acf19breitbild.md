@@ -8,9 +8,9 @@ summary: >-
   Stabile Bedingungen, viel Sonnenschein und gemütliches Abendessen brachten
   einen Teilnehmerrekord. 31 Tächi flogen am diesjährigen Clubfliegen mit.
   Etliche mehr fanden sich zum Abendessen auf dem Golfplatz Aspi ein.…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/acf19breitbild.jpg'
+coverImage: '/assets/legacy-images/6e923020cef47096a1c2.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/acf19breitbild.jpg'
+  - src: '/assets/legacy-images/6e923020cef47096a1c2.jpg'
     alt: ''
   - src: /assets/archive/news/acf19breitbild/002.jpg
     alt: ''

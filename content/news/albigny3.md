@@ -8,9 +8,9 @@ summary: >-
   Auch im 2022 fliegt Nanda wieder an der Spitze. Hier ihr Bericht über die
   Teilnahme an den French Open 2022 und wieso es ein gutes Gefühl ist, mit dem
   Gleitschirm zwischen U-Booten zu sein:"Hansjörg und Nanda bei den…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/albigny3.jpg'
+coverImage: '/assets/legacy-images/b889b22c84f87ad5f78d.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/albigny3.jpg'
+  - src: '/assets/legacy-images/b889b22c84f87ad5f78d.jpg'
     alt: ''
   - src: /assets/archive/news/albigny3/002.jpg
     alt: ''

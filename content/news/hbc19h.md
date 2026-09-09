@@ -8,9 +8,9 @@ summary: >-
   Der starke Westwind in den höheren Lagen verursachte zwar Schwierigkeiten beim
   Start. Einmal in der Luft, waren die Verhältnisse ausgezeichnet. Dank
   gemeinsamer Unterstützung konnten schlussendlich alle Teilnehmenden…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/hbc19h.jpg'
+coverImage: '/assets/legacy-images/115ea4fc4bb4fd64620f.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/hbc19h.jpg'
+  - src: '/assets/legacy-images/115ea4fc4bb4fd64620f.jpg'
     alt: ''
   - src: /assets/archive/news/hbc19h/002.jpg
     alt: ''
