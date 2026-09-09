@@ -1,11 +1,18 @@
 import { formatWindTime, readingValue } from "./wind-feed.js";
 
-export function WindStationCard({ station, selected, onSelect, compact = false }) {
-  return <button className={`wind-card status-${station.status}${selected ? " is-selected" : ""}${compact ? " is-compact" : ""}`} type="button" role="tab" aria-selected={selected} aria-controls="meteo-station-detail" onClick={onSelect}>
-    <span className="wind-card-head"><span><strong>{station.name}</strong><small>{station.altitude} m · {station.detail || `${station.distanceKm.toFixed(1)} km ab Grindelwald`}</small></span><span className="station-status">{station.statusLabel}</span></span>
-    <span className="wind-current"><span className="wind-direction" style={{ transform: station.direction === null ? undefined : `rotate(${station.direction + 180}deg)` }} aria-label={station.direction === null ? "Windrichtung nicht verfügbar" : `Wind aus ${station.directionLabel}`}>{station.direction === null ? "–" : "↑"}</span><span><strong>{readingValue(station.average)}</strong><small>km/h Ø</small></span><span><strong>{readingValue(station.gust)}</strong><small>Böen</small></span><span><strong>{station.directionLabel}</strong><small>{station.direction === null ? "–" : `${Math.round(station.direction)}°`}</small></span></span>
-    <span className="wind-observed"><span>{station.observedAt ? `Messung ${formatWindTime(station.observedAt, { day: "2-digit", month: "2-digit" })}` : station.liveState === "loading" ? "Livewerte werden geladen…" : "Keine Messwerte verfügbar"}</span><span className="wind-temperature">Temperatur <strong>{station.temperature == null ? "–" : `${readingValue(station.temperature)} °C`}</strong></span></span>
-    {!compact && station.values.length > 0 && <><span className="wind-history-label">{station.values.length > 1 ? "Letzte Messungen" : "Aktueller Messwert"} · Ø / Böe in km/h</span><span className={`wind-history${station.values.length === 1 ? " is-single" : ""}`}>{station.values.map((value) => <span key={value.epoch}><small>{value.time}</small><strong>{readingValue(value.average)}</strong><small>/{readingValue(value.gust)}</small></span>)}</span></>}
-    <span className="wind-card-foot"><small>Quelle: {station.attribution}</small><span>Details ansehen</span></span>
-  </button>;
+export function WindStationCard({ station }) {
+  const history = station.values.slice().sort((a, b) => a.epoch - b.epoch);
+  const href = station.mapUrl || (station.id === "fanet-BA-4" ? "https://map.burnair.cloud/?layer=mw&id=fanet-BA-4" : `https://winds.mobi/map/${encodeURIComponent(station.id)}`);
+  return <article className={`wind-card wind-card-integrated status-${station.status}`} aria-label={station.name}>
+    <header className="wind-card-head"><div><h3>{station.name}</h3><small>{station.altitude} m{station.detail ? ` · ${station.detail}` : ""}</small></div><div className="wind-card-meta"><span className="station-status">{station.statusLabel}</span><small>{station.observedAt ? formatWindTime(station.observedAt, { day: "2-digit", month: "2-digit" }) : "Noch keine Messung"}</small></div></header>
+    <div className="wind-current">
+      <div className="wind-bearing"><span className="wind-direction" style={{ transform: station.direction === null ? undefined : `rotate(${station.direction + 180}deg)` }} aria-label={station.direction === null ? "Windrichtung nicht verfügbar" : `Wind aus ${station.directionLabel}`}>{station.direction === null ? "–" : "↑"}</span><small>{station.directionLabel} · {station.direction === null ? "–" : `${Math.round(station.direction)}°`}</small></div>
+      <span><strong>{readingValue(station.average)}</strong><small>km/h Mittel</small></span>
+      <span><strong>{readingValue(station.gust)}</strong><small>km/h Böen</small></span>
+      <span><strong>{station.temperature == null ? "–" : `${readingValue(station.temperature)}°`}</strong><small>Temperatur °C</small></span>
+    </div>
+    <div className="wind-history-heading"><strong>Letzte Messungen</strong><span>Mittel / Böen · km/h</span></div>
+    {history.length ? <div className="wind-history">{history.map((value, index) => <span key={value.epoch} className={index === history.length - 1 ? "is-latest" : ""}><small title={formatWindTime(value.epoch, { day: "2-digit", month: "2-digit" })}>{value.time}</small><strong>{readingValue(value.average)} / {readingValue(value.gust)}</strong></span>)}</div> : <p className="wind-empty">{station.liveState === "loading" ? "Messwerte werden geladen …" : "Keine Messwerte verfügbar."}</p>}
+    <footer className="wind-card-foot"><small>Quelle: {station.attribution}</small><a href={href} target="_blank" rel="noopener noreferrer" aria-label={`Station ${station.name} öffnen (neuer Tab)`}>Station öffnen ↗</a></footer>
+  </article>;
 }

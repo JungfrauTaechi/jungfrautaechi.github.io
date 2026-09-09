@@ -50,16 +50,13 @@ test("meteo prototype exposes the reviewed station hierarchy, live burnair and w
   for (const camera of ["Grindelwald-First", "Eigergletscher", "Männlichen", "Kleine Scheidegg", "Grindelwald Terminal"]) assert.ok(data.includes(camera));
   assert.equal((data.match(/roundshot\.com\/cams\/\d+\/medium/g) || []).length, 7);
   assert.equal((data.match(/focus: 0\./g) || []).length, 8);
-  assert.match(app, /burnair Map öffnen/);
   assert.doesNotMatch(app, /setRequestKey|burnair-station-actions|>Aktualisieren</);
-  assert.match(app, /showStationDetails/);
+  assert.doesNotMatch(app, /showStationDetails|meteo-station-detail/);
   assert.match(app, /useWindFeed/);
   assert.match(app, /<WindStationCard/);
   assert.doesNotMatch(app, /BurnairStationCard|onReadingsChange/);
-  assert.match(app, /useState\(grundMeteoStation\.id\)/);
+  assert.match(app, /a\.id === "windline-4104"/);
   assert.match(data, /windStationRoster/);
-  assert.match(app, /scrollIntoView/);
-  assert.match(app, /prefers-reduced-motion: reduce/);
   assert.match(app, /function WebcamCard/);
   assert.match(app, /method: "HEAD"/);
   assert.match(app, /Last-Modified/);
