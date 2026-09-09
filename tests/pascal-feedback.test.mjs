@@ -5,7 +5,29 @@ import { SHV_LINKS, SHV_PRODUCTS, shvDestination } from "../src/shv-links.js";
 import { validateRecord, localMediaPath } from "../scripts/content-validation.mjs";
 import { generatedNews, generatedPhotoReports } from "../src/generated-content.js";
 import { readFile, access } from "node:fs/promises";
+import { applyMarkerPosition } from "../src/marker-position.js";
 const shvWeatherSource = await readFile(new URL("../src/ShvWeather.jsx", import.meta.url), "utf8");
+
+test("marker overrides change only coordinates and retain the original link or station", () => {
+  const marker = { targetId: "grund", station: { id: "fanet-BA-4" }, yaw: 10, pitch: 20 };
+  assert.deepEqual(applyMarkerPosition(marker, { yaw: 0, pitch: -12 }), { ...marker, yaw: 0, pitch: -12 });
+  assert.equal(marker.yaw, 10);
+  for (const invalid of [undefined, {}, { yaw: 181, pitch: 0 }, { yaw: 0, pitch: NaN }]) assert.equal(applyMarkerPosition(marker, invalid), marker);
+});
+
+test("each of the thirteen panoramas has one configurable position for all eight webcams", async () => {
+  const positions = JSON.parse(await readFile(new URL("../src/panorama-webcams.json", import.meta.url), "utf8"));
+  const expected = ["first", "eigergletscher", "maennlichen", "kleine-scheidegg", "terminal", "kirchbuehl", "baeregg", "glecksteinhuette"].sort();
+  assert.equal(Object.keys(positions).length, 13);
+  for (const [scene, cameras] of Object.entries(positions)) {
+    assert.deepEqual(Object.keys(cameras).sort(), expected, scene);
+    for (const point of Object.values(cameras)) {
+      assert.ok(Number.isFinite(point.yaw) && point.yaw >= -180 && point.yaw <= 180, scene);
+      assert.ok(Number.isFinite(point.pitch) && point.pitch >= -90 && point.pitch <= 90, scene);
+      assert.equal(typeof point.provisional, "boolean");
+    }
+  }
+});
 
 test("all thirteen panorama pyramids have every expected local tile and original crop limits", async () => {
   const root = new URL("../public/assets/panoramas/", import.meta.url);
