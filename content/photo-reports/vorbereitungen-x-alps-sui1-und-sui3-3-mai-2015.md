@@ -4,7 +4,7 @@ slug: vorbereitungen-x-alps-sui1-und-sui3-3-mai-2015
 title: 'Vorbereitungen X-Alps, SUI1 und SUI3'
 date: '1970-01-01'
 detail: 3. Mai 2015
-coverImage: /assets/archive/photos/vorbereitungen-x-alps-sui1-und-sui3-3-mai-2015/001.jpg
+coverImage: /assets/archive/photos/vorbereitungen-x-alps-sui1-und-sui3-3-mai-2015/006.jpg
 gallery:
   - src: >-
       /assets/archive/photos/vorbereitungen-x-alps-sui1-und-sui3-3-mai-2015/001.jpg
