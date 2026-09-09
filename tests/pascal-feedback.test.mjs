@@ -5,7 +5,15 @@ import { SHV_LINKS, SHV_PRODUCTS, shvDestination } from "../src/shv-links.js";
 import { validateRecord, localMediaPath } from "../scripts/content-validation.mjs";
 import { generatedNews, generatedPhotoReports } from "../src/generated-content.js";
 import { readFile, access } from "node:fs/promises";
+import { applyMarkerPosition } from "../src/marker-position.js";
 const shvWeatherSource = await readFile(new URL("../src/ShvWeather.jsx", import.meta.url), "utf8");
+
+test("marker overrides change only coordinates and retain the original link or station", () => {
+  const marker = { targetId: "grund", station: { id: "fanet-BA-4" }, yaw: 10, pitch: 20 };
+  assert.deepEqual(applyMarkerPosition(marker, { yaw: 0, pitch: -12 }), { ...marker, yaw: 0, pitch: -12 });
+  assert.equal(marker.yaw, 10);
+  for (const invalid of [undefined, {}, { yaw: 181, pitch: 0 }, { yaw: 0, pitch: NaN }]) assert.equal(applyMarkerPosition(marker, invalid), marker);
+});
 
 test("each of the thirteen panoramas has one configurable position for all eight webcams", async () => {
   const positions = JSON.parse(await readFile(new URL("../src/panorama-webcams.json", import.meta.url), "utf8"));

@@ -2,6 +2,8 @@ import { upcomingEvents } from "./club-events.js";
 import { FullscreenFrame } from "./FullscreenFrame.jsx";
 import { PanoramaPositionPicker } from "./PanoramaPositionPicker.jsx";
 import panoramaWebcams from "./panorama-webcams.json";
+import panoramaMarkerOverrides from "./panorama-marker-overrides.json";
+import { applyMarkerPosition } from "./marker-position.js";
 import { Imprint } from "./Imprint.jsx";
 import { WeatherForecast } from "./WeatherForecast.jsx";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -285,7 +287,7 @@ function panoramaInfoMarkers(site) {
     if (!position) continue;
     markers.push({ id: `${site.id}-webcam-${camera.id}`, kind: "webcam", yaw: position.yaw, pitch: position.pitch, eyebrow: "Live-Webcam", title: camera.title, detail: "Original-Webcam öffnen ↗", ariaLabel: `Live-Webcam ${camera.title} öffnen`, camera });
   }
-  return markers;
+  return markers.map((marker) => marker.kind === "meteo" ? applyMarkerPosition(marker, panoramaMarkerOverrides[site.id]?.wind?.[marker.station.id]) : marker);
 }
 function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas }) {
   const containerRef = useRef(null);
@@ -293,6 +295,12 @@ function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas 
   const viewerRef = useRef(null);
   const [selectingPosition, setSelectingPosition] = useState(false);
   const [pickedPosition, setPickedPosition] = useState(null);
+  const editableMarkers = [
+    ...meteoWebcams.map((camera) => ({ key: `webcam:${camera.id}`, id: camera.id, label: camera.title, group: "Webcams", file: "src/panorama-webcams.json" })),
+    ...[...new Map(panoramaInfoMarkers(site).filter((marker) => marker.kind === "meteo").map((marker) => [marker.station.id, marker])).values()].map((marker) => ({ key: `wind:${marker.station.id}`, id: marker.station.id, label: marker.title, group: "Wind", section: "wind", file: "src/panorama-marker-overrides.json" })),
+    ...site.links.map((link) => ({ key: `panorama:${link.targetId}`, id: link.targetId, label: flightScenes.find((scene) => scene.id === link.targetId)?.label || link.targetId, group: "Andere Panoramen", section: "panoramas", file: "src/panorama-marker-overrides.json" })),
+  ];
+  const resetPickedPosition = () => { setPickedPosition(null); setSelectingPosition(false); viewerRef.current?.removeHotSpot("marker-position-preview"); };
   const pickPosition = (event) => {
     if (!selectingPosition || event.target.closest(".pano-marker-editor") || !viewerRef.current) return;
     event.preventDefault();
@@ -315,7 +323,7 @@ function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas 
         const centre = areaCentre(area.vertices);
         return site.sceneType === "overview" ? [] : [{ pitch: centre.pitch, yaw: centre.yaw, cssClass: `pano-area-label is-${area.kind}`, createTooltipFunc: createAreaLabelHotspot, createTooltipArgs: area }];
       }) : [];
-      const sceneHotSpots = site.links.map((link) => { const target = flightScenes.find((scene) => scene.id === link.targetId); const args = { ...link, label: target?.label || link.targetId, onSelectScene }; return { pitch: link.pitch, yaw: link.yaw, cssClass: "pano-link-hotspot", createTooltipFunc: createSceneLinkHotspot, createTooltipArgs: args, clickHandlerFunc: (_event, handlerArgs) => handlerArgs.onSelectScene(handlerArgs.targetId), clickHandlerArgs: args }; });
+      const sceneHotSpots = site.links.map((originalLink) => { const link = applyMarkerPosition(originalLink, panoramaMarkerOverrides[site.id]?.panoramas?.[originalLink.targetId]); const target = flightScenes.find((scene) => scene.id === link.targetId); const args = { ...link, label: target?.label || link.targetId, onSelectScene }; return { pitch: link.pitch, yaw: link.yaw, cssClass: "pano-link-hotspot", createTooltipFunc: createSceneLinkHotspot, createTooltipArgs: args, clickHandlerFunc: (_event, handlerArgs) => handlerArgs.onSelectScene(handlerArgs.targetId), clickHandlerArgs: args }; });
       const landmarkHotSpots = site.landmarks.map((landmark) => ({ pitch: landmark.pitch, yaw: landmark.yaw, cssClass: "pano-landmark-hotspot", createTooltipFunc: createLandmarkHotspot, createTooltipArgs: landmark }));
       const infoHotSpots = panoramaInfoMarkers(site).map((marker) => ({ pitch: marker.pitch, yaw: marker.yaw, cssClass: `pano-info-hotspot is-${marker.kind}`, createTooltipFunc: createInfoHotspot, createTooltipArgs: marker, clickHandlerFunc: (_event, handlerArgs) => { if (handlerArgs.kind === "webcam") window.open(handlerArgs.camera.viewerUrl, "_blank", "noopener,noreferrer"); else handlerArgs.onOpenMeteo(); }, clickHandlerArgs: { ...marker, onOpenMeteo } }));
       viewer = window.pannellum.viewer(containerRef.current, { type: "multires", multiRes: site.panorama.multiRes, minPitch: site.panorama.minPitch, maxPitch: site.panorama.maxPitch, avoidShowingBackground: true, multiResMinHfov: false, preview: site.panorama.preview, hotSpots: [...areaHotSpots, ...sceneHotSpots, ...landmarkHotSpots, ...infoHotSpots], autoLoad: true, yaw: site.panorama.yaw, pitch: site.panorama.pitch, hfov: site.panorama.hfov, minHfov: 45, maxHfov: 115, showFullscreenCtrl: false, compass: false, escapeHTML: true, strings: { loadButtonLabel: "Panorama laden", loadingLabel: "Panorama wird geladen …", bylineLabel: "von %s", noPanoramaError: "Panorama konnte nicht geladen werden.", fileAccessError: "Das Panorama muss über den Webserver geöffnet werden.", malformedURLError: "Ungültige Panorama-Adresse.", iOS8WebGLError: "Der Browser unterstützt die 360°-Ansicht nicht.", genericWebGLError: "Der Browser unterstützt die 360°-Ansicht nicht.", textureSizeError: "Das Panorama ist für dieses Gerät zu gross.", unknownError: "Unbekannter Fehler.", twoTouchActivate: "Mit zwei Fingern bewegen", twoTouchXActivate: "Mit zwei Fingern seitlich bewegen", twoTouchYActivate: "Mit zwei Fingern vertikal bewegen", ctrlZoomActivate: "Strg + Scrollen zum Zoomen" } });
@@ -353,7 +361,7 @@ function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas 
     mountViewer();
     return () => { cancelled = true; if (areaFrame) cancelAnimationFrame(areaFrame); viewer?.destroy(); viewerRef.current = null; areaOverlayRef.current = null; };
   }, [site, reloadKey, onSelectScene, onOpenMeteo, showAreas]);
-  return <div className={`panorama-layer${selectingPosition ? " is-picking" : ""}`} onClickCapture={pickPosition}><div className="panorama-canvas" ref={containerRef} role="region" aria-label={`Interaktives 360°-Panorama: ${site.label}`} />{import.meta.env.DEV && <PanoramaPositionPicker site={site} cameras={meteoWebcams} point={pickedPosition} selecting={selectingPosition} onSelect={setSelectingPosition} />}</div>;
+  return <div className={`panorama-layer${selectingPosition ? " is-picking" : ""}`} onClickCapture={pickPosition}><div className="panorama-canvas" ref={containerRef} role="region" aria-label={`Interaktives 360°-Panorama: ${site.label}`} />{import.meta.env.DEV && <PanoramaPositionPicker site={site} markers={editableMarkers} point={pickedPosition} selecting={selectingPosition} onSelect={setSelectingPosition} onReset={resetPickedPosition} />}</div>;
 }
 function FlightExplorer({ initialGroup = "overview", initialSceneId = "" }) {
   const firstScene = flightScenes.find((scene) => scene.id === initialSceneId) || flightScenes.find((scene) => scene.sceneType === initialGroup) || flightScenes[0];
