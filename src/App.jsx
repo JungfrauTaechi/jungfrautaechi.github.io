@@ -3,8 +3,9 @@ import { Imprint } from "./Imprint.jsx";
 import { WeatherForecast } from "./WeatherForecast.jsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CONFIG, boardMembers, chronology, clubPortrait, clubProgramme, clubPurposes, clubStories, flightFacts, flightSceneGroups, flightScenes, grundMeteoStation, images, membershipFormUrl, meteoStations, meteoWebcams, news, photoReports, routes, safetyAreas, shvAirspaceUrl, shvGrindelwaldDocument, utilityLinks } from "./data.js";
-import { isBurnairReadingStale, parseBurnairWindPayload } from "./burnair-wind.js";
-import { isWindsMobiReadingStale, loadWindsMobiLatest, readWindsMobiCache } from "./winds-mobi.js";
+import { WindStationCard } from "./WindStationCard.jsx";
+import { useWindFeed } from "./useWindFeed.js";
+import { formatWindTime, readingValue } from "./wind-feed.js";
 import { appPath, routeFromPathname } from "./site-paths.js";
 const navItems = [routes.flightArea, routes.meteo, routes.club, routes.news, routes.photos]; const routeList = Object.values(routes);
 const siteBase = import.meta.env.BASE_URL;
@@ -32,98 +33,7 @@ function Home() {
   </>;
 }
 
-function StationCard({ station, selected, onSelect, compact = false }) {
-  const liveStatus = station.liveState === "loading" ? "Wird geladen" : station.liveState === "unavailable" ? "Nicht verfügbar" : station.stale ? "Veraltet" : station.statusLabel;
-  const hasLiveValue = Boolean(station.observedAt);
-  return <button className={`wind-card status-${station.status}${selected ? " is-selected" : ""}${compact ? " is-compact" : ""}`} type="button" role="tab" aria-selected={selected} aria-controls="meteo-station-detail" onClick={onSelect}>
-    <span className="wind-card-head"><span><strong>{station.name}</strong><small>{station.altitude} m · {station.distanceKm.toFixed(1)} km ab Grindelwald</small></span><span className="station-status">{liveStatus}</span></span>
-    <span className="wind-current"><span className="wind-direction" style={{ transform: `rotate(${(station.direction ?? 0) + 180}deg)` }} aria-label={station.direction === null ? "Windrichtung nicht verfügbar" : `Wind aus ${station.directionLabel}`}>↑</span><span><strong>{readingValue(station.average)}</strong><small>km/h Ø</small></span><span><strong>{readingValue(station.gust)}</strong><small>Böen</small></span><span><strong>{station.directionLabel}</strong><small>{station.direction === null ? "–" : `${Math.round(station.direction)}°`}</small></span></span>
-    {!compact && <>{hasLiveValue ? <><span className="wind-history-label">Aktueller Messwert · Ø / Böe in km/h</span><span className="wind-history is-single"><span><small>{formatBurnairTime(station.observedAt)}</small><strong>{readingValue(station.average)}</strong><small>/{readingValue(station.gust)}</small></span></span></> : <span className="wind-history-label">{station.liveState === "loading" ? "Livewerte werden geladen…" : "Livewerte momentan nicht verfügbar"}</span>}</>}
-    <span className="wind-card-foot">Quelle: winds.mobi · {station.provider}<span>Details ansehen</span></span>
-  </button>;
-}
 
-const formatBurnairTime = (epoch, options = {}) => new Intl.DateTimeFormat("de-CH", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Zurich", ...options }).format(new Date(epoch * 1000));
-const readingValue = (value) => value === null || value === undefined ? "–" : Math.round(value);
-const windsMobiStationIds = meteoStations.map((station) => station.id);
-
-function withWindsMobiReadings(stations, readings, feedStatus) {
-  const readingsById = new Map(readings.map((reading) => [reading.id, reading]));
-  return stations.map((station) => {
-    const reading = readingsById.get(station.id);
-    const hasMeasurement = reading?.average !== null && reading?.average !== undefined;
-    const stale = isWindsMobiReadingStale(reading);
-    const average = reading?.average ?? null;
-    const status = average === null ? "watch" : average >= 22 ? "strong" : average >= 16 ? "watch" : "good";
-    return {
-      ...station,
-      provider: reading?.provider || station.provider,
-      observedAt: reading?.epoch ?? null,
-      average,
-      gust: reading?.gust ?? null,
-      direction: reading?.direction ?? null,
-      directionLabel: reading?.directionLabel ?? "–",
-      temperature: reading?.temperature ?? null,
-      status,
-      statusLabel: status === "strong" ? "Stark" : status === "watch" ? "Beobachten" : "Ruhig",
-      stale,
-      liveState: hasMeasurement ? "ready" : feedStatus === "loading" || feedStatus === "refreshing" ? "loading" : "unavailable",
-      trend: hasMeasurement ? stale ? "Messwert veraltet" : "Aktuelle Live-Messung" : feedStatus === "loading" || feedStatus === "refreshing" ? "Livewerte werden geladen" : "Livewerte momentan nicht verfügbar",
-      values: hasMeasurement ? [{ time: formatBurnairTime(reading.epoch), average: reading.average, gust: reading.gust }] : [],
-      source: "winds.mobi",
-    };
-  });
-}
-
-function BurnairStationCard({ station, selected, onSelect, onReadingsChange }) {
-  const [feed, setFeed] = useState({ status: "loading", readings: [], error: "" });
-
-  useEffect(() => {
-    const controller = new AbortController();
-    let active = true;
-    const timeout = setTimeout(() => controller.abort(), 10000);
-    setFeed((current) => ({ ...current, status: "loading", error: "" }));
-    fetch(station.apiUrl, { cache: "no-store", headers: { Accept: "application/json" }, signal: controller.signal })
-      .then((response) => {
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return response.json();
-      })
-      .then((payload) => {
-        const readings = parseBurnairWindPayload(payload, station.id);
-        if (!readings.length) throw new Error("Keine Messwerte empfangen");
-        if (active) {
-          setFeed({ status: "ready", readings, error: "" });
-          onReadingsChange(readings);
-        }
-      })
-      .catch((error) => {
-        if (!active) return;
-        if (error.name === "AbortError" && controller.signal.aborted) {
-          setFeed((current) => ({ ...current, status: "error", error: "Zeitüberschreitung beim Abruf" }));
-          return;
-        }
-        setFeed((current) => ({ ...current, status: "error", error: "Livewerte momentan nicht verfügbar" }));
-      })
-      .finally(() => clearTimeout(timeout));
-    return () => { active = false; clearTimeout(timeout); controller.abort(); };
-  }, [onReadingsChange, station.apiUrl, station.id]);
-
-  const latest = feed.readings[0];
-  const stale = isBurnairReadingStale(latest);
-  const statusLabel = feed.status === "loading" && !latest ? "Wird geladen" : feed.status === "error" ? "Nicht verfügbar" : stale ? "Veraltet" : "Live";
-  const visibleHistory = feed.readings.slice(0, 4);
-
-  return <article className={`burnair-station-card${selected ? " is-selected" : ""}${stale ? " is-stale" : ""}${feed.status === "error" ? " has-error" : ""}`} aria-label={`${station.name}, Live-Windwerte von burnair`} aria-live="polite">
-    <div className="burnair-station-head"><span className="burnair-station-marker" aria-hidden="true">L</span><span className="wind-card-head"><span><strong>{station.name}</strong><small>{station.detail} · {station.altitude} m</small></span><span className="station-status">{statusLabel}</span></span></div>
-    {latest ? <>
-      <div className="wind-current"><span className="wind-direction" style={{ transform: `rotate(${(latest.direction ?? 0) + 180}deg)` }} aria-label={latest.direction === null ? "Windrichtung nicht verfügbar" : `Wind aus ${latest.directionLabel}`}>↑</span><span><strong>{readingValue(latest.average)}</strong><small>km/h Ø</small></span><span><strong>{readingValue(latest.gust)}</strong><small>km/h Böen</small></span><span><strong>{latest.directionLabel}</strong><small>{latest.direction === null ? "–" : `${Math.round(latest.direction)}°`}</small></span></div>
-      <span className="wind-history-label">Letzte Messungen · Ø / Böe in km/h</span>
-      <span className="wind-history">{visibleHistory.map((reading) => <span key={reading.epoch}><small>{formatBurnairTime(reading.epoch)}</small><strong>{readingValue(reading.average)}</strong><small>/{readingValue(reading.gust)}</small></span>)}</span>
-    </> : <div className="burnair-station-message"><strong>{feed.status === "error" ? feed.error : "Livewerte werden geladen…"}</strong><small>Falls der Abruf nicht funktioniert, öffne die Station direkt in der burnair Map.</small></div>}
-    {feed.error && latest && <p className="burnair-feed-error">{feed.error}. Der letzte empfangene Wert bleibt sichtbar.</p>}
-    <div className="burnair-station-foot"><span><strong>Quelle: burnair</strong>{latest && <> · Stand {formatBurnairTime(latest.epoch, { day: "2-digit", month: "2-digit" })}</>} · Prototyp · <ExternalLink className="burnair-map-link" href={station.mapUrl}>burnair Map öffnen ↗</ExternalLink></span><button className="burnair-detail-button" type="button" aria-controls="meteo-station-detail" onClick={onSelect}>Details ansehen</button></div>
-  </article>;
-}
 
 function WebcamCard({ camera, refreshToken, index, total, onPrevious, onNext }) {
   const [capturedAt, setCapturedAt] = useState("");
@@ -193,40 +103,16 @@ function WebcamCard({ camera, refreshToken, index, total, onPrevious, onNext }) 
 }
 
 function MeteoPage() {
-  const [activeId, setActiveId] = useState(meteoStations[0].id);
-  const [grundReadings, setGrundReadings] = useState([]);
-  const [windsFeed, setWindsFeed] = useState(() => {
-    const cached = readWindsMobiCache(windsMobiStationIds);
-    return { status: cached ? cached.fresh ? "ready" : "refreshing" : "loading", readings: cached?.stations || [], fetchedAt: cached?.fetchedAt || null, fromCache: Boolean(cached) };
-  });
+  const [activeId, setActiveId] = useState(grundMeteoStation.id);
+  const windFeed = useWindFeed();
   const [showRegionalStations, setShowRegionalStations] = useState(false);
   const [webcamRefresh, setWebcamRefresh] = useState(0);
   const [activeWebcamIndex, setActiveWebcamIndex] = useState(0);
   const detailsRef = useRef(null);
-  useEffect(() => {
-    let active = true;
-    loadWindsMobiLatest(windsMobiStationIds)
-      .then((feed) => { if (active) setWindsFeed({ status: "ready", readings: feed.stations, fetchedAt: feed.fetchedAt, fromCache: feed.fromCache }); })
-      .catch(() => { if (active) setWindsFeed((current) => ({ ...current, status: "error" })); });
-    return () => { active = false; };
-  }, []);
-  const grundLatest = grundReadings[0];
-  const grundDetailStation = {
-    ...grundMeteoStation,
-    average: grundLatest?.average ?? null,
-    gust: grundLatest?.gust ?? null,
-    direction: grundLatest?.direction ?? null,
-    directionLabel: grundLatest?.directionLabel ?? "–",
-    temperature: grundLatest?.temperature ?? null,
-    trend: grundLatest ? "Aktuelle Live-Messungen" : "Livewerte werden geladen",
-    values: grundReadings.slice(0, 4).map((reading) => ({ time: formatBurnairTime(reading.epoch), average: reading.average, gust: reading.gust })),
-    source: "burnair",
-  };
-  const liveMeteoStations = withWindsMobiReadings(meteoStations, windsFeed.readings, windsFeed.status);
-  const activeStation = activeId === grundMeteoStation.id ? grundDetailStation : liveMeteoStations.find((station) => station.id === activeId) || liveMeteoStations[0];
+  const activeStation = windFeed.stations.find((station) => station.id === activeId) || windFeed.stations[0];
   const activeWebcam = meteoWebcams[activeWebcamIndex];
-  const primaryStations = liveMeteoStations.slice(0, 5);
-  const regionalStations = liveMeteoStations.slice(5);
+  const primaryStations = windFeed.stations.filter((station) => station.primary);
+  const regionalStations = windFeed.stations.filter((station) => !station.primary);
   const showStationDetails = (stationId) => {
     setActiveId(stationId);
     requestAnimationFrame(() => detailsRef.current?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }));
@@ -236,20 +122,20 @@ function MeteoPage() {
     <section className="page-banner meteo-intro" style={{ "--page-banner-image": `url("${images.meteoHeader}")`, "--page-banner-position": "center 48%" }}>
       <div className="shell meteo-intro-grid">
         <div><p className="eyebrow">Meteo Jungfrau · Prototyp</p><h1 tabIndex="-1">Wind und Flugwetter auf einen Blick</h1><p>Aktuelle Messwerte, Verlauf, Webcams und Luftraum für die wichtigsten Plätze der Region.</p></div>
-        <div className="meteo-update"><span className="live-dot" aria-hidden="true" /><div><strong>{windsFeed.status === "error" ? "winds.mobi nicht verfügbar" : windsFeed.fromCache ? "winds.mobi Cache verwendet" : "winds.mobi Livewerte geladen"}</strong><span>{windsFeed.fetchedAt ? `Stand ${formatBurnairTime(windsFeed.fetchedAt / 1000)} · Browser-Cache 5 Min.` : "Livewerte werden geladen…"}</span></div></div>
+        <div className="meteo-update"><span className={`live-dot${windFeed.status === "ready" ? "" : " is-muted"}`} aria-hidden="true" /><div><strong>{windFeed.status === "loading" ? "Windwerte werden geladen" : windFeed.status === "error" ? "Winddaten nicht verfügbar" : windFeed.status === "partial" ? "Winddaten teilweise verfügbar" : windFeed.status === "refreshing" ? "Winddaten werden aktualisiert" : "Winddaten geladen"}</strong><span>Messzeit und Quelle bei jeder Station</span></div></div>
       </div>
     </section>
-    <aside className="mock-notice" aria-label="Hinweis zu den Wetterdaten"><div className="shell"><strong>Demonstration:</strong> Grund wird testweise live von burnair geladen, die übrigen Stationen direkt von winds.mobi mit einem Browser-Cache von fünf Minuten. Sicherheitsmeldungen bleiben simuliert und alle Werte sind nicht für Flugentscheidungen geeignet.</div></aside>
+    <aside className="mock-notice" aria-label="Hinweis zu den Wetterdaten"><div className="shell"><strong>Demonstration:</strong> {windFeed.mode === "thermalbase" ? "Windwerte werden über den gemeinsamen Wetterdienst geladen." : "Windwerte werden testweise direkt von burnair und winds.mobi geladen, mit einem Browser-Cache von fünf Minuten."} Sicherheitsmeldungen bleiben simuliert und alle Werte sind nicht für Flugentscheidungen geeignet.</div></aside>
     <section className="shell meteo-overview" aria-labelledby="wind-heading">
-      <div className="meteo-section-head"><div><p className="eyebrow">Messstationen rund um Grindelwald</p><h2 id="wind-heading">Die fünf nächsten Stationen</h2><p>Nach Luftlinie ab Grindelwald, ergänzt um die Live-Station am Landeplatz Grund.</p></div><div className="meteo-section-tools"><span className="station-count">29 winds.mobi · 1 burnair</span><div className="meteo-legend"><span><i className="legend-good" />Ruhig</span><span><i className="legend-watch" />Beobachten</span><span><i className="legend-strong" />Stark</span></div></div></div>
-      <BurnairStationCard station={grundMeteoStation} selected={activeId === grundMeteoStation.id} onSelect={() => showStationDetails(grundMeteoStation.id)} onReadingsChange={setGrundReadings} />
-      <div className="wind-grid" role="tablist" aria-label="Nahe Messstation auswählen">{primaryStations.map((station) => <StationCard key={station.id} station={station} selected={station.id === activeStation.id} onSelect={() => showStationDetails(station.id)} />)}</div>
+      <div className="meteo-section-head"><div><p className="eyebrow">Messstationen rund um Grindelwald</p><h2 id="wind-heading">Sechs Stationen rund um Grindelwald</h2><p>Landeplatz Grund zuerst, danach die fünf nächsten Stationen nach Luftlinie.</p></div><div className="meteo-section-tools"><span className="station-count">6 vor Ort · 24 in der Region</span><div className="meteo-legend"><span><i className="legend-good" />Ruhig</span><span><i className="legend-watch" />Beobachten</span><span><i className="legend-strong" />Stark</span></div></div></div>
+
+      <div className="wind-grid" role="tablist" aria-label="Nahe Messstation auswählen">{primaryStations.map((station) => <WindStationCard key={station.id} station={station} selected={station.id === activeStation.id} onSelect={() => showStationDetails(station.id)} />)}</div>
       <button className="station-expand" type="button" aria-expanded={showRegionalStations} aria-controls="regional-wind-stations" onClick={() => setShowRegionalStations((visible) => !visible)}><span><strong>{showRegionalStations ? "Regionale Stationen ausblenden" : `${regionalStations.length} weitere Stationen anzeigen`}</strong><small>Interlaken · Lauterbrunnen · Meiringen und Umgebung</small></span><span className="station-expand-icon" aria-hidden="true">{showRegionalStations ? "−" : "+"}</span></button>
-      {showRegionalStations && <section className="regional-stations" id="regional-wind-stations" aria-labelledby="regional-stations-title"><header><div><p className="eyebrow">Erweiterte Region</p><h3 id="regional-stations-title">Alle weiteren Stationen</h3></div><p>Sortiert nach Entfernung zu Grindelwald. Antippen, um Verlauf und Details unten anzuzeigen.</p></header><div className="wind-grid is-regional" role="tablist" aria-label="Regionale Messstation auswählen">{regionalStations.map((station) => <StationCard compact key={station.id} station={station} selected={station.id === activeStation.id} onSelect={() => showStationDetails(station.id)} />)}</div></section>}
+      {showRegionalStations && <section className="regional-stations" id="regional-wind-stations" aria-labelledby="regional-stations-title"><header><div><p className="eyebrow">Erweiterte Region</p><h3 id="regional-stations-title">Alle weiteren Stationen</h3></div><p>Sortiert nach Entfernung zu Grindelwald. Antippen, um Verlauf und Details unten anzuzeigen.</p></header><div className="wind-grid is-regional" role="tablist" aria-label="Regionale Messstation auswählen">{regionalStations.map((station) => <WindStationCard compact key={station.id} station={station} selected={station.id === activeStation.id} onSelect={() => showStationDetails(station.id)} />)}</div></section>}
     </section>
     <section className="shell meteo-detail" id="meteo-station-detail" ref={detailsRef} role="tabpanel" aria-label={`Details für ${activeStation.name}`}>
-      <div className="station-detail-main"><p className="eyebrow">Ausgewählte Station</p><h2>{activeStation.name}</h2><p>{activeStation.source === "winds.mobi" ? `Quelle: winds.mobi · ${activeStation.provider}` : activeStation.provider} · {activeStation.altitude} m · {activeStation.id === grundMeteoStation.id ? activeStation.detail : `${activeStation.distanceKm.toFixed(1)} km ab Grindelwald`}</p><div className="detail-reading"><span><strong>{readingValue(activeStation.average)}</strong><small>km/h Mittel</small></span><span><strong>{readingValue(activeStation.gust)}</strong><small>km/h Böen</small></span><span><strong>{activeStation.directionLabel}</strong><small>{activeStation.direction === null ? "–" : `${Math.round(activeStation.direction)}°`}</small></span><span><strong>{activeStation.temperature === null ? "–" : `${Math.round(activeStation.temperature)}°`}</strong><small>Temperatur</small></span></div></div>
-      <div className="station-trend"><p className="eyebrow">Entwicklung</p><strong>{activeStation.trend}</strong><p>{activeStation.source === "winds.mobi" ? "Dieser Test zeigt den aktuellen winds.mobi-Messwert; die Verlaufshistorie folgt mit der serverseitigen Anbindung." : "Die letzten vier gemeldeten Werte bleiben auf der Stationskarte direkt sichtbar."}</p><div className="trend-values">{activeStation.values.slice().reverse().map((value) => <span key={value.time}><small>{value.time}</small><i style={{ height: `${Math.max(22, (value.gust ?? 0) * 1.5)}px` }} /><strong>{readingValue(value.average)}/{readingValue(value.gust)}</strong></span>)}</div><small>Ø / Böe in km/h</small></div>
+      <div className="station-detail-main"><p className="eyebrow">Ausgewählte Station</p><h2>{activeStation.name}</h2><p>Quelle: {activeStation.attribution} · {activeStation.altitude} m · {activeStation.id === grundMeteoStation.id ? activeStation.detail : `${activeStation.distanceKm.toFixed(1)} km ab Grindelwald`}</p><p className="station-detail-status">{activeStation.statusLabel}{activeStation.observedAt && ` · Messung ${formatWindTime(activeStation.observedAt, { day: "2-digit", month: "2-digit" })}`}{activeStation.id === grundMeteoStation.id && <> · <ExternalLink href={grundMeteoStation.mapUrl}>burnair Map öffnen ↗</ExternalLink></>}</p><div className="detail-reading"><span><strong>{readingValue(activeStation.average)}</strong><small>km/h Mittel</small></span><span><strong>{readingValue(activeStation.gust)}</strong><small>km/h Böen</small></span><span><strong>{activeStation.directionLabel}</strong><small>{activeStation.direction === null ? "–" : `${Math.round(activeStation.direction)}°`}</small></span><span><strong>{activeStation.temperature === null ? "–" : `${Math.round(activeStation.temperature)}°`}</strong><small>Temperatur</small></span></div></div>
+      <div className="station-trend"><p className="eyebrow">Entwicklung</p><strong>{activeStation.trend}</strong><p>{activeStation.values.length > 1 ? "Die letzten vier verfügbaren Messungen. Messzeiten in Schweizer Ortszeit." : activeStation.values.length === 1 ? "Aktuell ist eine Messung verfügbar. Weitere Werte erscheinen, sobald die Datenquelle einen Verlauf liefert." : "Sobald Messwerte vorliegen, erscheint hier der Verlauf."}</p><div className="trend-values">{activeStation.values.slice().reverse().map((value) => <span key={value.epoch}><small>{value.time}</small><i style={{ height: `${Math.max(22, (value.gust ?? 0) * 1.5)}px` }} /><strong>{readingValue(value.average)}/{readingValue(value.gust)}</strong></span>)}</div><small>Ø / Böe in km/h</small></div>
     </section>
     <WeatherForecast />
     <section className="meteo-secondary"><div className="shell meteo-secondary-grid">

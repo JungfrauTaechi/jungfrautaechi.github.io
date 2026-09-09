@@ -2,6 +2,8 @@
 
 Status: architecture companion, proposed for review, 1 September 2026. Runtime defaults, compliance gates and acceptance criteria are authoritative in [Thermalbase on-demand winds.mobi integration — developer handover](./thermalbase-wind-history-requirements.md).
 
+Frontend update, 9 September 2026: the common six-card station grid and switchable feed client are implemented. See [shared wind feed integration](./wind-feed-integration.md) for the current EigAir API findings, exact public client contract, and activation instructions. The public backend endpoint remains pending. The four displayed observations include latest.
+
 ## Decision
 
 Thermalbase owns provider access and normalization. `winds.mobi` is the first provider, not the client-facing API. Its history endpoint already supplies up to seven days, which is sufficient for this product. Thermalbase therefore fetches only when a user requests a stale feed, stores a rolling seven-day normalized read model, and serves EigAir and the public Jungfrau-Tächi meteo page through separate, controlled API surfaces.
