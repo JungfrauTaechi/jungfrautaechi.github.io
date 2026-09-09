@@ -11,8 +11,36 @@ gallery:
     alt: Location
 ---
 
-Am Samstag 19. September 2026 findet das grosse 50 Jahre Jubiläums Clubfliegen statt. Dieses Jahr feieren wir im Sandigen Boden. Weitere Infos zu Treffpunkt und Ablauf folgen in Kürze.
+Grosses Jubiläums-Clubfliegen im Sandigen Boden:
 
-## Programm
+Am 19. September 2026 findet das diesjährige Clubfliegen statt. Aus Anlass unseres 50-jährigen Jubliäums findet dies im Sandigen Boden statt. Neben dem Clubfliegen gibt es auch eine Akroshow. Alle Clubmitglieder mit Anhang sind herzlich willkommen! Spanferkel, Getränke und gemütliches Zusammensein. Es gibt die Möglichkeit, im Sandigen Boden im Festzelt zu übernachten (Mätteli und Schlafsack mitnehmen).
+Weitere Details und das genaue Programm folgen!
 
-Weitere Informationen zum Anlass folgen.
+Wir freuen uns auf zahlreiches Erscheinen!
+
+Euer Jungfrau-Tächi Vorstand.
+
+
+
+
+## Provisorisches Programm Jubiläums Clubfliegen 50 Jahre Jungfrau-Tächi:
+
+Samstag 19. September 2026
+
+09.30h Startplatz First: Gemeinsamer Morgenflug in den Grund
+
+12.00h Treffpunkt Terrasse Restaurant First
+
+13.00h Task in drei Stärkeklassen. Landung im Sandigen Boden
+
+16.00 - 17.00h Apéro im Sandigen Boden
+
+16.30h Akro Show Sandigen Boden
+
+ab 17.00h Essen
+
+danach gemütliches Zusammensein im Sandigen Boden
+
+
+
+ACHTUNG: Zufahrt zum Sandigen Boden ist ohne Fahrbewilligung (P) nicht gestattet! Wir organisieren ab ca. 14.00h einen Shuttle ab Haifmatte zum Sandigen Boden, und zurück. Anmeldung unbedingt notwendig für Shuttle per Telefon an Matthias Schenk (079 824 86 02). Parkplätze in der Haifmatte vorhanden (Skizze/Plan folgt).
