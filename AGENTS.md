@@ -42,4 +42,4 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 - Pascal’s September 2026 feedback: retain original vertical panorama limits and stream the recovered 4,096–8,192 px cube faces as local multiresolution tiles; keep the existing cross-links and polygons.
 - Remove the two `Test:` event articles. Homepage and club agenda select upcoming events by Europe/Zurich dates, including the last day of multi-day events.
-- SHV weather has no API integration. Desktop links to the official app page; mobile uses official platform store links until SHV publishes a verified app deep link. Never invent an app URL scheme. The Föhn pressure-difference chart is omitted.
+- SHV weather has no API integration. On mobile, use only the HTTPS product links from SHV’s supplied Deep Links guide for Textprognose, the Grindelwald Live-Karte, Prévitemps and the Europe forecast; keep the official iOS/Android store link visible as installation fallback because SHV links show an error page when the app is absent. Desktop links to the official app page. Keep the guide confidential and out of the repository. The Föhn pressure-difference chart is omitted.

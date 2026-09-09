@@ -1,10 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { upcomingEvents, swissToday } from "../src/club-events.js";
-import { SHV_LINKS, shvDestination } from "../src/shv-links.js";
+import { SHV_LINKS, SHV_PRODUCTS, shvDestination } from "../src/shv-links.js";
 import { validateRecord, localMediaPath } from "../scripts/content-validation.mjs";
 import { generatedNews, generatedPhotoReports } from "../src/generated-content.js";
 import { readFile, access } from "node:fs/promises";
+const shvWeatherSource = await readFile(new URL("../src/ShvWeather.jsx", import.meta.url), "utf8");
 
 test("all thirteen panorama pyramids have every expected local tile and original crop limits", async () => {
   const root = new URL("../public/assets/panoramas/", import.meta.url);
@@ -35,13 +36,17 @@ test("next events include the final event day, exclude expired events and sort w
   assert.equal(swissToday(new Date("2026-09-19T22:30:00Z")), "2026-09-20");
 });
 
-test("SHV destinations use official stores on mobile and information page on desktop", () => {
+test("SHV destinations use documented product links on mobile and information page on desktop", () => {
   assert.equal(shvDestination({ userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)" }).href, SHV_LINKS.ios);
   assert.equal(shvDestination({ userAgent: "Mozilla/5.0 (Linux; Android 16)" }).href, SHV_LINKS.android);
   assert.equal(shvDestination({ userAgent: "Mozilla/5.0 (Macintosh)", platform: "MacIntel", maxTouchPoints: 5 }).href, SHV_LINKS.ios);
   assert.equal(shvDestination({ userAgent: "Mozilla/5.0 (Windows NT 10.0)", maxTouchPoints: 10 }).href, SHV_LINKS.page);
   assert.equal(shvDestination().href, SHV_LINKS.page);
-  assert.equal(SHV_LINKS.mobileDeepLink, null, "do not ship an undocumented SHV URL scheme");
+  assert.deepEqual(SHV_PRODUCTS.map(({ id }) => id), ["textForecast", "liveMap", "previtemps", "globalForecast"]);
+  assert.ok(SHV_PRODUCTS.every(({ href }) => href.startsWith("https://prod.shv-app.ch/")));
+  assert.match(SHV_PRODUCTS.find(({ id }) => id === "liveMap").href, /coord=4326,8\.0414,46\.6242/);
+  assert.match(shvWeatherSource, /SHV_PRODUCTS\.map/);
+  assert.match(shvWeatherSource, /SHV-App installieren/);
 });
 
 test("content validation rejects invalid dates and unsafe slugs", () => {
