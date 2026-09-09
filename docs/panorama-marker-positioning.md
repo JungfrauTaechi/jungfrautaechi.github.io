@@ -1,5 +1,13 @@
 # Positioning webcam, wind and panorama-link markers
 
+## Save directly on localhost
+
+Open **Markerposition**, choose a marker, click **Position im Bild wählen**, click its location, then **Position speichern**. The development server updates the corresponding JSON entry and the local preview reloads it. Other entries are preserved. The change is local only: review and commit/publish separately. **Koordinaten kopieren** remains available if you prefer to paste the coordinates into chat.
+
+The picker is omitted from production builds and is only shown on localhost / 127.0.0.1 / ::1 in development. Its save endpoint exists only in the Vite development server, checks same-origin loopback access, validates IDs and angles, and cannot accept arbitrary file paths.
+
+Grund/Terminal and Bodmi/Kirchbühl now combine temporarily when their projected locations are close enough in the current view. Zooming in separates them again. They keep independent saved positions, and opening the picker separates them for editing. Other distinct locations are not automatically combined.
+
 ## Grouped locations
 
 Matching panorama, wind and webcam actions now share one marker, retaining separate clickable icons. Location matching is explicit in `src/panorama-locations.js`, not based on screen proximity. First and Männlichen combine all three when available; Grund and Stechelberg combine their panorama and wind actions. Other cameras stay separate.
@@ -20,8 +28,8 @@ Previously available visual anchors were retained. Every previously missing came
 2. Click **Markerposition** at the lower left of the image. This tool only appears in the local development server, including fullscreen; it is excluded from the production build.
 3. Select a marker from **Webcams**, **Wind**, or **Andere Panoramen**, then drag/zoom the panorama until its intended location is clear. Wind and panorama-link choices are limited to the markers present in this scene.
 4. Click **Position im Bild wählen**, then click the precise point on the image. A red cross marks the selected spot. This selection suppresses the normal webcam-link click.
-5. Copy the generated JSON from the text box. The picker shows the destination file. Webcam entries go in `src/panorama-webcams.json`. Wind and panorama-link entries go in `src/panorama-marker-overrides.json`, under the displayed scene ID and the generated `wind` or `panoramas` group. Merge the selected entry into any existing group; do not replace its other entries. The tool reads coordinates; it does not save files or publish automatically.
-6. Save the file. The development preview reloads the marker positions. Verify the icon from several zoom levels and avoid collisions with scene links or other markers.
+5. Click **Position speichern**. The picker updates the selected entry in `src/panorama-webcams.json` or `src/panorama-marker-overrides.json`, preserving other entries. It does not commit or publish. Alternatively, expand **Koordinaten kopieren** to paste the JSON into chat or edit the indicated file manually.
+6. The development preview reloads the marker positions. Verify the icon from several zoom levels and avoid collisions with unrelated markers.
 7. Repeat independently for each scene, then commit and publish through a pull request.
 
 For example, under `airtime-west`, replace its `baeregg` entry with the exact `yaw` and `pitch` produced by the picker. Keep `provisional: true` if the location is still an estimate; set it to false only after visual review. To have the assistant apply an adjustment, send the panorama name, webcam name and the copied coordinates.
@@ -30,6 +38,6 @@ The coordinate picker does not change or download webcam imagery. Webcam URLs an
 
 ## Wind and panorama-link overrides
 
-The overrides file starts empty, preserving all existing positions. Within a scene, `wind` entries are keyed by station ID (for example `fanet-BA-4`) and `panoramas` entries by the destination scene (for example `grund`). Only yaw/pitch are applied. A moved wind marker still opens Meteo; a moved panorama link still opens the same panorama. Moving a panorama link does not move a nearby wind marker, and editing one scene does not affect another. Remove an override to return to the original calculated position.
+The overrides file starts empty, preserving all existing positions. Within a scene, `wind` entries are keyed by station ID (for example `fanet-BA-4`) and `panoramas` entries by the destination scene (for example `grund`). Only yaw/pitch are applied. A moved wind marker still opens Meteo; a moved panorama link still opens the same panorama. Grouped actions follow their controlling position; unrelated markers and other scenes are unaffected. Remove an override to return to the original calculated position.
 
 Changing the selected marker clears the old coordinate readout and preview, preventing accidental reuse of another marker's point.

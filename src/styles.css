@@ -364,6 +364,7 @@
 .pano-location-hotspot{display:flex!important;align-items:center;gap:5px;width:max-content!important;height:auto!important;z-index:7!important;background:none!important;white-space:nowrap}
 .pano-location-hotspot:has(.pano-location-link){padding:4px;border:1px solid #ffffffb3;border-radius:3px;background:#06233ee8!important;box-shadow:0 3px 12px #00152666}
 .pano-location-hotspot:hover,.pano-location-hotspot:focus-within{z-index:10!important}
+.pano-location-hotspot.is-combined{display:none!important}
 .pano-location-hotspot .pano-info-hotspot{position:relative;flex:none;padding:0;margin:0}
 .pano-location-hotspot .pano-location-link{border:0;background:transparent;box-shadow:none;padding:2px 4px}
 .pano-link-hotspot{display:flex!important;align-items:center;gap:.42rem;min-width:max-content;padding:.28rem .5rem;border:1px solid #fff;border-radius:2px;background:#06233ee8;color:#fff;box-shadow:0 3px 12px #00152666;cursor:pointer;transform-origin:center;transition:background .15s ease,border-color .15s ease}

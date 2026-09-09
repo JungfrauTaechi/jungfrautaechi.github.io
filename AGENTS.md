@@ -1,5 +1,7 @@
 # Prototype Instructions
 
+- Grund/Terminal and Bodmi/Kirchbühl temporarily combine when their projected positions are close in the current panorama/zoom, and separate on zoom-in. Preserve their separate saved coordinates. Disable this temporary grouping while the picker is open. The picker is restricted to development on localhost, 127.0.0.1 or ::1; its Save button uses a development-server-only endpoint accepting same-origin loopback requests and writing only validated marker entries in the two known JSON files. No editor or write endpoint on the live site; local saves do not commit or publish.
+
 - Group panorama links and matching wind/webcam actions by explicit location identity. Preserve the current circular SVG icons and independent actions. Position follows the panorama link, otherwise wind, otherwise webcam. The picker exposes the controlling position only. Preserve saved member coordinates. Do not merge distinct sites solely because their markers are visually close.
 
 Run the local server yourself and open the preview in the browser available to this environment. Do not give the user server-start instructions when you can run it.
