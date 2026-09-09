@@ -4,6 +4,7 @@ import { PanoramaPositionPicker } from "./PanoramaPositionPicker.jsx";
 import panoramaWebcams from "./panorama-webcams.json";
 import panoramaMarkerOverrides from "./panorama-marker-overrides.json";
 import { applyMarkerPosition } from "./marker-position.js";
+import { groupPanoramaMarkers } from "./panorama-locations.js";
 import { Imprint } from "./Imprint.jsx";
 import { WeatherForecast } from "./WeatherForecast.jsx";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -206,6 +207,34 @@ function createInfoHotspot(element, marker) {
   element.append(symbol, popover);
   element.addEventListener("keydown", (event) => { if (["Enter", " "].includes(event.key)) { event.preventDefault(); element.click(); } });
 }
+function createLocationHotspot(element, { group, onSelectScene, onOpenMeteo }) {
+  element.setAttribute("role", "group");
+  element.setAttribute("aria-label", group.link?.label || group.title);
+  if (group.link) {
+    const link = document.createElement("button");
+    link.type = "button";
+    link.className = "pano-link-hotspot pano-location-link";
+    createSceneLinkHotspot(link, group.link);
+    link.addEventListener("click", (event) => { event.stopPropagation(); onSelectScene(group.link.targetId); });
+    element.append(link);
+  }
+  for (const marker of group.markers) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `pano-info-hotspot is-${marker.kind}`;
+    createInfoHotspot(button, marker);
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if (marker.kind === "webcam") window.open(marker.camera.viewerUrl, "_blank", "noopener,noreferrer");
+      else onOpenMeteo();
+    });
+    element.append(button);
+  }
+}
+function locationMarkers(site) {
+  const links = site.links.map(link => ({ ...applyMarkerPosition(link, panoramaMarkerOverrides[site.id]?.panoramas?.[link.targetId]), label: flightScenes.find(scene => scene.id === link.targetId)?.label || link.targetId }));
+  return groupPanoramaMarkers(links, panoramaInfoMarkers(site));
+}
 function areaCentre(vertices) { const radians = vertices.map((vertex) => vertex.yaw * Math.PI / 180); return { yaw: Math.atan2(radians.reduce((sum, value) => sum + Math.sin(value), 0), radians.reduce((sum, value) => sum + Math.cos(value), 0)) * 180 / Math.PI, pitch: vertices.reduce((sum, vertex) => sum + vertex.pitch, 0) / vertices.length }; }
 function clipPolygon(points, inside, intersect) {
   const clipped = [];
@@ -299,7 +328,7 @@ function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas 
     ...meteoWebcams.map((camera) => ({ key: `webcam:${camera.id}`, id: camera.id, label: camera.title, group: "Webcams", file: "src/panorama-webcams.json" })),
     ...[...new Map(panoramaInfoMarkers(site).filter((marker) => marker.kind === "meteo").map((marker) => [marker.station.id, marker])).values()].map((marker) => ({ key: `wind:${marker.station.id}`, id: marker.station.id, label: marker.title, group: "Wind", section: "wind", file: "src/panorama-marker-overrides.json" })),
     ...site.links.map((link) => ({ key: `panorama:${link.targetId}`, id: link.targetId, label: flightScenes.find((scene) => scene.id === link.targetId)?.label || link.targetId, group: "Andere Panoramen", section: "panoramas", file: "src/panorama-marker-overrides.json" })),
-  ];
+  ].filter(marker => locationMarkers(site).some(group => group.link ? marker.key === `panorama:${group.link.targetId}` : marker.key === `${group.kind === "webcam" ? "webcam" : "wind"}:${group.camera?.id || group.station?.id}`));
   const resetPickedPosition = () => { setPickedPosition(null); setSelectingPosition(false); viewerRef.current?.removeHotSpot("marker-position-preview"); };
   const pickPosition = (event) => {
     if (!selectingPosition || event.target.closest(".pano-marker-editor") || !viewerRef.current) return;
@@ -323,9 +352,9 @@ function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas 
         const centre = areaCentre(area.vertices);
         return site.sceneType === "overview" ? [] : [{ pitch: centre.pitch, yaw: centre.yaw, cssClass: `pano-area-label is-${area.kind}`, createTooltipFunc: createAreaLabelHotspot, createTooltipArgs: area }];
       }) : [];
-      const sceneHotSpots = site.links.map((originalLink) => { const link = applyMarkerPosition(originalLink, panoramaMarkerOverrides[site.id]?.panoramas?.[originalLink.targetId]); const target = flightScenes.find((scene) => scene.id === link.targetId); const args = { ...link, label: target?.label || link.targetId, onSelectScene }; return { pitch: link.pitch, yaw: link.yaw, cssClass: "pano-link-hotspot", createTooltipFunc: createSceneLinkHotspot, createTooltipArgs: args, clickHandlerFunc: (_event, handlerArgs) => handlerArgs.onSelectScene(handlerArgs.targetId), clickHandlerArgs: args }; });
+      const sceneHotSpots = locationMarkers(site).map(group => ({ pitch: group.pitch, yaw: group.yaw, cssClass: "pano-location-hotspot", createTooltipFunc: createLocationHotspot, createTooltipArgs: { group, onSelectScene, onOpenMeteo } }));
       const landmarkHotSpots = site.landmarks.map((landmark) => ({ pitch: landmark.pitch, yaw: landmark.yaw, cssClass: "pano-landmark-hotspot", createTooltipFunc: createLandmarkHotspot, createTooltipArgs: landmark }));
-      const infoHotSpots = panoramaInfoMarkers(site).map((marker) => ({ pitch: marker.pitch, yaw: marker.yaw, cssClass: `pano-info-hotspot is-${marker.kind}`, createTooltipFunc: createInfoHotspot, createTooltipArgs: marker, clickHandlerFunc: (_event, handlerArgs) => { if (handlerArgs.kind === "webcam") window.open(handlerArgs.camera.viewerUrl, "_blank", "noopener,noreferrer"); else handlerArgs.onOpenMeteo(); }, clickHandlerArgs: { ...marker, onOpenMeteo } }));
+      const infoHotSpots = [];
       viewer = window.pannellum.viewer(containerRef.current, { type: "multires", multiRes: site.panorama.multiRes, minPitch: site.panorama.minPitch, maxPitch: site.panorama.maxPitch, avoidShowingBackground: true, multiResMinHfov: false, preview: site.panorama.preview, hotSpots: [...areaHotSpots, ...sceneHotSpots, ...landmarkHotSpots, ...infoHotSpots], autoLoad: true, yaw: site.panorama.yaw, pitch: site.panorama.pitch, hfov: site.panorama.hfov, minHfov: 45, maxHfov: 115, showFullscreenCtrl: false, compass: false, escapeHTML: true, strings: { loadButtonLabel: "Panorama laden", loadingLabel: "Panorama wird geladen …", bylineLabel: "von %s", noPanoramaError: "Panorama konnte nicht geladen werden.", fileAccessError: "Das Panorama muss über den Webserver geöffnet werden.", malformedURLError: "Ungültige Panorama-Adresse.", iOS8WebGLError: "Der Browser unterstützt die 360°-Ansicht nicht.", genericWebGLError: "Der Browser unterstützt die 360°-Ansicht nicht.", textureSizeError: "Das Panorama ist für dieses Gerät zu gross.", unknownError: "Unbekannter Fehler.", twoTouchActivate: "Mit zwei Fingern bewegen", twoTouchXActivate: "Mit zwei Fingern seitlich bewegen", twoTouchYActivate: "Mit zwei Fingern vertikal bewegen", ctrlZoomActivate: "Strg + Scrollen zum Zoomen" } });
       viewerRef.current = viewer;
       if (showAreas) {

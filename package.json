@@ -17,7 +17,7 @@
     "preview": "vite preview",
     "test:sites": "node --test tests/sites-worker.test.mjs",
     "pretest": "npm run content:build",
-    "test": "node --test tests/app.test.mjs tests/pascal-feedback.test.mjs tests/wind-feed.test.mjs",
+    "test": "node --test tests/app.test.mjs tests/pascal-feedback.test.mjs tests/wind-feed.test.mjs tests/panorama-locations.test.mjs",
     "test:pages": "node --test tests/pages.test.mjs"
   },
   "dependencies": {

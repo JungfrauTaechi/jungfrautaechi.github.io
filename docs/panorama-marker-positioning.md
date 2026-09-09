@@ -1,5 +1,11 @@
 # Positioning webcam, wind and panorama-link markers
 
+## Grouped locations
+
+Matching panorama, wind and webcam actions now share one marker, retaining separate clickable icons. Location matching is explicit in `src/panorama-locations.js`, not based on screen proximity. First and Männlichen combine all three when available; Grund and Stechelberg combine their panorama and wind actions. Other cameras stay separate.
+
+The group follows its panorama-link coordinates. Without a panorama link it follows the wind position, otherwise the webcam position. The picker shows only this controlling entry: select the panorama under **Andere Panoramen** to move its whole group. Existing member coordinates are preserved but do not affect a grouped marker. This supersedes the independent-position instructions below for grouped actions.
+
 All eight Meteo webcams have one camera-icon marker in each of the 13 flight-area panoramas. The marker opens that webcam's official viewer. Wind markers use a wind icon and retain their existing station destinations.
 
 Positions are independent for each panorama, stored in `src/panorama-webcams.json` under scene ID and camera ID. `yaw` is the horizontal angle in degrees (-180 to 180); `pitch` is the vertical angle (-90 to 90, positive upwards). These are image angles, not GPS coordinates. Do not copy coordinates between panoramas: each image has a different viewpoint and orientation.
