@@ -3,6 +3,10 @@ const windLocations = { 'windline-4104': 'first', 'slf-MAN1': 'maennlichen', 'fa
 
 export const nearbyLocationPairs = [['grund', 'terminal'], ['bodmi', 'kirchbuehl']];
 
+export function visibleLocationGroups(groups) {
+  return groups.map(group => ({ ...group, link: group.link?.hidden ? null : group.link, markers: group.markers.filter(marker => !marker.hidden) })).filter(group => group.link || group.markers.length);
+}
+
 export function projectLocation(point, view) {
   const rad = Math.PI / 180;
   const pitch = point.pitch * rad, cameraPitch = view.pitch * rad, yaw = (point.yaw - view.yaw) * rad;

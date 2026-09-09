@@ -1,6 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { groupPanoramaMarkers, shouldCombineLocations, projectLocation } from '../src/panorama-locations.js';
+import { groupPanoramaMarkers, shouldCombineLocations, projectLocation, visibleLocationGroups } from '../src/panorama-locations.js';
+
+test('hiding individual actions preserves shared coordinates and siblings; all hidden removes the group', () => {
+  const group = { yaw: 3, pitch: 4, link: { hidden: true }, markers: [{ kind: 'webcam', hidden: true }, { kind: 'meteo' }] };
+  const [visible] = visibleLocationGroups([group]);
+  assert.equal(visible.link, null);
+  assert.equal(visible.yaw, 3);
+  assert.deepEqual(visible.markers, [{ kind: 'meteo' }]);
+  assert.equal(group.markers.length, 2);
+  assert.equal(visibleLocationGroups([{ ...group, markers: [{ hidden: true }] }]).length, 0);
+  assert.equal(visibleLocationGroups([{ ...group, link: { hidden: false } }])[0].link.hidden, false);
+});
 
 test('groups preserve actions and panorama position without merging unrelated nearby cameras', () => {
   const link = { targetId: 'maennlichen', yaw: 10, pitch: 20 };

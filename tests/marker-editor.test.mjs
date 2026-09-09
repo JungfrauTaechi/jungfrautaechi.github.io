@@ -27,6 +27,13 @@ test('local editor saves selected entries, preserves other edits, serializes wri
   assert.deepEqual(changed['airtime-west'].baeregg, { yaw: 0, pitch: -3, provisional: false });
   assert.deepEqual(changed.grund, initial.grund);
   assert.deepEqual(changed['airtime-west'].first, initial['airtime-west'].first);
+  const visibility = { sceneId: data.sceneId, kind: data.kind, id: data.id, hidden: true };
+  assert.equal((await post(visibility)).status, 200);
+  assert.deepEqual(JSON.parse(await readFile(webcamFile, 'utf8'))['airtime-west'].baeregg, { ...changed['airtime-west'].baeregg, hidden: true });
+  assert.equal((await post({ ...visibility, hidden: false })).status, 200);
+  assert.equal(JSON.parse(await readFile(webcamFile, 'utf8'))['airtime-west'].baeregg.hidden, false);
+  assert.equal((await post({ ...visibility, hidden: 'yes' })).status, 400);
+  assert.equal((await post({ sceneId: data.sceneId, kind: 'wind', id: 'slf-MAN1', hidden: true })).status, 200);
   const results = await Promise.all([post({ ...data, kind: 'wind', id: 'fanet-BA-4' }), post({ ...data, kind: 'panoramas', id: 'grund' })]);
   assert.deepEqual(results.map(r => r.status), [200, 200]);
   const overrides = JSON.parse(await readFile(overrideFile, 'utf8'));

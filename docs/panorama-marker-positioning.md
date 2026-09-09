@@ -2,6 +2,8 @@
 
 ## Save directly on localhost
 
+Select any webcam, wind action or panorama link and click **Ausblenden** to hide only that action in the current panorama. Hidden entries remain in the dropdown with **ausgeblendet** and can be restored with **Einblenden**. Visibility saves directly without choosing a new position; coordinates and sibling actions are preserved. All actions are selectable for visibility, including grouped icons whose position follows their location marker.
+
 Open **Markerposition**, choose a marker, click **Position im Bild wählen**, click its location, then **Position speichern**. The development server updates the corresponding JSON entry and refreshes the markers in place. The selected panorama, viewing angle, zoom and picker state stay unchanged, including the selected marker and coordinate readout. Other entries are preserved. The change is local only: review and commit/publish separately. **Koordinaten kopieren** remains available if you prefer to paste the coordinates into chat.
 
 The picker is omitted from production builds and is only shown on localhost / 127.0.0.1 / ::1 in development. Its save endpoint exists only in the Vite development server, checks same-origin loopback access, validates IDs and angles, and cannot accept arbitrary file paths.

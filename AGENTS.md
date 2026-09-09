@@ -1,5 +1,7 @@
 # Prototype Instructions
 
+- The localhost picker supports Ausblenden/Einblenden for each individual webcam, wind action and panorama link, including grouped actions. Persist a per-scene hidden boolean without deleting coordinates; keep hidden actions in the picker for restoration and preserve sibling actions and group anchors. Visibility changes use the same localhost-only save endpoint and in-place hotspot refresh.
+
 - Marker JSON hot updates are accepted in `panorama-marker-config.js` and refresh only location hotspots in the existing Pannellum viewer. Saving must preserve the current scene, yaw/pitch/zoom, fullscreen, open picker, selected marker and coordinate readout; do not let these data changes remount App or the viewer.
 
 - Grund/Terminal and Bodmi/Kirchbühl temporarily combine when their projected positions are close in the current panorama/zoom, and separate on zoom-in. Preserve their separate saved coordinates. Disable this temporary grouping while the picker is open. The picker is restricted to development on localhost, 127.0.0.1 or ::1; its Save button uses a development-server-only endpoint accepting same-origin loopback requests and writing only validated marker entries in the two known JSON files. No editor or write endpoint on the live site; local saves do not commit or publish.

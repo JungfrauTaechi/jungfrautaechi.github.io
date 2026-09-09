@@ -3,7 +3,7 @@ import { FullscreenFrame } from "./FullscreenFrame.jsx";
 import { PanoramaPositionPicker } from "./PanoramaPositionPicker.jsx";
 import { panoramaWebcams, panoramaMarkerOverrides, subscribeMarkerConfig } from "./panorama-marker-config.js";
 import { applyMarkerPosition } from "./marker-position.js";
-import { groupPanoramaMarkers, watchNearbyLocations } from "./panorama-locations.js";
+import { groupPanoramaMarkers, watchNearbyLocations, visibleLocationGroups } from "./panorama-locations.js";
 import { Imprint } from "./Imprint.jsx";
 import { WeatherForecast } from "./WeatherForecast.jsx";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -208,7 +208,7 @@ function createInfoHotspot(element, marker) {
 }
 function createLocationHotspot(element, { group, onSelectScene, onOpenMeteo }) {
   element.setAttribute("role", "group");
-  element.setAttribute("aria-label", group.link?.label || group.title);
+  element.setAttribute("aria-label", group.link?.label || group.title || group.markers[0]?.title || group.locationId);
   if (group.link) {
     const link = document.createElement("button");
     link.type = "button";
@@ -230,9 +230,12 @@ function createLocationHotspot(element, { group, onSelectScene, onOpenMeteo }) {
     element.append(button);
   }
 }
-function locationMarkers(site) {
+function locationMarkers(site, includeHidden = false) {
   const links = site.links.map(link => ({ ...applyMarkerPosition(link, panoramaMarkerOverrides[site.id]?.panoramas?.[link.targetId]), label: flightScenes.find(scene => scene.id === link.targetId)?.label || link.targetId }));
-  return groupPanoramaMarkers(links, panoramaInfoMarkers(site));
+  links.forEach(link => { link.hidden = panoramaMarkerOverrides[site.id]?.panoramas?.[link.targetId]?.hidden === true; });
+  const markers = panoramaInfoMarkers(site).map(marker => ({ ...marker, hidden: (marker.kind === 'webcam' ? panoramaWebcams[site.id]?.[marker.camera.id] : panoramaMarkerOverrides[site.id]?.wind?.[marker.station.id])?.hidden === true }));
+  const groups = groupPanoramaMarkers(links, markers);
+  return includeHidden ? groups : visibleLocationGroups(groups);
 }
 function areaCentre(vertices) { const radians = vertices.map((vertex) => vertex.yaw * Math.PI / 180); return { yaw: Math.atan2(radians.reduce((sum, value) => sum + Math.sin(value), 0), radians.reduce((sum, value) => sum + Math.cos(value), 0)) * 180 / Math.PI, pitch: vertices.reduce((sum, vertex) => sum + vertex.pitch, 0) / vertices.length }; }
 function clipPolygon(points, inside, intersect) {
@@ -325,11 +328,12 @@ function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas 
   const editingMarkers = useRef(false);
   const [selectingPosition, setSelectingPosition] = useState(false);
   const [pickedPosition, setPickedPosition] = useState(null);
+  const [, updateMarkerConfig] = useState(0);
   const editableMarkers = [
     ...meteoWebcams.map((camera) => ({ key: `webcam:${camera.id}`, id: camera.id, label: camera.title, group: "Webcams", file: "src/panorama-webcams.json" })),
     ...[...new Map(panoramaInfoMarkers(site).filter((marker) => marker.kind === "meteo").map((marker) => [marker.station.id, marker])).values()].map((marker) => ({ key: `wind:${marker.station.id}`, id: marker.station.id, label: marker.title, group: "Wind", section: "wind", file: "src/panorama-marker-overrides.json" })),
     ...site.links.map((link) => ({ key: `panorama:${link.targetId}`, id: link.targetId, label: flightScenes.find((scene) => scene.id === link.targetId)?.label || link.targetId, group: "Andere Panoramen", section: "panoramas", file: "src/panorama-marker-overrides.json" })),
-  ].filter(marker => locationMarkers(site).some(group => group.link ? marker.key === `panorama:${group.link.targetId}` : marker.key === `${group.kind === "webcam" ? "webcam" : "wind"}:${group.camera?.id || group.station?.id}`));
+  ].map(marker => ({ ...marker, hidden: (marker.section ? panoramaMarkerOverrides[site.id]?.[marker.section]?.[marker.id] : panoramaWebcams[site.id]?.[marker.id])?.hidden === true, canPosition: locationMarkers(site, true).some(group => group.link ? marker.key === `panorama:${group.link.targetId}` : marker.key === `${group.kind === "webcam" ? "webcam" : "wind"}:${group.camera?.id || group.station?.id}`) }));
   const resetPickedPosition = () => { setPickedPosition(null); setSelectingPosition(false); viewerRef.current?.removeHotSpot("marker-position-preview"); };
   const pickPosition = (event) => {
     if (!selectingPosition || event.target.closest(".pano-marker-editor") || !viewerRef.current) return;
@@ -367,6 +371,7 @@ function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas 
       stopNearbyLocations = watchNearbyLocations(groups, elements, viewer, containerRef.current, () => editingMarkers.current);
       unsubscribeMarkers = subscribeMarkerConfig(() => {
         if (cancelled) return;
+        updateMarkerConfig(value => value + 1);
         stopNearbyLocations?.();
         groups.forEach(group => viewer.removeHotSpot(`location-${group.locationId}`));
         groups = locationMarkers(site);
