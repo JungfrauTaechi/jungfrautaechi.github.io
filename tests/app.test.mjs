@@ -83,7 +83,7 @@ test("meteo prototype exposes the reviewed station hierarchy, live burnair and w
   assert.match(app, /24 weitere Stationen anzeigen|regionalStations\.length/);
   assert.match(app, /aria-expanded=\{showRegionalStations\}/);
   assert.match(app, /aria-controls="regional-wind-stations"/);
-  assert.match(app, /nicht für Flugentscheidungen geeignet/);
+  assert.doesNotMatch(app, /className="mock-notice"|className="meteo-update"/);
   assert.match(app, /Offizielles DABS öffnen/);
   assert.match(styles, /\.wind-history\{display:grid;grid-template-columns:repeat\(4/);
   assert.match(styles, /\.wind-grid\.is-regional/);

@@ -122,10 +122,8 @@ function MeteoPage() {
     <section className="page-banner meteo-intro" style={{ "--page-banner-image": `url("${images.meteoHeader}")`, "--page-banner-position": "center 48%" }}>
       <div className="shell meteo-intro-grid">
         <div><p className="eyebrow">Meteo Jungfrau · Prototyp</p><h1 tabIndex="-1">Wind und Flugwetter auf einen Blick</h1><p>Aktuelle Messwerte, Verlauf, Webcams und Luftraum für die wichtigsten Plätze der Region.</p></div>
-        <div className="meteo-update"><span className={`live-dot${windFeed.status === "ready" ? "" : " is-muted"}`} aria-hidden="true" /><div><strong>{windFeed.status === "loading" ? "Windwerte werden geladen" : windFeed.status === "error" ? "Winddaten nicht verfügbar" : windFeed.status === "partial" ? "Winddaten teilweise verfügbar" : windFeed.status === "refreshing" ? "Winddaten werden aktualisiert" : "Winddaten geladen"}</strong><span>Messzeit und Quelle bei jeder Station</span></div></div>
       </div>
     </section>
-    <aside className="mock-notice" aria-label="Hinweis zu den Wetterdaten"><div className="shell"><strong>Demonstration:</strong> {windFeed.mode === "thermalbase" ? "Windwerte werden über den gemeinsamen Wetterdienst geladen." : "Windwerte werden testweise direkt von burnair und winds.mobi geladen, mit einem Browser-Cache von fünf Minuten."} Sicherheitsmeldungen bleiben simuliert und alle Werte sind nicht für Flugentscheidungen geeignet.</div></aside>
     <section className="shell meteo-overview" aria-labelledby="wind-heading">
       <div className="meteo-section-head"><div><p className="eyebrow">Messstationen rund um Grindelwald</p><h2 id="wind-heading">Sechs Stationen rund um Grindelwald</h2><p>Landeplatz Grund zuerst, danach die fünf nächsten Stationen nach Luftlinie.</p></div><div className="meteo-section-tools"><span className="station-count">6 vor Ort · 24 in der Region</span><div className="meteo-legend"><span><i className="legend-good" />Ruhig</span><span><i className="legend-watch" />Beobachten</span><span><i className="legend-strong" />Stark</span></div></div></div>
 
