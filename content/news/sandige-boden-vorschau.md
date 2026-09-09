@@ -11,8 +11,8 @@ gallery:
     alt: Location
 ---
 
-Am Samstag 19. September 2026 findet das grosse Jubiläums Clubfliegen statt. Dieses Jahr feieren wir im Sandigen Boden. Weitere Infos zu Treffpunkt und Ablauf folgen in Kürze.
+Am Samstag 19. September 2026 findet das grosse 50 Jahre Jubiläums Clubfliegen statt. Dieses Jahr feieren wir im Sandigen Boden. Weitere Infos zu Treffpunkt und Ablauf folgen in Kürze.
 
-## Zwischentitel
+## Programm
 
-Weitere Informationen zum Anlass.
+Weitere Informationen zum Anlass folgen.
