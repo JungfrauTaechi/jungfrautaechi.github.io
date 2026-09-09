@@ -35,6 +35,7 @@ jobs:
       - run: npm run build:pages
         env:
           SITE_BASE: ${{ steps.pages.outputs.base_path }}
+          VITE_THERMALBASE_WEATHER_URL: ${{ vars.VITE_THERMALBASE_WEATHER_URL }}
       - run: npm run test:pages
       - uses: actions/upload-pages-artifact@v4
         with:

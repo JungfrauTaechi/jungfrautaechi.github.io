@@ -1,5 +1,7 @@
 # Thermalbase on-demand winds.mobi integration — developer handover
 
+Implementation companion, 9 September 2026: [shared wind feed integration](./wind-feed-integration.md) records the inspected EigAir API, prepared club-site client and exact public response contract. The card now uses four observations including latest. Backend implementation and activation remain pending.
+
 | Field | Value |
 | --- | --- |
 | Status | Proposed for implementation review |
