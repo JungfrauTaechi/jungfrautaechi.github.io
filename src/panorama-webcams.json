@@ -11,34 +11,34 @@
       "provisional": true
     },
     "eigergletscher": {
-      "yaw": -4.7,
-      "pitch": 5.3,
-      "provisional": true
+      "yaw": 7.881,
+      "pitch": 3.987,
+      "provisional": false
     },
     "kleine-scheidegg": {
-      "yaw": 20.5,
-      "pitch": 5.3,
-      "provisional": true
+      "yaw": 16.037,
+      "pitch": 2.119,
+      "provisional": false
     },
     "terminal": {
-      "yaw": -17.3,
-      "pitch": -10.7,
-      "provisional": true
+      "yaw": -0.086,
+      "pitch": -10.925,
+      "provisional": false
     },
     "kirchbuehl": {
-      "yaw": -4.7,
-      "pitch": -10.7,
-      "provisional": true
+      "yaw": -14.063,
+      "pitch": -12.198,
+      "provisional": false
     },
     "baeregg": {
-      "yaw": 7.9,
-      "pitch": -10.7,
-      "provisional": true
+      "yaw": -27.552,
+      "pitch": 1.28,
+      "provisional": false
     },
     "glecksteinhuette": {
-      "yaw": 20.5,
-      "pitch": -10.7,
-      "provisional": true
+      "yaw": -63.842,
+      "pitch": 3.177,
+      "provisional": false
     }
   },
   "waldspitz": {
@@ -48,39 +48,41 @@
       "provisional": true
     },
     "eigergletscher": {
-      "yaw": -62.725,
-      "pitch": 9.6,
-      "provisional": true
+      "yaw": 39.809,
+      "pitch": 1.238,
+      "provisional": false
     },
     "maennlichen": {
-      "yaw": -44.875,
-      "pitch": 9.6,
-      "provisional": true
+      "yaw": 54.723,
+      "pitch": 1.545,
+      "provisional": false,
+      "hidden": true
     },
     "kleine-scheidegg": {
-      "yaw": -27.025,
-      "pitch": 9.6,
-      "provisional": true
+      "yaw": 48.259,
+      "pitch": -0.438,
+      "provisional": false
     },
     "terminal": {
       "yaw": -80.575,
       "pitch": -6.4,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "kirchbuehl": {
-      "yaw": -62.725,
-      "pitch": -6.4,
-      "provisional": true
+      "yaw": 8.421,
+      "pitch": -16.129,
+      "provisional": false
     },
     "baeregg": {
-      "yaw": -44.875,
-      "pitch": -6.4,
-      "provisional": true
+      "yaw": -2.911,
+      "pitch": -2.342,
+      "provisional": false
     },
     "glecksteinhuette": {
-      "yaw": -27.025,
-      "pitch": -6.4,
-      "provisional": true
+      "yaw": -39.93,
+      "pitch": 1.765,
+      "provisional": false
     }
   },
   "maennlichen": {
@@ -90,81 +92,88 @@
       "provisional": true
     },
     "eigergletscher": {
-      "yaw": -20.45,
-      "pitch": 9.5,
-      "provisional": true
+      "yaw": -7.37,
+      "pitch": 0.017,
+      "provisional": false
     },
     "maennlichen": {
       "yaw": -9.95,
       "pitch": 9.5,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "kleine-scheidegg": {
       "yaw": 0.55,
       "pitch": 9.5,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "terminal": {
-      "yaw": -30.95,
-      "pitch": -6.5,
-      "provisional": true
+      "yaw": -70.75,
+      "pitch": -11.846,
+      "provisional": false
     },
     "kirchbuehl": {
-      "yaw": -20.45,
-      "pitch": -6.5,
-      "provisional": true
+      "yaw": -73.865,
+      "pitch": -8.811,
+      "provisional": false
     },
     "baeregg": {
-      "yaw": -9.95,
-      "pitch": -6.5,
-      "provisional": true
+      "yaw": -56.119,
+      "pitch": -3.296,
+      "provisional": false
     },
     "glecksteinhuette": {
-      "yaw": 0.55,
-      "pitch": -6.5,
-      "provisional": true
+      "yaw": -70.904,
+      "pitch": -0.678,
+      "provisional": false
     }
   },
   "muerren": {
     "first": {
       "yaw": -28.35,
       "pitch": 8,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "eigergletscher": {
-      "yaw": -9.45,
-      "pitch": 8,
-      "provisional": true
+      "yaw": -35.817,
+      "pitch": 6.736,
+      "provisional": false
     },
     "maennlichen": {
-      "yaw": 9.45,
-      "pitch": 8,
-      "provisional": true
+      "yaw": -74.149,
+      "pitch": 4.154,
+      "provisional": false
     },
     "kleine-scheidegg": {
-      "yaw": 28.35,
-      "pitch": 8,
-      "provisional": true
+      "yaw": -44.659,
+      "pitch": 4.625,
+      "provisional": false
     },
     "terminal": {
       "yaw": -28.35,
       "pitch": -8,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "kirchbuehl": {
       "yaw": -9.45,
       "pitch": -8,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "baeregg": {
       "yaw": 9.45,
       "pitch": -8,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "glecksteinhuette": {
       "yaw": 28.35,
       "pitch": -8,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     }
   },
   "grund": {
@@ -179,34 +188,35 @@
       "provisional": true
     },
     "eigergletscher": {
-      "yaw": -88.1,
-      "pitch": 13.7,
-      "provisional": true
+      "yaw": -172.3,
+      "pitch": 13.944,
+      "provisional": false
     },
     "kleine-scheidegg": {
-      "yaw": -54.5,
-      "pitch": 13.7,
-      "provisional": true
+      "yaw": -156.342,
+      "pitch": 11.043,
+      "provisional": false
     },
     "terminal": {
-      "yaw": -104.9,
-      "pitch": -2.3,
-      "provisional": true
+      "yaw": -93.711,
+      "pitch": -1.167,
+      "provisional": false
     },
     "kirchbuehl": {
       "yaw": -88.1,
       "pitch": -2.3,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "baeregg": {
-      "yaw": -71.3,
-      "pitch": -2.3,
-      "provisional": true
+      "yaw": 100.778,
+      "pitch": 14.71,
+      "provisional": false
     },
     "glecksteinhuette": {
-      "yaw": -54.5,
-      "pitch": -2.3,
-      "provisional": true
+      "yaw": 51.227,
+      "pitch": 13.65,
+      "provisional": false
     }
   },
   "bodmi": {
@@ -221,118 +231,133 @@
       "provisional": true
     },
     "eigergletscher": {
-      "yaw": -40.3,
-      "pitch": 28.4,
-      "provisional": true
+      "yaw": 14.2,
+      "pitch": 10.665,
+      "provisional": false
     },
     "kleine-scheidegg": {
-      "yaw": -6.7,
-      "pitch": 28.4,
-      "provisional": true
+      "yaw": 24.145,
+      "pitch": 7.774,
+      "provisional": false
     },
     "terminal": {
       "yaw": -57.1,
       "pitch": 12.4,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "kirchbuehl": {
-      "yaw": -40.3,
-      "pitch": 12.4,
-      "provisional": true
+      "yaw": -79.939,
+      "pitch": -3.186,
+      "provisional": false
     },
     "baeregg": {
-      "yaw": -23.5,
-      "pitch": 12.4,
-      "provisional": true
+      "yaw": -45.976,
+      "pitch": 11.078,
+      "provisional": false
     },
     "glecksteinhuette": {
-      "yaw": -6.7,
-      "pitch": 12.4,
-      "provisional": true
+      "yaw": -109.905,
+      "pitch": 17.301,
+      "provisional": false
     }
   },
   "stechelberg": {
     "first": {
       "yaw": -28.35,
       "pitch": 8,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "eigergletscher": {
       "yaw": -9.45,
       "pitch": 8,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "maennlichen": {
-      "yaw": 9.45,
-      "pitch": 8,
-      "provisional": true
+      "yaw": 107,
+      "pitch": 11.154,
+      "provisional": false
     },
     "kleine-scheidegg": {
       "yaw": 28.35,
       "pitch": 8,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "terminal": {
       "yaw": -28.35,
       "pitch": -8,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "kirchbuehl": {
       "yaw": -9.45,
       "pitch": -8,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "baeregg": {
       "yaw": 9.45,
       "pitch": -8,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "glecksteinhuette": {
       "yaw": 28.35,
       "pitch": -8,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     }
   },
   "lauterbrunnen": {
     "first": {
       "yaw": -56.7,
       "pitch": 18.6,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "eigergletscher": {
       "yaw": -39.9,
       "pitch": 18.6,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "maennlichen": {
-      "yaw": -23.1,
-      "pitch": 18.6,
-      "provisional": true
+      "yaw": -174.457,
+      "pitch": 21.829,
+      "provisional": false
     },
     "kleine-scheidegg": {
       "yaw": -6.3,
       "pitch": 18.6,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "terminal": {
       "yaw": -56.7,
       "pitch": 2.6,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "kirchbuehl": {
       "yaw": -39.9,
       "pitch": 2.6,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "baeregg": {
       "yaw": -23.1,
       "pitch": 2.6,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "glecksteinhuette": {
       "yaw": -6.3,
       "pitch": 2.6,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     }
   },
   "airtime-west": {
@@ -347,34 +372,34 @@
       "provisional": true
     },
     "kirchbuehl": {
-      "yaw": -112.342,
-      "pitch": -16.775,
-      "provisional": true
+      "yaw": -90.341,
+      "pitch": -22.01,
+      "provisional": false
     },
     "baeregg": {
-      "yaw": -43.198,
-      "pitch": 7.282,
-      "provisional": true
+      "yaw": -27.898,
+      "pitch": 5.584,
+      "provisional": false
     },
     "glecksteinhuette": {
-      "yaw": -86.376,
-      "pitch": 11.591,
-      "provisional": true
+      "yaw": -81.894,
+      "pitch": 11.023,
+      "provisional": false
     },
     "eigergletscher": {
-      "yaw": 21.796,
-      "pitch": -33.505,
-      "provisional": true
+      "yaw": 46.762,
+      "pitch": 9.201,
+      "provisional": false
     },
     "kleine-scheidegg": {
-      "yaw": 42.796,
-      "pitch": -33.505,
-      "provisional": true
+      "yaw": 59.83,
+      "pitch": 6.207,
+      "provisional": false
     },
     "terminal": {
-      "yaw": 11.296,
-      "pitch": -49.505,
-      "provisional": true
+      "yaw": 90.255,
+      "pitch": -30.307,
+      "provisional": false
     }
   },
   "airtime-ost": {
@@ -389,34 +414,34 @@
       "provisional": true
     },
     "kirchbuehl": {
-      "yaw": 108.759,
-      "pitch": -48.594,
-      "provisional": true
+      "yaw": 176.14,
+      "pitch": -77.533,
+      "provisional": false
     },
     "baeregg": {
-      "yaw": -75.568,
-      "pitch": 5.436,
-      "provisional": true
+      "yaw": -51.754,
+      "pitch": -0.059,
+      "provisional": false
     },
     "glecksteinhuette": {
-      "yaw": -122.277,
-      "pitch": 5.219,
-      "provisional": true
+      "yaw": -116.439,
+      "pitch": 2.95,
+      "provisional": false
     },
     "eigergletscher": {
-      "yaw": 105.834,
-      "pitch": -41.184,
-      "provisional": true
+      "yaw": 12.91,
+      "pitch": 14.281,
+      "provisional": false
     },
     "kleine-scheidegg": {
-      "yaw": 125.231,
-      "pitch": -41.184,
-      "provisional": true
+      "yaw": 24.734,
+      "pitch": 13.251,
+      "provisional": false
     },
     "terminal": {
-      "yaw": 96.135,
-      "pitch": -57.184,
-      "provisional": true
+      "yaw": 55.955,
+      "pitch": -6.394,
+      "provisional": false
     }
   },
   "airtime-winter": {
@@ -431,34 +456,34 @@
       "provisional": true
     },
     "kirchbuehl": {
-      "yaw": 151.501,
-      "pitch": -51.198,
-      "provisional": true
+      "yaw": -160.02,
+      "pitch": -55.634,
+      "provisional": false
     },
     "baeregg": {
-      "yaw": -100.736,
-      "pitch": 1.523,
-      "provisional": true
+      "yaw": -82.268,
+      "pitch": -1.854,
+      "provisional": false
     },
     "glecksteinhuette": {
-      "yaw": -146.762,
-      "pitch": 6.858,
-      "provisional": true
+      "yaw": -141.826,
+      "pitch": 4.202,
+      "provisional": false
     },
     "eigergletscher": {
-      "yaw": -27.01,
-      "pitch": 5.654,
-      "provisional": true
+      "yaw": -15.913,
+      "pitch": 7.396,
+      "provisional": false
     },
     "kleine-scheidegg": {
-      "yaw": 5.445,
-      "pitch": 5.654,
-      "provisional": true
+      "yaw": -3.92,
+      "pitch": 6.108,
+      "provisional": false
     },
     "terminal": {
-      "yaw": -43.237,
-      "pitch": -10.346,
-      "provisional": true
+      "yaw": 27.106,
+      "pitch": -17.484,
+      "provisional": false
     }
   },
   "airtime-max": {
@@ -473,76 +498,82 @@
       "provisional": true
     },
     "eigergletscher": {
-      "yaw": 5.117,
-      "pitch": -15.103,
-      "provisional": true
+      "yaw": 56.679,
+      "pitch": -8.206,
+      "provisional": false
     },
     "kleine-scheidegg": {
-      "yaw": 34.517,
-      "pitch": -15.103,
-      "provisional": true
+      "yaw": 65.134,
+      "pitch": -10.401,
+      "provisional": false
     },
     "terminal": {
-      "yaw": -9.583,
-      "pitch": -31.103,
-      "provisional": true
+      "yaw": 45.1,
+      "pitch": -39.637,
+      "provisional": false
     },
     "kirchbuehl": {
-      "yaw": 5.117,
-      "pitch": -31.103,
-      "provisional": true
+      "yaw": 8.112,
+      "pitch": -38.772,
+      "provisional": false
     },
     "baeregg": {
-      "yaw": 19.817,
-      "pitch": -31.103,
-      "provisional": true
+      "yaw": 9.008,
+      "pitch": -16.339,
+      "provisional": false
     },
     "glecksteinhuette": {
-      "yaw": 34.517,
-      "pitch": -31.103,
-      "provisional": true
+      "yaw": -27.424,
+      "pitch": -11.71,
+      "provisional": false
     }
   },
   "airtime-stechelberg": {
     "first": {
       "yaw": -92.447,
       "pitch": -32.492,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "eigergletscher": {
       "yaw": -77.747,
       "pitch": -32.492,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "maennlichen": {
-      "yaw": -63.047,
-      "pitch": -32.492,
-      "provisional": true
+      "yaw": 112.19,
+      "pitch": 9.372,
+      "provisional": false
     },
     "kleine-scheidegg": {
-      "yaw": -48.347,
-      "pitch": -32.492,
-      "provisional": true
+      "yaw": 149.813,
+      "pitch": 12.481,
+      "provisional": false
     },
     "terminal": {
       "yaw": -92.447,
       "pitch": -48.492,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "kirchbuehl": {
       "yaw": -77.747,
       "pitch": -48.492,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "baeregg": {
       "yaw": -63.047,
       "pitch": -48.492,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     },
     "glecksteinhuette": {
       "yaw": -48.347,
       "pitch": -48.492,
-      "provisional": true
+      "provisional": true,
+      "hidden": true
     }
   }
 }
