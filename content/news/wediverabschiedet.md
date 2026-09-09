@@ -8,9 +8,9 @@ summary: >-
   Während mehr als 11 Jahren hat Wedi aktiv im Vorstand des DCJT mitgearbeitet,
   insbesondere das Material verwaltet, Clubjacken, die Verpflegung am
   Clubfliegen und die Clubausflüge organisiert. Mehrfach hat er die…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/wediverabschiedet.jpg'
+coverImage: '/assets/legacy-images/8f094560ccfd2bcc220c.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/wediverabschiedet.jpg'
+  - src: '/assets/legacy-images/8f094560ccfd2bcc220c.jpg'
     alt: ''
   - src: /assets/archive/news/wediverabschiedet/002.jpg
     alt: ''

@@ -2,6 +2,7 @@ import { assetUrl } from "./site-paths.js";
 import { formatContentDate } from "./content-date.js";
 import { generatedNews, generatedPhotoReports } from "./generated-content.js";
 import { panoramaAreas, panoramaLandmarks, panoramaLinks } from "./panorama-links.js";
+import panoramaManifest from "../public/assets/panoramas/multires-manifest.json";
 
 const siteBase = import.meta.env.BASE_URL;
 const localAsset = (path) => assetUrl(path, siteBase);
@@ -11,6 +12,7 @@ const formatDate = formatContentDate;
 export const CONFIG = { showAnniversary: true, showPanoramaAreas: true };
 export const source = (url) => `https://www.jungfrau-taechi.ch${url}`;
 export const images = {
+  homeHero: localAsset("/assets/brand/home-first.jpg"),
   hero: localAsset("/assets/source/hero-flight.jpg"),
   eigertourMap: localAsset("/assets/source/eigertour9a.jpg"),
   firabe: localAsset("/assets/source/fa2_26.jpg"),
@@ -35,9 +37,10 @@ export const images = {
   safetyInterlaken2: localAsset("/assets/source/safety-interlaken-2.jpg"),
 };
 export const routes = {
+  imprint: { path: "/impressum", label: "Impressum" },
   home: { path: "/", label: "Start", sourceUrl: source("/") }, meteo: { path: "/meteo", label: "Meteo", sourceUrl: source("/sites/meteo") }, news: { path: "/news", label: "News", sourceUrl: source("/sites/news") }, club: { path: "/club", label: "Club", sourceUrl: source("/sites/club") }, chronology: { path: "/chronik", label: "Chronik", sourceUrl: source("/sites/chronik") }, membership: { path: "/mitglied", label: "Mitglied werden", sourceUrl: source("/sites/mitglied") }, flightArea: { path: "/fluggebiet", label: "Fluggebiet", sourceUrl: source("/sites/fluggebiet") }, startSites: { path: "/fluggebiet/startplaetze", label: "Startplätze", sourceUrl: source("/sites/dcjt360") }, landingSites: { path: "/fluggebiet/landeplaetze", label: "Landeplätze", sourceUrl: source("/sites/dcjt360") }, safety: { path: "/fluggebiet/sicherheit", label: "Sicherheit", sourceUrl: source("/sites/gk_gw") }, grund: { path: "/fluggebiet/grund", label: "Grund", sourceUrl: source("/sites/grund") }, photos: { path: "/fotos", label: "Fotos", sourceUrl: source("/sites/fotoreports") }, contact: { path: "/kontakt", label: "Kontakt", sourceUrl: source("/sites/kontakt") },
 };
-export const utilityLinks = [{ label: "Wind & Meteo", to: routes.meteo.path }, { label: "Webcams", href: "https://www.jungfrau-taechi.ch/sites/webcamlinks" }, { label: "DABS", href: "https://www.skybriefing.com/de/" }];
+export const utilityLinks = [{ label: "Wind & Meteo", to: routes.meteo.path }, { label: "Webcams", to: `${routes.meteo.path}#webcams` }, { label: "DABS", href: "https://www.skybriefing.com/de/" }];
 // Ordered snapshot from the winds.mobi station API, resolved around Grindelwald
 // (46.6242, 8.0414) on 2026-09-01. Readings below remain deterministic mock data.
 export const windStationCatalog = [
@@ -118,7 +121,7 @@ export const meteoWebcams = [
   { id: "baeregg", title: "Bäregg", focus: 0.5, image: "https://baeregg.roundshot.com/cams/1726/medium", viewerUrl: "https://baeregg.roundshot.com/#/", credit: "© Berghaus Bäregg · Roundshot", alt: "Aktuelles Panoramabild der Webcam Bäregg" },
   { id: "glecksteinhuette", title: "Glecksteinhütte", focus: 0.5, image: "https://www.foto-webcam.eu/webcam/glecksteinhuette/current/1200.jpg", viewerUrl: "https://www.foto-webcam.eu/webcam/glecksteinhuette/", credit: "© Glecksteinhütte · Foto-Webcam.eu", still: true, alt: "Aktuelles Webcambild der Glecksteinhütte mit Blick nach Westen" },
 ];
-export const news = generatedNews.map((item) => ({ ...item, dateLabel: formatDate(item.date), image: contentAsset(item.coverImage) || images.hero, alt: item.gallery?.[0]?.alt || item.title, path: `/news/${item.slug}`, gallery: (item.gallery || []).map((image, index) => ({ ...image, src: contentAsset(image.src), alt: image.alt || `${item.title} – Bild ${index + 1}` })) }));
+export const news = generatedNews.map((item) => ({ ...item, dateLabel: formatDate(item.date), image: contentAsset(item.coverImage) || contentAsset(item.gallery?.[0]?.src) || images.hero, alt: item.coverAlt || (!item.coverImage || item.coverImage === item.gallery?.[0]?.src ? item.gallery?.[0]?.alt : "") || item.title, path: `/news/${item.slug}`, gallery: (item.gallery || []).map((image, index) => ({ ...image, src: contentAsset(image.src), alt: image.alt || `${item.title} – Bild ${index + 1}` })) }));
 export const clubPurposes = [
   { number: "01", title: "Fluggebiet erhalten", text: "Erhaltung des Fluggebietes mit Start- und Landeplätzen, vor allem in den Lütschinentälern." },
   { number: "02", title: "Sport und Gemeinschaft", text: "Förderung des Sports und der Geselligkeit für Mitglieder durch Clubaktivitäten." },
@@ -228,11 +231,11 @@ export const clubStories = [
   },
 ];
 export const clubProgramme = [
-  { date: "19.–20. September 2026", title: "Clubfliegen First – Sandigen Boden", text: "Taskfliegen nach Stärkeklasse und Punktlandungen, anschliessend Jubiläumsfest im Sandigen Boden." },
-  { date: "7. November 2026", title: "Clubessen", text: "Informationen zum Ort und zur Anmeldung folgen." },
-  { date: "30. Januar 2027", title: "Hauptversammlung", text: "Informationen folgen." },
-  { date: "13. Februar 2027", title: "Nachtschlitteln und Fondueplausch", text: "Auf dem Eigerrun." },
-  { date: "6. März 2027", title: "Landecup Holzerbar", text: "Informationen folgen." },
+  { startDate: "2026-09-19", endDate: "2026-09-20", date: "19.–20. September 2026", path: "/news/sandige-boden-vorschau", title: "Clubfliegen First – Sandigen Boden", text: "Taskfliegen nach Stärkeklasse und Punktlandungen, anschliessend Jubiläumsfest im Sandigen Boden." },
+  { startDate: "2026-11-07", endDate: "2026-11-07", date: "7. November 2026", title: "Clubessen", text: "Informationen zum Ort und zur Anmeldung folgen." },
+  { startDate: "2027-01-30", endDate: "2027-01-30", date: "30. Januar 2027", title: "Hauptversammlung", text: "Informationen folgen." },
+  { startDate: "2027-02-13", endDate: "2027-02-13", date: "13. Februar 2027", title: "Nachtschlitteln und Fondueplausch", text: "Auf dem Eigerrun." },
+  { startDate: "2027-03-06", endDate: "2027-03-06", date: "6. März 2027", title: "Landecup Holzerbar", text: "Informationen folgen." },
 ];
 export const chronology = [
   { year: "1976", text: "Gründung des Deltaclub Jungfrau Tächi am 17. Januar 1976 im Hotel Eden in Wengen. Toni Wyss wird erster Präsident. Der Club zählt 13 Mitglieder. Toni Wyss nimmt an der Deltaweltmeisterschaft in Kössen teil." },
@@ -267,10 +270,13 @@ export const chronology = [
   { year: "2010–2014", text: "Christian Maurer gewinnt die X-Alps 2011 und 2013. Auch weitere Clubmitglieder überzeugen in nationalen und internationalen Wettkämpfen." },
 ];
 export const flightFacts = [{ title: "13 Panorama-Standorte", body: "5 Übersichten · 4 Startplätze · 4 Landeplätze", path: routes.flightArea.path }, { title: "360° vor Ort", body: "Start- und Landeplätze vor dem Flug erkunden", path: routes.landingSites.path }, { title: "Sicherheit", body: "Lokale Regeln, Lufträume und DABS vor jedem Flug", path: routes.safety.path }];
-export const photoReports = generatedPhotoReports.map((item) => ({ ...item, dateLabel: formatDate(item.date), image: contentAsset(item.coverImage) || images.hero, alt: item.gallery?.[0]?.alt || item.title, path: `/fotos/${item.slug}`, gallery: (item.gallery || []).map((image, index) => ({ ...image, src: contentAsset(image.src), alt: image.alt || `${item.title} – Bild ${index + 1}` })) }));
+export const photoReports = generatedPhotoReports.map((item) => ({ ...item, dateLabel: formatDate(item.date), image: contentAsset(item.coverImage) || contentAsset(item.gallery?.[0]?.src) || images.hero, alt: item.coverAlt || (!item.coverImage || item.coverImage === item.gallery?.[0]?.src ? item.gallery?.[0]?.alt : "") || item.title, path: `/fotos/${item.slug}`, gallery: (item.gallery || []).map((image, index) => ({ ...image, src: contentAsset(image.src), alt: image.alt || `${item.title} – Bild ${index + 1}` })) }));
 export const shvGrindelwaldDocument = localAsset("/assets/documents/shv-fluggebiet-grindelwald.pdf");
 export const shvAirspaceUrl = "https://airspace.shv-fsvl.ch/";
 const panorama = (scene, yaw, pitch, hfov) => ({
+  minPitch: panoramaManifest[scene].minPitch,
+  maxPitch: panoramaManifest[scene].maxPitch,
+  multiRes: { ...panoramaManifest[scene].multiRes, basePath: localAsset(`/assets/panoramas/${scene}/multires/`) },
   cubeMap: Array.from({ length: 6 }, (_, face) => localAsset(`/assets/panoramas/${scene}/${face}.jpg`)),
   preview: localAsset(`/assets/panoramas/${scene}/thumbnail.jpg`),
   yaw,

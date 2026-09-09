@@ -8,9 +8,9 @@ summary: >-
   Fabienne Weiss übernahm im Februar 2019 das Sekretariat des DCJT. Anlässlich
   der letzen Hauptversammlung gab sie das Amt wieder ab. Ihre tadellose Arbeit
   konnte coronabedingt nicht an einer grossen HV gewürdigt…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/verabschiedungfabienne.jpg'
+coverImage: '/assets/legacy-images/4b53b31ffe630b666190.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/verabschiedungfabienne.jpg'
+  - src: '/assets/legacy-images/4b53b31ffe630b666190.jpg'
     alt: ''
   - src: /assets/archive/news/verabschiedungfabienne/002.jpg
     alt: ''

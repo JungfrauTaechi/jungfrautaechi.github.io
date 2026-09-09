@@ -8,9 +8,9 @@ summary: >-
   Am 09.07.2021, 20:00 Uhr, stand Nanda Walliser als Siegerin der Damenkategorie
   bei den «German Open» in Levico Terme fest. Mit ihr zusammen standen Ramona
   Eckert als zweite und damit Deutsche Meisterin, sowie Julia…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/germanopen1.jpg'
+coverImage: '/assets/legacy-images/3b3d1b1b7b0bcfce401b.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/germanopen1.jpg'
+  - src: '/assets/legacy-images/3b3d1b1b7b0bcfce401b.jpg'
     alt: ''
   - src: /assets/archive/news/germanopen1/002.jpg
     alt: ''

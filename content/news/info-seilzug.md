@@ -8,9 +8,9 @@ summary: >-
   Informationen Seilzug Materialseilbahn Stechelberg - Mürren Start: 1. Juli
   2022Dauer: circa 2 WochenStrecke: Stechelberg – Mürren Rad (rote Linie)Während
   dieser Zeit ist beim Klettersteig Mürren – Gimmelwald im…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/info_seilzug.jpg'
+coverImage: '/assets/legacy-images/bafdbd04dd60907fcdba.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/info_seilzug.jpg'
+  - src: '/assets/legacy-images/bafdbd04dd60907fcdba.jpg'
     alt: ''
   - src: /assets/archive/news/info-seilzug/002.jpg
     alt: ''

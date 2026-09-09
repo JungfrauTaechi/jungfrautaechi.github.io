@@ -8,9 +8,9 @@ summary: >-
   Nanda und Hansjörg Walliser sind zurück aus dem Südosten Frankreichs, genauer
   Gourdon, wo sie sehr erfolgreich an den French Open teilgenommen haben.Bei den
   Damen konnte Nanda den Sieg herausfliegen. Im Overall…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/nandagourdon215.jpg'
+coverImage: '/assets/legacy-images/765045fef8e2651749d6.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/nandagourdon215.jpg'
+  - src: '/assets/legacy-images/765045fef8e2651749d6.jpg'
     alt: ''
   - src: /assets/archive/news/nandagourdon215/002.jpg
     alt: ''

@@ -1,0 +1,171 @@
+{
+  "first": {
+    "sourceScene": "pano1777",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 90.0,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 6656
+    }
+  },
+  "waldspitz": {
+    "sourceScene": "pano20804",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -44.385479999999994,
+    "maxPitch": 41.10768,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 6656
+    }
+  },
+  "maennlichen": {
+    "sourceScene": "pano20789",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -60.77394,
+    "maxPitch": 33.7329,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 6656
+    }
+  },
+  "muerren": {
+    "sourceScene": "pano20989",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 90.0,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 6656
+    }
+  },
+  "grund": {
+    "sourceScene": "pano20642",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 90.0,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 4096
+    }
+  },
+  "bodmi": {
+    "sourceScene": "pano20641",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 90.0,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 4096
+    }
+  },
+  "stechelberg": {
+    "sourceScene": "pano20344",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 90.0,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 4096
+    }
+  },
+  "lauterbrunnen": {
+    "sourceScene": "pano20643",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 90.0,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 4096
+    }
+  },
+  "airtime-west": {
+    "sourceScene": "pano6666",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 38.33334,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 6656
+    }
+  },
+  "airtime-ost": {
+    "sourceScene": "pano11658",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 42.22224,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 8192
+    }
+  },
+  "airtime-winter": {
+    "sourceScene": "pano12421",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 90.0,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 7168
+    }
+  },
+  "airtime-max": {
+    "sourceScene": "pano21159",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 21.82554,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 6144
+    }
+  },
+  "airtime-stechelberg": {
+    "sourceScene": "pano20982",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 90.0,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 6144
+    }
+  }
+}

@@ -8,9 +8,9 @@ summary: >-
   Besser könnte ein Clubausflug nicht gelingen. Perfektes Flug-, Wander- und
   Zweiradwetter, komfortable Unterkunft und leckere Verpflegung. Entsprechend
   war auch die Stimmung bei den Teilnehmenden bestens. Für uns…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/borso2130.jpg'
+coverImage: '/assets/legacy-images/70c2f59135eeb5121824.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/borso2130.jpg'
+  - src: '/assets/legacy-images/70c2f59135eeb5121824.jpg'
     alt: ''
   - src: /assets/archive/news/borso2130/002.jpg
     alt: ''

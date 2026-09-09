@@ -8,9 +8,9 @@ summary: >-
   Am Landeplatz in Grindelwald-Grund ist ab sofort auf den massiven Holzzaun zu
   achten. Der Landeplatz wird neu vom Endweg und dem Holzzaun begrenzt (vgl.
   Situation). Der Startplatz am Männlichen befindet sich neu…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/situation_grund.jpg'
+coverImage: '/assets/legacy-images/bbdc1db25e0c15c9ff59.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/situation_grund.jpg'
+  - src: '/assets/legacy-images/bbdc1db25e0c15c9ff59.jpg'
     alt: ''
   - src: /assets/archive/news/situation-grund/002.jpg
     alt: ''
@@ -20,7 +20,7 @@ gallery:
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/situation_grund'
 ---
-Am Landeplatz in Grindelwald-Grund ist ab sofort auf den massiven Holzzaun zu achten. Der Landeplatz wird neu vom Endweg und dem Holzzaun begrenzt ([vgl. Situation](https://jungfrau-taechi.ch/2021_weitereBilder/situation_grund.JPG)). 
+Am Landeplatz in Grindelwald-Grund ist ab sofort auf den massiven Holzzaun zu achten. Der Landeplatz wird neu vom Endweg und dem Holzzaun begrenzt ([vgl. Situation](/assets/legacy-images/49e25b0b372435c0f892.jpg)). 
 
 Der [Startplatz am Männlichen](https://jungfrau-taechi.ch/2021_weitereBilder/Startplatz%20Maennlichen.pdf) befindet sich neu süd-östlich der Bergstation vom Männlichen-Sessellift. Wir bitten alle Piloten, nur noch diesen Startplatz zu benutzen ([vgl. PDF](https://jungfrau-taechi.ch/2021_weitereBilder/Startplatz%20Maennlichen.pdf)). 
 

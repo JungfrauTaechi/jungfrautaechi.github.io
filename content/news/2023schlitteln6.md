@@ -7,9 +7,9 @@ category: Clubleben
 summary: >-
   Kalter Schnee und heisses Fondue waren perfekt für ein gelungenes
   Clubschlitteln am vergangenen Samstag. Hier ein paar Bilder vom Anlass:
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/2023schlitteln6.jpg'
+coverImage: '/assets/legacy-images/bfc8d9d57849203fa0be.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/2023schlitteln6.jpg'
+  - src: '/assets/legacy-images/bfc8d9d57849203fa0be.jpg'
     alt: ''
   - src: /assets/archive/news/2023schlitteln6/002.jpg
     alt: ''

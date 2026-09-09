@@ -1,0 +1,667 @@
+{
+  "images": {
+    "https://jungfrau-taechi.ch/2021_weitereBilder/situation_grund.JPG": {
+      "localPath": "/assets/legacy-images/49e25b0b372435c0f892.jpg",
+      "sha256": "dbfb44afd52f9ee3ea2ad8fccccbb12e51c78e5f5c88e610fbbbb3d627a2a602",
+      "bytes": 63474,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:42:06.470Z"
+    },
+    "https://jungfrau-taechi.ch/images/HV22Apero16.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:44.132Z"
+    },
+    "https://jungfrau-taechi.ch/images/KranGrund%20Kopie.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:44.221Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/11201615.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:44.302Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/2021clubessen9.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:44.380Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/2022bassano7.jpg": {
+      "localPath": "/assets/legacy-images/c8161213ac58dab162fa.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/weitere_bilder_22/2022Bassano7.jpg",
+      "sha256": "52c71c7cec1cd8ac70f8b0aa16c9a86ad6ccf29d123b46e9753e129673b736e0",
+      "bytes": 299463,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:44.698Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/2022ed5.jpg": {
+      "localPath": "/assets/legacy-images/1933e78aecb76e61b423.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/uploaded_images/2022ED5.jpg",
+      "sha256": "27556eb170021e6d6e96a85509111971881162dd0550da4f523bf7f0518b59f0",
+      "bytes": 409109,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:44.930Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/2023schlitteln6.jpg": {
+      "localPath": "/assets/legacy-images/bfc8d9d57849203fa0be.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/uploaded_images/2023Schlitteln6.jpg",
+      "sha256": "a19513b59c968e36b5dbba3d592099c254a41c4f3916d7418387e4d955faa855",
+      "bytes": 383368,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:45.144Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/22clubschlitteln8.jpg": {
+      "localPath": "/assets/legacy-images/daa0ac1fab90d1a8449a.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/weitere_bilder_22/22Clubschlitteln8.jpg",
+      "sha256": "e81bacb464450bd63e2021d93104af5350c2bbb4835095f38f622f0ae2f56476",
+      "bytes": 350638,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:45.376Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/22landecup21.jpg": {
+      "localPath": "/assets/legacy-images/c8dab51d7fc965c661d2.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/uploaded_images/22Landecup21.jpg",
+      "sha256": "7fe88a28a32917ebe5858cddc692d214164be44bf17f0928fd9da104302f8186",
+      "bytes": 468253,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:45.838Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/40jahr.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:45.909Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/Schlitten16a.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:45.979Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/aace1922.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:46.063Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/absageswisscup.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:46.137Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/aca1910.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:46.207Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/acf19breitbild.jpg": {
+      "localPath": "/assets/legacy-images/6e923020cef47096a1c2.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/weitere_bilder_19_blog/ACF19Breitbild.jpg",
+      "sha256": "dbee818cc1a74f41e0e90fb57d073fd7d77b608894d645502705d40ebcb29364",
+      "bytes": 262145,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:46.427Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/aeschbacher.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:46.494Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/albigny3.jpg": {
+      "localPath": "/assets/legacy-images/b889b22c84f87ad5f78d.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/weitere_bilder_22/Albigny3.jpg",
+      "sha256": "6cecb58d60e8977030b58b11ce4fa4cda2cc7817a16636b25d455b9d3ab022ae",
+      "bytes": 455877,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:46.716Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/bassano17002.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:46.789Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/bawuepodest.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:46.857Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/borso2130.jpg": {
+      "localPath": "/assets/legacy-images/70c2f59135eeb5121824.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/uploaded_images/Borso2130.jpg",
+      "sha256": "ec117f439b289c8db0e83c13a78d71b7ee58b98d4ff8f94d80530e9f5c08c583",
+      "bytes": 344458,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:47.075Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/boxx.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:47.145Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/ce18g.jpg": {
+      "localPath": "/assets/legacy-images/611f32080abd59bc8090.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/weitere_bilder_18_blog/CE18g.jpg",
+      "sha256": "269c135f6977c32a29fb9973040e23196b29b327c94a890f9cb2649561f61326",
+      "bytes": 72315,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:47.311Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/ce22x6.jpg": {
+      "localPath": "/assets/legacy-images/12fc60f14456e6329b73.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/uploaded_images/CE22X6.jpg",
+      "sha256": "6a43114d6ba835e7099638423c15cdce164e4f3ef54192105d4650f5fabe4917",
+      "bytes": 407162,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:47.879Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/cf17d.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:47.958Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/cf18gewinner1.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:48.047Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/cf22dc16.jpg": {
+      "localPath": "/assets/legacy-images/54e80f62f05039e70059.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/uploaded_images/CF22DC16.jpg",
+      "sha256": "a6a6db7378c5cd1107634cc410b3fc5929eb6ee30ec2e99c4caa74f40ae4e819",
+      "bytes": 812473,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:48.285Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/cfeinundzwanzig38.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:48.361Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/clubausflug15.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:48.444Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/clubausflug18.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:48.515Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/clubessen15g.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:48.587Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/clubessen17a.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:48.660Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/clubessen18einladung.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:48.737Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/clubessen2022einladung.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:48.810Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/clubesseneinladung.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:48.879Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/clubfliegen.jpg": {
+      "localPath": "/assets/legacy-images/70f34e79fef8dd25f841.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/uploaded_images/Clubfliegen.JPG",
+      "sha256": "519d76d666fdf929ecb9092fc603681a4083047c34f18dda274cb93623b9cf7d",
+      "bytes": 228086,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:49.090Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/clubfliegen22.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:49.166Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/clubschlitteln16.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:49.239Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/cs19b.jpg": {
+      "localPath": "/assets/legacy-images/0e9ba611fd133610c0c7.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/weitere_bilder_19_blog/CS19B.jpg",
+      "sha256": "fdee587133ec7215b7e62612a4f398fd1d3e818dd2159364da186ba8358fee0e",
+      "bytes": 357941,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:49.458Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/cschlitteln18.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:49.524Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/dietervonallmen.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:49.595Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/disentis21f.jpg": {
+      "localPath": "/assets/legacy-images/cd96b7699ccf4a7ee493.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/uploaded_images/Disentis21f.jpg",
+      "sha256": "cc4d03ea458338d3f4fca07b872e7a2ffe0934abdfebfe961243cdb410781f00",
+      "bytes": 383304,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:49.816Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/eigair.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:49.892Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/eigertour18.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:49.967Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/eigertour2019barflyer.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:50.041Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/eigertour21.jpg": {
+      "localPath": "/assets/legacy-images/0eef5ac001492dec345a.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/2020_weitere_bilder/Eigertour21.jpg",
+      "sha256": "041f7477100ac0d94ebd335a088ef84c4d8db6f7f91e06ec0f8300a0d6e2d867",
+      "bytes": 557972,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:50.313Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/einladunghv16.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:50.389Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/einladunghv20.jpg": {
+      "localPath": "/assets/legacy-images/3ef12358aea155461bb9.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/2020_weitere_bilder/Einladunghv20.jpg",
+      "sha256": "4d3eb110d9e536aa5df1759b693fdd3e070fee464183477f5c88834606d2796a",
+      "bytes": 150920,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:50.578Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/einladunghv2019.jpg": {
+      "localPath": "/assets/legacy-images/ff0adf9aa0d5c1f05ed6.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/blogposts/EinladungHV2019.jpg",
+      "sha256": "bd238417fb1d2fa721f0ee504b8900d2126011b6f4ce77150f8b32dcfd2a5e6c",
+      "bytes": 129660,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:50.749Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/et191.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:50.819Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/et22.jpg": {
+      "localPath": "/assets/legacy-images/7a7654cc3248f6614e67.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/uploaded_images/ET22.jpg",
+      "sha256": "384dc9ee0c557c38f0f6fc3c1a0e0249b7a408741d1fb063923ade389089d80c",
+      "bytes": 254829,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:51.014Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/fliegerbar16.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:51.087Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/fliegerbar17.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:51.159Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/flugverbotmuerren.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:51.239Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/germanopen1.jpg": {
+      "localPath": "/assets/legacy-images/3b3d1b1b7b0bcfce401b.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/2021_weitereBilder/Germanopen1.jpg",
+      "sha256": "a05d1c454fc84cdc32d7c230762cd37481d242c1fbc4dba336d1b278718f3c0b",
+      "bytes": 377561,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:51.447Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/gf8.jpg": {
+      "localPath": "/assets/legacy-images/41cd9426cd83c6254603.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/weitere_bilder_19_blog/GF8.jpg",
+      "sha256": "960f9d1c367675320fb2c21fab6a1b11fcd27df9ebde14e533a30eb7616165a3",
+      "bytes": 185771,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:51.624Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/gipfelflug.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:51.701Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/gkrafttraining.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:51.771Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/guide.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:51.842Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/hb2020.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:51.912Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/hbc19h.jpg": {
+      "localPath": "/assets/legacy-images/115ea4fc4bb4fd64620f.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/weitere_bilder_19_blog/HBC19h.jpg",
+      "sha256": "807a539342be36aedf16aec89c58307648dd42e1db79f84429986dec19dda8de",
+      "bytes": 283371,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:52.099Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/helistechelberg0.jpg": {
+      "localPath": "/assets/legacy-images/3c3545a01d80fb18cc13.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/weitere_bilder_22/Helistechelberg0.jpg",
+      "sha256": "414a33d439b914e41e708b0a112f17f354691837f1ccbe7af1895e8ed1a61df9",
+      "bytes": 544361,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:52.310Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/hoehenflug.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:52.390Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/holzerbar17a.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:52.458Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/holzerbar18.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:52.528Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/holzerbar18neu.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:52.597Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/holzerbar19.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:52.668Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/holzerbar23.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:52.738Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/holzerbarcup16a.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:52.810Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/holzerbarcup22.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:52.882Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/holzheizwerk.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:52.956Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/hv16.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:53.027Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/hv17.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:53.098Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/hv20titelbild.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:53.169Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/hv42d.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:53.245Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/img_1036.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:53.317Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/img_1801.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:53.398Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/info_seilzug.jpg": {
+      "localPath": "/assets/legacy-images/bafdbd04dd60907fcdba.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/blogposts/Info_Seilzug.jpg",
+      "sha256": "3ca21fe72285ef44e0045736c143011c60d9ed2e1843cc65aab2609b10d0ef14",
+      "bytes": 215647,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:53.584Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/jacke1.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:53.659Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/jb.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:53.727Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/kran.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:53.813Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/landecup-2015.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:53.884Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/lauterbrunnen.jpg": {
+      "localPath": "/assets/legacy-images/d4a13c577fd9adea1037.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/uploaded_images/Lauterbrunnen.jpg",
+      "sha256": "08cc8c1a1ac2066d7ecde39c0bce68d3c79ad1d3833f0e61c581f7411774a55d",
+      "bytes": 133909,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:54.086Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/maibachfoto1.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:54.157Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/maskenteddy.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:54.233Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/maskenteddy1.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:54.308Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/maskenteddy4.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:54.377Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/mh2018.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:54.456Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/mhc173.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:54.536Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/mhc18z.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:54.602Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/mheiger.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:54.674Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/mountainhostel.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:54.744Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/nanda.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:54.817Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/nandabrasil3.jpg": {
+      "localPath": "/assets/legacy-images/4e71c646e8459440137b.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/2023_weitere_Bilder/NandaBrasil3.jpg",
+      "sha256": "78a2600caf80dcaf2fb27ba6ee977ab43076bbeb92b5cfa30eb68805f7bafcf7",
+      "bytes": 609248,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:55.048Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/nandagemona2.jpg": {
+      "localPath": "/assets/legacy-images/ca12554c9f8f0994e10c.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/uploaded_images/NandaGemona2.jpg",
+      "sha256": "9df58afae8cb7754052338492528674e02966f63609fcf8a26b87480e5e91df8",
+      "bytes": 134977,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:55.247Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/nandagourdon215.jpg": {
+      "localPath": "/assets/legacy-images/765045fef8e2651749d6.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/uploaded_images/NandaGourdon215.jpg",
+      "sha256": "77c76afba144c96d30ce3f68d973dfd3471ac7971dad0694518f30e4e891abba",
+      "bytes": 483459,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:55.469Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/nandasm17.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:55.546Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/nandaswisscup1.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:55.618Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/pfarrschyr.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:55.688Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/piemont2018.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:55.761Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/podestopen1.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:55.834Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/protokoll44.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:55.906Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/protokollbild.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:55.976Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/pyr2016.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:56.057Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/regikaufmann.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:56.129Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/reinerneustadt.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:56.200Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/sc19a.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:56.269Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/sc2017.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:56.339Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/scg23.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:56.411Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/schlitteln21.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:56.481Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/schlitten16b.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:56.553Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/schlitten16c.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:56.628Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/schlitten16d.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:56.702Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/schlitten16e.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:56.772Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/schlitten16f.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:56.845Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/schlitten16g.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:56.929Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/schlitten19.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:57.008Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/schlittenfahrt.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:57.078Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/situation_grund.jpg": {
+      "localPath": "/assets/legacy-images/bbdc1db25e0c15c9ff59.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/2021_weitereBilder/situation_grund.JPG",
+      "sha256": "dbfb44afd52f9ee3ea2ad8fccccbb12e51c78e5f5c88e610fbbbb3d627a2a602",
+      "bytes": 63474,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:57.204Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/smfiesch21.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:57.276Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/sportdamen.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:57.345Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/stallbeizliclubessen21.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:57.410Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/stammtisch.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:57.481Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/supportdcjt.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:57.555Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/swisscup22.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:57.624Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/swisscupgrindelwald.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:57.697Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/umleitungkamel.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:57.809Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/verabschiedungfabienne.jpg": {
+      "localPath": "/assets/legacy-images/4b53b31ffe630b666190.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/uploaded_images/VerabschiedungFabienne.jpg",
+      "sha256": "1f4b75291905b01db4710257b912a4db91ac30cc7127741306423793ca3090f6",
+      "bytes": 432076,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:58.032Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/vorstandsabschied.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:58.107Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/vortragsui.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:58.177Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/vortragsui3witschi.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:58.257Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/wediverabschiedet.jpg": {
+      "localPath": "/assets/legacy-images/8f094560ccfd2bcc220c.jpg",
+      "fetchedFrom": "https://jungfrau-taechi.ch/images/weitere_bilder_22/Wediverabschiedet.jpg",
+      "sha256": "7638da4dde24296d190b3979a60a0a90cb15b2ae83c5030fe1005e65ad0780df",
+      "bytes": 368563,
+      "contentType": "image/jpeg",
+      "downloadedAt": "2026-09-09T06:43:58.461Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/weidenkatzen.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:58.543Z"
+    },
+    "https://jungfrau-taechi.ch/images/blogposts/wintereigertour.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:58.613Z"
+    },
+    "https://jungfrau-taechi.ch/images/weitere_bilder_blog/UmleitungKamel.jpg": {
+      "error": "Invalid image response: 404",
+      "checkedAt": "2026-09-09T06:43:58.726Z"
+    }
+  }
+}

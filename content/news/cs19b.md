@@ -7,9 +7,9 @@ category: Clubleben
 summary: >-
   Perfekte Bedingungen für diejenigen Jungfrau-Tächi, welche sich zum
   traditionellen Clubschlitteln trafen. Hier ein paar Bilder vom Anlass:
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/cs19b.jpg'
+coverImage: '/assets/legacy-images/0e9ba611fd133610c0c7.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/cs19b.jpg'
+  - src: '/assets/legacy-images/0e9ba611fd133610c0c7.jpg'
     alt: ''
   - src: /assets/archive/news/cs19b/002.jpg
     alt: ''

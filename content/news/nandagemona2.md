@@ -8,9 +8,9 @@ summary: >-
   Hohe Temperaturen, um 33° C, herrschten in Italien, man sei froh gewesen, in
   der Luft sein zu können, erzählt Nanda Walliser. Eigentlich hätte sie mit
   ihrem Ehemann Hansjörg nach Skandinavien in den Urlaub fahren…
-coverImage: 'https://jungfrau-taechi.ch/images/blogposts/nandagemona2.jpg'
+coverImage: '/assets/legacy-images/ca12554c9f8f0994e10c.jpg'
 gallery:
-  - src: 'https://jungfrau-taechi.ch/images/blogposts/nandagemona2.jpg'
+  - src: '/assets/legacy-images/ca12554c9f8f0994e10c.jpg'
     alt: ''
   - src: /assets/archive/news/nandagemona2/002.jpg
     alt: ''

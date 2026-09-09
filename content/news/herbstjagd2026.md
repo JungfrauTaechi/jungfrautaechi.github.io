@@ -5,8 +5,10 @@ title: 'Herbstjagd 2026: Wir nehmen Rücksicht'
 date: '2026-09-01'
 category: Fluggebiet
 summary: Die Gämsjagd findet vom 10. bis 30. September statt. Der Club bittet darum, die vereinbarten Einschränkungen am Abend zu beachten.
-coverImage: ''
-gallery: []
+coverImage: /assets/archive/news/herbstjagd2026/001.jpg
+gallery:
+  - src: /assets/archive/news/herbstjagd2026/001.jpg
+    alt: Zwei Gämsen vor einer Bergkulisse
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/herbstjagd2026'
 ---
 # Herbstjagd: Wir nehmen Rücksicht!
