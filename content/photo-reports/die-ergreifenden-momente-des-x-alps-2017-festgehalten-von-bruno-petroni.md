@@ -5,7 +5,7 @@ title: 'Die ergreifenden Momente des X-Alps 2017, festgehalten von Bruno Petroni
 date: '1970-01-01'
 detail: Fotoreport
 coverImage: >-
-  /assets/archive/photos/die-ergreifenden-momente-des-x-alps-2017-festgehalten-von-bruno-petroni/001.jpg
+  /assets/archive/photos/die-ergreifenden-momente-des-x-alps-2017-festgehalten-von-bruno-petroni/011.jpg
 gallery:
   - src: >-
       /assets/archive/photos/die-ergreifenden-momente-des-x-alps-2017-festgehalten-von-bruno-petroni/001.jpg
