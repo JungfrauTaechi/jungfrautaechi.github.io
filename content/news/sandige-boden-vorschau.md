@@ -1,7 +1,7 @@
 ---
 kind: news
 slug: sandige-boden-vorschau
-title: Clubfliegen Sandige Boden 19. September 2026
+title: Clubfliegen im Sandigen Boden 19. September 2026
 date: '2026-09-09'
 category: Clubleben
 summary: Vorschau zum Jubiläums Clubfliegen 2026
@@ -27,7 +27,7 @@ Euer Jungfrau-Tächi Vorstand.
 
 Samstag 19. September 2026
 
-09.30h Startplatz First: Gemeinsamer Morgenflug in den Grund
+09.30h Treffpunkt Startplatz First: Gemeinsamer Morgenflug in den Grund
 
 12.00h Treffpunkt Terrasse Restaurant First
 
@@ -43,4 +43,4 @@ danach gemütliches Zusammensein im Sandigen Boden
 
 
 
-ACHTUNG: Zufahrt zum Sandigen Boden ist ohne Fahrbewilligung (P) nicht gestattet! Wir organisieren ab ca. 14.00h einen Shuttle ab Haifmatte zum Sandigen Boden, und zurück. Anmeldung unbedingt notwendig für Shuttle per Telefon an Matthias Schenk (079 824 86 02). Parkplätze in der Haifmatte vorhanden (Skizze/Plan folgt).
+ACHTUNG: Zufahrt zum Sandigen Boden ist ohne Fahrbewilligung (P) nicht gestattet! Wir organisieren ab ca. 14.00h einen Shuttle ab Haifmatte zum Sandigen Boden, und zurück. Anmeldung für Shuttle unbedingt notwendig per Telefon an Matthias Schenk (079 824 86 02). Parkplätze in der Haifmatte vorhanden (Skizze/Plan folgt).
