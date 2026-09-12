@@ -33,4 +33,3 @@
 }
 .webcam-external { padding: 2rem; background: #edf2f3; min-height: 220px; display: grid; align-content: center; justify-items: start; gap: .75rem; }
 .webcam-external h3, .webcam-external p { margin: 0; }
-.pano-area-focus { position: absolute; top: 12px; left: 48px; z-index: 5; padding: .6rem .8rem; background: #8f231e; color: white; border: 1px solid #fff; border-radius: 4px; cursor: pointer; }

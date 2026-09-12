@@ -1,4 +1,3 @@
-import curatedPanoramaAreas from "./panorama-curated-areas.json";
 import clubPurposesContent from "../content/site/purposes.json";
 import clubPortraitContent from "../content/site/portrait.json";
 import clubProgrammeContent from "../content/site/programme.json";
@@ -300,7 +299,7 @@ const overviewSites = [
   { id: "airtime-max", label: "Grindelwald · Airtime Max", area: "Grindelwald", panorama: panorama("airtime-max", 12.4666, -23.1034, 70) },
   { id: "airtime-stechelberg", label: "Stechelberg · Luftpanorama", area: "Lauterbrunnental", panorama: panorama("airtime-stechelberg", -70.3972, -40.4921, 70) },
 ];
-const withSceneMeta = (site, sceneType) => ({ ...site, sceneType, links: panoramaLinks[site.id] || [], landmarks: panoramaLandmarks[site.id] || [], areas: [...(panoramaAreas[site.id] || []), ...(curatedPanoramaAreas[site.id] || [])] });
+const withSceneMeta = (site, sceneType) => ({ ...site, sceneType, links: panoramaLinks[site.id] || [], landmarks: panoramaLandmarks[site.id] || [], areas: panoramaAreas[site.id] || [] });
 export const flightScenes = [
   ...overviewSites.map((site) => withSceneMeta(site, "overview")),
   ...startSites.map((site) => withSceneMeta(site, "start")),

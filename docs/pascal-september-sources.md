@@ -45,4 +45,4 @@ Roundshot IDs were read from each provider page's `og:image` metadata. The Pfing
 
 ## First panorama annotation
 
-Alain clarified on 12 September: east of the path, uphill from the wooden tower toward the First cable-car station. The curated polygon was placed visually on that hillside in the older panorama, with a red translucent fill and label using the same renderer as Grund. It is an orientation annotation, not surveyed geometry. The original graphic remains the boundary reference. The default camera direction is preserved; “Sperrzone ansehen” turns toward the annotation. Source-derived areas and marker positions remain unchanged.
+Alain clarified on 12 September that the restriction lies east of the path, uphill from the wooden tower toward the First cable-car station. He subsequently confirmed that the panorama camera position cannot show this area. The attempted overlay and focus button were therefore removed. The original top-down graphic and notice remain on the First and safety pages; other panorama areas and marker positions are unchanged.
