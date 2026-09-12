@@ -1,19 +1,19 @@
 # Shared wind feed: club-site preparation and EigAir handover
 
-Status: club frontend implemented, 9 September 2026. ThermalBase backend changes and activation are pending. This document refines the client contract in [Meteo data architecture](./meteo-data-architecture.md); the server fetch, authorization and retention requirements remain in [ThermalBase wind history requirements](./thermalbase-wind-history-requirements.md).
+Status: public feed verified and activation authorized, 12 September 2026. Production uses `https://app.eigair.com/api/public/weather/jungfrau?observations=4` through the GitHub Pages `VITE_THERMALBASE_WEATHER_URL` Actions variable. Stage uses the same path on `https://stage.thermalbase.ch`. This document refines the client contract in [Meteo data architecture](./meteo-data-architecture.md); the server fetch, authorization and retention requirements remain in [ThermalBase wind history requirements](./thermalbase-wind-history-requirements.md).
 
 ## Club-site behavior
 
-The primary desktop grid has two columns and three rows: Grindelwald Grund, Grindelwald First, Schmidigen-Bidmeren, Itramen, Männlichen, Russisprung. Mobile stacks the cards. The other 24 stations remain behind the region expand control. Grund is selected initially.
+The primary desktop grid has two columns and three rows: Grindelwald First, Grindelwald Grund, Schmidigen-Bidmeren, Itramen, Männlichen, Russisprung. Mobile stacks the cards. The other 24 stations remain behind the region expand control.
 
 - `src/data.js` exports `windStationRoster`: stable IDs, primary/region membership, order, coordinates and display metadata. Ground station `fanet-BA-4` is outside the 29 winds.mobi IDs.
-- `src/WindStationCard.jsx` renders every station using the same presentation. Provider attribution, observation time, current wind and up to four actual observations are shared across sources. The detail panel uses the same normalized values. A single current value is never repeated to fabricate history.
+- `src/WindStationCard.jsx` renders every station using the same presentation. Provider attribution, observation time, current wind and up to four actual observations are shared across sources. A single current value is never repeated to fabricate history.
 - `src/wind-feed.js` owns requests, parsing, normalization, a five-minute browser cache, in-flight request coalescing, a ten-second request deadline and per-station failure handling. A failed or missing station retains its last-known observations and original timestamps with an explicit degraded state. An empty station shows unavailable values, never mock readings.
 - `src/useWindFeed.js` loads the feed on page mount. A local timer ages observations once per minute but never fetches providers. Re-entering the page after cache expiry triggers the next request. Failed attempts also receive the five-minute client cooldown. Server refresh decisions must use server-side successful-fetch state, not this browser cache timestamp.
 
-Until a public feed is configured, the prototype uses one winds.mobi batch and one burnair request, concurrently. Selecting a card or expanding the list does not fetch data. Existing provider-use requirements continue to apply.
+When the variable is explicitly empty, the prototype uses one winds.mobi batch and one burnair request, concurrently. Selecting a card or expanding the list does not fetch data. Existing provider-use requirements continue to apply.
 
-## What exists in EigAir today
+## Historical backend handover (9 September, superseded by activation below)
 
 Inspected the local ThermalBase-v2 implementation on 9 September 2026:
 
@@ -69,8 +69,8 @@ Mark a provider failure using `unavailable: true` on that station while returnin
 
 ## Activation
 
-Leave `VITE_THERMALBASE_WEATHER_URL` empty for the current prototype adapters. Once the public endpoint exists, set this build-time variable to its full public URL, including `?observations=4`. Local development uses `.env.local`; restart Vite after changing it. Validate against Stage first. GitHub Pages reads the corresponding repository/environment Actions variable at build time. Rebuilding is required to change sources.
+Production `VITE_THERMALBASE_WEATHER_URL` is set to `https://app.eigair.com/api/public/weather/jungfrau?observations=4`. Local development uses `.env.local`; restart Vite after changing it. Validate against Stage first. GitHub Pages reads the corresponding repository/environment Actions variable at build time. Rebuilding is required to change sources.
 
 With a URL configured, the client makes one credential-free request to that URL and **never falls back to direct burnair or winds.mobi calls**, including on 401, timeout, invalid JSON, or invalid contract. Do not enable the variable until the backend feed is verified. A wrong URL will display unavailable data rather than silently bypassing the backend.
 
-Before activation, retain the provider approvals required by the architecture handover. Add the endpoint URL only after the backend is ready; no placeholder URL is enabled by this change.
+Verification on 12 September: Stage and Production returned HTTP 200, apiVersion 1, the exact 30 public station IDs, current values and distinct history for all stations, and CORS for https://jungfrautaechi.github.io. The actual club parser/client accepted both feeds with one credential-free request and no duplicate request inside the five-minute cache. All temperatures were null at verification and display as a dash. Source/provider attribution and original observation times remain intact. This activation changes only the feed configuration; recurring polling, station selection, and a latest-plus-four history redesign remain deferred. Local development must use Stage because Production does not allow localhost CORS.
