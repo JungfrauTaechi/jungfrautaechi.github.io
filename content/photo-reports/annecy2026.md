@@ -1,9 +1,9 @@
 ---
 kind: photo-report
 slug: annecy2026
-title: Fotoreport Clubausflug Annecy
+title: Clubausflug Annecy 2026
 date: '2026-09-09'
-detail: Fotos vom Clubausflug nach Annecy im September 2026
+detail: Fotoreport vom Clubausflug nach Annecy, 24.-30. August 2026
 coverImage: /media/photos/annecy2026/Datei00001.jpg
 gallery:
   - src: /media/photos/annecy2026/Datei00002.jpg
