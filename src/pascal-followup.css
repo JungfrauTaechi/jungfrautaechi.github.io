@@ -1,0 +1,36 @@
+/* September feedback: scoped layouts preserve the other gallery/card families. */
+.news-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.1rem; }
+.news-grid .story-card img { aspect-ratio: 3 / 2; height: auto; object-fit: cover; }
+.news-grid .story-card h3 { font-size: 1rem; line-height: 1.35; }
+.news-grid .story-card > a > div { padding: .85rem; }
+.first-takeoff-notice { display: grid; grid-template-columns: minmax(0, 1fr) minmax(130px, 220px); gap: 1.4rem; align-items: center; padding: 1.25rem; margin-block: 1rem; border: 1px solid #dfb7b2; border-left: 4px solid #a9342c; background: #fff8f6; }
+.first-takeoff-notice h3 { margin: .4rem 0; font-size: 1.2rem; }
+.first-takeoff-notice p { font-size: .9rem; line-height: 1.5; }
+.first-takeoff-notice img { display: block; width: 100%; height: auto; max-height: 260px; object-fit: contain; }
+.first-takeoff-notice a { color: #84251f; }
+.forecast-shortcuts { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 1rem; margin-bottom: 1.25rem; align-items: stretch; }
+.forecast-chart-compact { margin: 0; min-width: 0; }
+.forecast-chart-compact .forecast-scroll img { max-height: 270px; object-fit: contain; }
+.forecast-chart-compact .forecast-chart-heading { flex-wrap: wrap; gap: .4rem; padding: .8rem; }
+.radar-card { padding: 1.2rem; border: 1px solid var(--line); background: #eef4f8; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+.radar-card h3 { margin: .3rem 0 .5rem; font-size: 1.35rem; }
+.radar-card p { font-size: .88rem; line-height: 1.5; }
+.radar-card .button { font-size: .8rem; margin-top: .5rem; }
+.radar-card .radar-note { font-size: .72rem; margin-bottom: 0; color: var(--muted); }
+/* Presentation only: observation selection and provider/cache behavior are unchanged. */
+.meteo-page .wind-card-integrated { padding: .85rem 1rem; gap: .55rem; }
+.meteo-page .wind-card-integrated .wind-current { padding: .6rem 0; }
+.meteo-page .wind-card-integrated .wind-current strong { font-size: 1.75rem; }
+.meteo-page .wind-card-integrated .wind-history > span { padding: .35rem .2rem; gap: .2rem; }
+@media (max-width: 1199px) and (min-width: 901px) { .news-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 900px) { .news-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .forecast-shortcuts { grid-template-columns: 1fr; } }
+@media (max-width: 520px) {
+  .news-grid { grid-template-columns: 1fr; }
+  .first-takeoff-notice { grid-template-columns: 1fr; gap: .75rem; padding: 1rem; }
+  .first-takeoff-notice img { max-height: 330px; }
+  .meteo-page .wind-card-integrated { padding: .8rem; }
+  .meteo-page .wind-card-integrated .wind-current strong { font-size: 1.5rem; }
+}
+.webcam-external { padding: 2rem; background: #edf2f3; min-height: 220px; display: grid; align-content: center; justify-items: start; gap: .75rem; }
+.webcam-external h3, .webcam-external p { margin: 0; }
+.pano-area-focus { position: absolute; top: 12px; left: 48px; z-index: 5; padding: .6rem .8rem; background: #8f231e; color: white; border: 1px solid #fff; border-radius: 4px; cursor: pointer; }

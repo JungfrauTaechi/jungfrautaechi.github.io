@@ -1,3 +1,7 @@
+import curatedPanoramaAreas from "./panorama-curated-areas.json";
+import clubPurposesContent from "../content/site/purposes.json";
+import clubPortraitContent from "../content/site/portrait.json";
+import clubProgrammeContent from "../content/site/programme.json";
 import { assetUrl } from "./site-paths.js";
 import { formatContentDate } from "./content-date.js";
 import { generatedNews, generatedPhotoReports } from "./generated-content.js";
@@ -117,31 +121,26 @@ export const meteoStations = windStationCatalog.map((station, index) => {
   };
 });
 export const meteoWebcams = [
+  {"id":"mittellegi","title":"Mittellegihütte","focus":0.5,"image":"https://grindelwald.roundshot.com/cams/1314/medium","viewerUrl":"https://grindelwald.roundshot.com/mittellegihuette/","credit":"© Grindelwald Tourismus · Roundshot","alt":"Panorama der Mittellegihütte am Eiger"},
+  {"id":"faulhorn","title":"Faulhorn","focus":0.5,"image":"https://faulhorn.roundshot.com/cams/1571/medium","viewerUrl":"https://faulhorn.roundshot.com/","credit":"© Faulhorn · Roundshot","alt":"Panorama vom Faulhorn"},
+  {"id":"pfingstegg","title":"Pfingstegg","focus":0.5,"image":"https://pfingstegg.roundshot.com/cams/416/medium","viewerUrl":"https://pfingstegg.roundshot.com/","credit":"© Pfingsteggbahn · Roundshot","alt":"Panorama von der Pfingstegg"},
   { id: "first", title: "Grindelwald-First", focus: 0.52, image: "https://jungfrau.roundshot.com/cams/1515/medium", viewerUrl: "https://webcams.jungfrau.ch/first-schreckfeld/", alt: "Aktuelles Panoramabild der Webcam Grindelwald-First" },
   { id: "eigergletscher", title: "Eigergletscher", focus: 0.5, image: "https://jungfrau.roundshot.com/cams/756/medium", viewerUrl: "https://webcams.jungfrau.ch/eigergletscher/#/", alt: "Aktuelles Panoramabild der Webcam Eigergletscher" },
   { id: "maennlichen", title: "Männlichen", focus: 0.46, image: "https://maennlichen.roundshot.com/cams/1060/medium", viewerUrl: "https://maennlichen.roundshot.com/bergstation-wengen/", alt: "Aktuelles Panoramabild der Webcam Männlichen" },
-  { id: "kleine-scheidegg", title: "Kleine Scheidegg", focus: 0.34, image: "https://jungfrau.roundshot.com/cams/1514/medium", viewerUrl: "https://webcams.jungfrau.ch/lauberhorn/#/", alt: "Aktuelles Panoramabild der Webcam Kleine Scheidegg" },
+  { id: "kleine-scheidegg", title: "Lauberhorn", focus: 0.34, image: "https://jungfrau.roundshot.com/cams/1514/medium", viewerUrl: "https://webcams.jungfrau.ch/lauberhorn/#/", alt: "Aktuelles Panoramabild der Webcam Lauberhorn" },
   { id: "terminal", title: "Grindelwald Terminal", focus: 0.5, image: "https://jungfrau.roundshot.com/cams/750/medium", viewerUrl: "https://webcams.jungfrau.ch/grindelwald-terminal/", alt: "Aktuelles Panoramabild der Webcam Grindelwald Terminal" },
   { id: "kirchbuehl", title: "Kirchbühl", focus: 0.5, image: "https://kirchbuehl.roundshot.com/cams/41/medium", viewerUrl: "https://kirchbuehl.roundshot.com/#/", credit: "© Hotel Kirchbühl · Roundshot", alt: "Aktuelles Panoramabild der Webcam Kirchbühl" },
   { id: "baeregg", title: "Bäregg", focus: 0.5, image: "https://baeregg.roundshot.com/cams/1726/medium", viewerUrl: "https://baeregg.roundshot.com/#/", credit: "© Berghaus Bäregg · Roundshot", alt: "Aktuelles Panoramabild der Webcam Bäregg" },
   { id: "glecksteinhuette", title: "Glecksteinhütte", focus: 0.5, image: "https://www.foto-webcam.eu/webcam/glecksteinhuette/current/1200.jpg", viewerUrl: "https://www.foto-webcam.eu/webcam/glecksteinhuette/", credit: "© Glecksteinhütte · Foto-Webcam.eu", still: true, alt: "Aktuelles Webcambild der Glecksteinhütte mit Blick nach Westen" },
+  {"id":"eiger-express","title":"Eiger Express · Mast 4","focus":0.5,"image":"https://webcams.jungfrau.ch/cams/1064/medium","viewerUrl":"https://webcams.jungfrau.ch/top-of-europe-eiger-express/","credit":"© Jungfraubahnen · Roundshot","alt":"Panorama beim Mast 4 des Eiger Express"},
+  {"id":"bussalp","title":"Bussalp","focus":0.5,"image":"https://grindelwaldbus.roundshot.com/cams/10/medium","viewerUrl":"https://grindelwaldbus.roundshot.com/","credit":"© Grindelwald Bus · Roundshot","alt":"Panorama von der Bussalp"},
+  {"id":"schynige-platte","title":"Schynige Platte","focus":0.5,"image":"https://jungfrau.roundshot.com/cams/771/medium","viewerUrl":"https://jungfrau.roundshot.com/schynige-platte/","credit":"© Jungfraubahnen · Roundshot","alt":"Panorama von der Schynigen Platte"},
+  {"id":"harder","title":"Harder Kulm","focus":0.5,"image":"https://jungfrau.roundshot.com/cams/740/medium","viewerUrl":"https://jungfrau.roundshot.com/interlaken-harderkulm/","credit":"© Jungfraubahnen · Roundshot","alt":"Panorama vom Harder Kulm in Richtung Interlaken und nach Westen"},
+  {"id":"first-feratel","title":"First · Feratel","focus":0.5,"externalOnly":true,"viewerUrl":"https://www.feratel.com/en/webcams/switzerland/bern/grindelwald-first","credit":"© feratel media technologies AG","still":true,"alt":"Webcambild Grindelwald First von Feratel"},
 ];
 export const news = generatedNews.map((item) => ({ ...item, dateLabel: formatDate(item.date), image: contentAsset(item.coverImage) || contentAsset(item.gallery?.[0]?.src) || images.hero, alt: item.coverAlt || (!item.coverImage || item.coverImage === item.gallery?.[0]?.src ? item.gallery?.[0]?.alt : "") || item.title, path: `/news/${item.slug}`, gallery: (item.gallery || []).map((image, index) => ({ ...image, src: contentAsset(image.src), alt: image.alt || `${item.title} – Bild ${index + 1}` })) }));
-export const clubPurposes = [
-  { number: "01", title: "Fluggebiet erhalten", text: "Erhaltung des Fluggebietes mit Start- und Landeplätzen, vor allem in den Lütschinentälern." },
-  { number: "02", title: "Sport und Gemeinschaft", text: "Förderung des Sports und der Geselligkeit für Mitglieder durch Clubaktivitäten." },
-  { number: "03", title: "Wettkampfsport fördern", text: "Förderung des Hängegleiter-Wettkampfsportes." },
-];
-export const clubPortrait = [
-  "Unser Club wurde 1976 unter dem Namen «Delta-Club Jungfrau-Tächi» von 13 Flugenthusiasten um Toni Wyss von der Kleinen Scheidegg gegründet. Heute zählt der Club 361 Mitglieder, und Grindelwald hat sich zu einem der bekanntesten Fluggebiete der Schweiz entwickelt. Hier machen viele Gäste bei einem Tandemflug erstmals Bekanntschaft mit der freiesten Art des Fliegens, während die Könner an den besten Sommertagen gar über den höchsten Alpengipfeln schweben oder sich zu Streckenflügen von über 100 Kilometer aufmachen.",
-  "Trotz Otto Lilienthals Versuchen um 1890 entwickelte sich unser Sport erst 90 Jahre später. Ironischerweise bedurfte es für die einfachste Form des Fliegens zuerst der Reise zum Mond. Der NASA-Forscher Ernest Rogallo entwickelte im Zusammenhang mit Fallschirmstudien für die Apollokapseln den Drachen und auch das Prinzip für den späteren Gleitschirm. Zuerst dachte man – wie einst Lilienthal – nur an einfache Gleitflüge von Hügeln. Bald aber lernten die Pioniere, den Segelfliegern gleich die Aufwinde zu nutzen und damit stundenlange und weite Flüge zu machen.",
-  "Zwar nahmen die Mitgliederzahlen stetig zu, aber der Club blieb in seinen ersten zehn Jahren doch eine Gemeinschaft von meist wagemutigen Idealisten. Dies änderte sich mit dem Aufkommen der Gleitschirme ab 1986. Alpenweit, aber vor allem auch in Grindelwald, setzte ein eigentlicher Boom ein. 1988 hatte der Verein erstmals über 100 Mitglieder. Er wandelte sich nun immer mehr zum Gleitschirmclub.",
-  "Das Grindelwalder Wettkampfteam konnte Anfang der 90er Jahre einige grosse Erfolge buchen. Ulrich Bohren wurde Schweizer Meister und war zweimal Mannschaftsweltmeister mit dem Schweizer Team. Der Club gewann vier Medaillen an den nationalen Vereinsmeisterschaften, darunter 1996 den Meistertitel, und machte sich als Veranstalter einer Schweizer Meisterschaft und von drei Gleitschirm-Weltcups einen guten Namen.",
-  "Die Geselligkeit innerhalb des Clubs und die Verbundenheit mit dem Ort konnte glücklicherweise aus den Pioniertagen des Deltafliegens ins neue Jahrtausend hinübergerettet werden. Der Verein leistet regelmässig freiwillige Arbeitseinsätze zugunsten der Alpwirtschaft. Einen Höhepunkt bildet das alljährliche Clubfliegen, wo traditionellerweise ein ganzer «Bänz» am Spiess gebraten wird.",
-  "Bereits 1990 wurden ab Startplatz First das Wetterhorn und das Schreckhorn überflogen, mit dem Delta auch der Eiger. Im Jahr 2000 gelang Clubmitglied Alex Hofer der Überflug von Eiger, Mönch und Jungfrau in einem Zuge. Er war früher schon als erster von First aus ins Ausland geflogen: 130 Kilometer quer durch die Zentral- und Ostschweiz nach Vaduz.",
-  "Mit dem neuen Jahrtausend begannen sich die professionelle Jugendförderung und die konsequente Aufbauarbeit in der Leistungsgruppe auszuzahlen. Weltmeister, Teamweltmeisterinnen und Teamweltmeister, Europameister, Schweizermeister, Gesamtweltcup- und X-Alps-Sieger: Diese Titel wurden innerhalb weniger Jahre von Clubmitgliedern erflogen.",
-  "In enger Zusammenarbeit baute der Club die Infrastruktur auf und verbesserte sie laufend. Im Jahr 2000 konnte eine automatische Wetterstation beim Hauptstartplatz First in Betrieb genommen werden. Viele Gastpilotinnen und Gastpiloten aus aller Welt geniessen heute das dank der Vereinsanstrengungen gebührenfreie Fluggebiet.",
-];
+export const clubPurposes = clubPurposesContent;
+export const clubPortrait = clubPortraitContent;
 export const clubStories = [
   {
     period: "1987–1991", title: "Der Matratzenboom", image: images.clubCommunity,
@@ -235,13 +234,7 @@ export const clubStories = [
     ],
   },
 ];
-export const clubProgramme = [
-  { startDate: "2026-09-19", endDate: "2026-09-20", date: "19.–20. September 2026", path: "/news/sandige-boden-vorschau", title: "Clubfliegen First – Sandigen Boden", text: "Taskfliegen nach Stärkeklasse und Punktlandungen, anschliessend Jubiläumsfest im Sandigen Boden." },
-  { startDate: "2026-11-07", endDate: "2026-11-07", date: "7. November 2026", title: "Clubessen", text: "Informationen zum Ort und zur Anmeldung folgen." },
-  { startDate: "2027-01-30", endDate: "2027-01-30", date: "30. Januar 2027", title: "Hauptversammlung", text: "Informationen folgen." },
-  { startDate: "2027-02-13", endDate: "2027-02-13", date: "13. Februar 2027", title: "Nachtschlitteln und Fondueplausch", text: "Auf dem Eigerrun." },
-  { startDate: "2027-03-06", endDate: "2027-03-06", date: "6. März 2027", title: "Landecup Holzerbar", text: "Informationen folgen." },
-];
+export const clubProgramme = clubProgrammeContent;
 export const chronology = [
   { year: "1976", text: "Gründung des Deltaclub Jungfrau Tächi am 17. Januar 1976 im Hotel Eden in Wengen. Toni Wyss wird erster Präsident. Der Club zählt 13 Mitglieder. Toni Wyss nimmt an der Deltaweltmeisterschaft in Kössen teil." },
   { year: "1978", text: "Erstes Freundschaftsfliegen mit auswärtiger Beteiligung. Ziellandeflüge von Pfingstegg und Waldspitz ins Gryt." },
@@ -307,7 +300,7 @@ const overviewSites = [
   { id: "airtime-max", label: "Grindelwald · Airtime Max", area: "Grindelwald", panorama: panorama("airtime-max", 12.4666, -23.1034, 70) },
   { id: "airtime-stechelberg", label: "Stechelberg · Luftpanorama", area: "Lauterbrunnental", panorama: panorama("airtime-stechelberg", -70.3972, -40.4921, 70) },
 ];
-const withSceneMeta = (site, sceneType) => ({ ...site, sceneType, links: panoramaLinks[site.id] || [], landmarks: panoramaLandmarks[site.id] || [], areas: panoramaAreas[site.id] || [] });
+const withSceneMeta = (site, sceneType) => ({ ...site, sceneType, links: panoramaLinks[site.id] || [], landmarks: panoramaLandmarks[site.id] || [], areas: [...(panoramaAreas[site.id] || []), ...(curatedPanoramaAreas[site.id] || [])] });
 export const flightScenes = [
   ...overviewSites.map((site) => withSceneMeta(site, "overview")),
   ...startSites.map((site) => withSceneMeta(site, "start")),
@@ -319,7 +312,7 @@ export const flightSceneGroups = [
   { id: "landing", label: "Landeplätze", count: landingSites.length },
 ];
 export const safetyAreas = [
-  { id: "grindelwald", title: "Fluggebiet Grindelwald", detail: "LS-R6 Axalp und lokale Vereinbarung", body: "DABS zwingend beachten. Südlich SwissGrid 169000 gilt lokal eine maximale Höhe von 2250 m ü. M. statt 1850 m ü. M. Während der Axalp-Fliegerdemo kann die grössere temporäre LS-R13 gelten.", images: [images.safetyGrindelwald, images.safetyEigergletscher, images.safetyMaennlichen] },
+  { id: "grindelwald", title: "Fluggebiet Grindelwald", detail: "LS-R6 Axalp und lokale Vereinbarung", body: "DABS zwingend beachten. Bei aktiver LS-R6 gilt innerhalb der lokalen Sonderzone südlich SwissGrid 169000 eine maximale Höhe von 2250 m ü. M. statt 1850 m ü. M. (Sonderregelung). Während dem Axalp-Fliegerschiessen kann die grössere temporäre LS-R13 gelten; diese Sonderregelung gilt dann nicht.", images: [images.safetyGrindelwald, images.safetyEigergletscher, images.safetyMaennlichen] },
   { id: "lauterbrunnen", title: "Lauterbrunnen und Mürren", detail: "Lokale Fluggebietsregeln", body: "Bitte die eingezeichneten lokalen Regeln sowie Start- und Landeplatzhinweise vor dem Flug vollständig prüfen.", images: [images.safetyLauterbrunnen] },
   { id: "meiringen", title: "HX Meiringen", detail: "Militärflugplatz und Luftraum", body: "Die aktuellen HX-Regeln und Aktivierungszeiten vor jedem Flug prüfen; DABS und offizielle Luftfahrtinformationen bleiben verbindlich.", images: [images.safetyMeiringen] },
   { id: "interlaken", title: "Landeplätze Interlaken", detail: "Höhenangaben in AMSL", body: "Die publizierten Höhen sind Meter über Meer und nicht Meter über Grund. Die beiden Regelkarten vor Anflug der Interlakner Landeplätze beachten.", images: [images.safetyInterlaken1, images.safetyInterlaken2] },

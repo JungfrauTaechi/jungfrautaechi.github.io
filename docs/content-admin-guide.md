@@ -1,5 +1,7 @@
 # News und Fotoreports verwalten
 
+**Jahresprogramm oder Clubtexte ändern?** Die [Übersicht mit direkten GitHub-Bearbeitungslinks](../content/site/README.md) führt zu den separaten Dateien für Termine, Portrait und Vereinszwecke. Dort stehen auch Beispiele und die Zuordnung der übrigen Seiten.
+
 Die Website erzeugt alle News- und Fotoseiten aus einfachen Markdown-Dateien. Club-Admins müssen keine React-Komponenten und insbesondere nicht `src/App.jsx` bearbeiten.
 
 ## Welcher Veröffentlichungsweg?

@@ -6,7 +6,28 @@ import { validateRecord, localMediaPath } from "../scripts/content-validation.mj
 import { generatedNews, generatedPhotoReports } from "../src/generated-content.js";
 import { readFile, access } from "node:fs/promises";
 import { applyMarkerPosition } from "../src/marker-position.js";
+import { relatedNews } from "../src/related-news.js";
+import { validateSiteContent } from "../scripts/site-content-validation.mjs";
 const shvWeatherSource = await readFile(new URL("../src/ShvWeather.jsx", import.meta.url), "utf8");
+
+test("related news fills sparse categories without the current article or duplicates", () => {
+  const article = { slug: "current", category: "club" };
+  const items = [article, { slug: "other", category: "travel" }, { slug: "match", category: "club" }, { slug: "match", category: "club" }, { slug: "third", category: "travel" }, { slug: "fourth", category: "travel" }];
+  assert.deepEqual(relatedNews(items, article).map(item => item.slug), ["match", "other", "third", "fourth"]);
+  assert.deepEqual(relatedNews([article], article), []);
+  assert.deepEqual(items[0], article);
+});
+
+test("editable club content validates existing files and rejects broken programme edits", async () => {
+  const content = Object.fromEntries(await Promise.all(["programme", "portrait", "purposes"].map(async name => [name, JSON.parse(await readFile(new URL(`../content/site/${name}.json`, import.meta.url), "utf8"))])));
+  assert.deepEqual(validateSiteContent(content), []);
+  const event = content.programme[0];
+  for (const invalid of [null, { ...event, startDate: "2026-02-30" }, { ...event, endDate: "2026-01-01" }, { ...event, title: "" }, { ...event, path: "//example.com" }, { ...event, path: "/../admin" }]) {
+    assert.ok(validateSiteContent({ ...content, programme: [invalid] }).length);
+  }
+  assert.ok(validateSiteContent({ ...content, portrait: [""] }).length);
+  assert.ok(validateSiteContent({ ...content, purposes: [null] }).length);
+});
 
 test("marker overrides change only coordinates and retain the original link or station", () => {
   const marker = { targetId: "grund", station: { id: "fanet-BA-4" }, yaw: 10, pitch: 20 };

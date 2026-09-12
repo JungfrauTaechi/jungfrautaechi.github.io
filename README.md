@@ -2,6 +2,8 @@
 
 Local Vite/React first version of the Jungfrau-Tächi Grindelwald redesign, structured as reusable shell, page-intro, card listing, flight-area, gallery and anniversary components.
 
+Club-Redaktion: [Jahresprogramm und Seitentexte bearbeiten](content/site/README.md) · [News und Fotoreports veröffentlichen](docs/content-admin-guide.md).
+
 ```powershell
 npm run inventory
 npm run build

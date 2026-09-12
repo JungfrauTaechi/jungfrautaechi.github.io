@@ -4,8 +4,12 @@ import path from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
 import sanitizeHtml from "sanitize-html";
+import { validateSiteContent } from "./site-content-validation.mjs";
 
 const root = path.resolve(".");
+const siteContent = Object.fromEntries(await Promise.all(['programme', 'portrait', 'purposes'].map(async name => [name, JSON.parse(await readFile(path.join(root, 'content/site', `${name}.json`), 'utf8'))])));
+const siteIssues = validateSiteContent(siteContent);
+if (siteIssues.length) throw new Error(siteIssues.join('\n'));
 const output = path.join(root, "src/generated-content.js");
 let unavailableArchiveImages = 0;
 const mediaExists = async (src) => {

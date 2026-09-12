@@ -1,0 +1,15 @@
+{
+  "first": [
+    {
+      "id": "first-paragliding-start-restriction",
+      "label": "Sperrzone für Paragliding-Starts",
+      "kind": "danger",
+      "vertices": [
+        { "yaw": 132.521, "pitch": 7.923 },
+        { "yaw": 152.952, "pitch": 6.513 },
+        { "yaw": 159.924, "pitch": 1.895 },
+        { "yaw": 117.947, "pitch": -1.171 }
+      ]
+    }
+  ]
+}
