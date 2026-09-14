@@ -7,6 +7,8 @@ category: Clubleben
 summary: Vorschau zum Jubiläums Clubfliegen 2026
 coverImage: /media/news/sandige-boden-vorschau/titelbild.jpg
 gallery:
+  - src: /media/news/sandige-boden-vorschau/Parking-Haifmatte.jpg
+    alt: Parking Haifmatte
   - src: /media/news/sandige-boden-vorschau/sandigebode.jpg
     alt: Location
 ---
