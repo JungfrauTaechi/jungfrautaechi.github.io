@@ -18,6 +18,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Durable implementation decisions
 
+- September 14 Meteo polish: use the shorter intro “Aktuelle Messwerte, Verlauf und Webcams aus der Region”. Keep only the small Messstationen heading and status legend above the cards; remove the repeated six-station heading, ordering explanation and station count. Align source, station link and Verlauf vertically in a single footer row. Put Föhn and radar under the Flugwetter & Prognosen heading, retaining desktop side-by-side and mobile radar-first ordering. SHV description ends after the requested “Prévutemps in der offiziellen SHV-App.” Webcam renaming/order suggestions await selection.
+
 - September 14 compact Meteo design: keep the original wind arrow first in the readings row. Put altitude in small type immediately to the right of the station name (latest correction). Replace the separate Live label and timestamp with one status-coloured date/time pill at the top right; retain status in its accessible label and tooltip, and show loading/unavailable text when no observation exists. Show history through a collapsed per-card Verlauf disclosure; opening it must not stretch other cards. Preserve all feed behaviour and readings.
 - Show native MeteoSwiss RZC rain measurements with a two-hour time slider and playback. Desktop: beside the Föhn diagram. Mobile: immediately after wind cards and the regional-stations disclosure, before Föhn. Use the public STAC/HDF5 data and swisstopo map with visible attribution, real timestamps, stale/error and missing-coverage states; no forecast or iframe. Radar-only refresh is five minutes while visible; wind polling is unchanged. See docs/radar-integration.md.
 

@@ -122,11 +122,11 @@ function MeteoPage() {
   return <div className="meteo-page">
     <section className="page-banner meteo-intro" style={{ "--page-banner-image": `url("${images.meteoHeader}")`, "--page-banner-position": "center 48%" }}>
       <div className="shell meteo-intro-grid">
-        <div><p className="eyebrow">Meteo Jungfrau · Prototyp</p><h1 tabIndex="-1">Wind und Flugwetter auf einen Blick</h1><p>Aktuelle Messwerte, Verlauf, Webcams und Luftraum für die wichtigsten Plätze der Region.</p></div>
+        <div><p className="eyebrow">Meteo Jungfrau · Prototyp</p><h1 tabIndex="-1">Wind und Flugwetter auf einen Blick</h1><p>Aktuelle Messwerte, Verlauf und Webcams aus der Region</p></div>
       </div>
     </section>
     <section className="shell meteo-overview" aria-labelledby="wind-heading">
-      <div className="meteo-section-head"><div><p className="eyebrow">Messstationen rund um Grindelwald</p><h2 id="wind-heading">Sechs Stationen rund um Grindelwald</h2><p>First zuerst, danach Landeplatz Grund und die weiteren Stationen der Region.</p></div><div className="meteo-section-tools"><span className="station-count">6 vor Ort · 24 in der Region</span><div className="meteo-legend"><span><i className="legend-good" />Ruhig</span><span><i className="legend-watch" />Beobachten</span><span><i className="legend-strong" />Stark</span></div></div></div>
+      <div className="meteo-section-head"><div><h2 className="eyebrow" id="wind-heading">Messstationen rund um Grindelwald</h2></div><div className="meteo-section-tools"><div className="meteo-legend"><span><i className="legend-good" />Ruhig</span><span><i className="legend-watch" />Beobachten</span><span><i className="legend-strong" />Stark</span></div></div></div>
 
       <div className="wind-grid" aria-label="Nahe Windstationen">{primaryStations.map((station) => <WindStationCard key={station.id} station={station} />)}</div>
       <button className="station-expand" type="button" aria-expanded={showRegionalStations} aria-controls="regional-wind-stations" onClick={() => setShowRegionalStations((visible) => !visible)}><span><strong>{showRegionalStations ? "Regionale Stationen ausblenden" : `${regionalStations.length} weitere Stationen anzeigen`}</strong><small>Interlaken · Lauterbrunnen · Meiringen und Umgebung</small></span><span className="station-expand-icon" aria-hidden="true">{showRegionalStations ? "−" : "+"}</span></button>
