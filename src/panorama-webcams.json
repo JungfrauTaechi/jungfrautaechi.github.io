@@ -5,7 +5,7 @@
       "pitch": 6.353,
       "provisional": true
     },
-    "first": {
+    "first-feratel": {
       "yaw": 129.89,
       "pitch": 13.978,
       "provisional": true
@@ -42,7 +42,7 @@
     }
   },
   "waldspitz": {
-    "first": {
+    "first-feratel": {
       "yaw": -104.68,
       "pitch": 11.263,
       "provisional": true
@@ -86,7 +86,7 @@
     }
   },
   "maennlichen": {
-    "first": {
+    "first-feratel": {
       "yaw": -94.936,
       "pitch": 2.452,
       "provisional": true
@@ -130,7 +130,7 @@
     }
   },
   "muerren": {
-    "first": {
+    "first-feratel": {
       "yaw": -28.35,
       "pitch": 8,
       "provisional": true,
@@ -177,7 +177,7 @@
     }
   },
   "grund": {
-    "first": {
+    "first-feratel": {
       "yaw": -8.717,
       "pitch": 17.573,
       "provisional": true
@@ -220,7 +220,7 @@
     }
   },
   "bodmi": {
-    "first": {
+    "first-feratel": {
       "yaw": 165.914,
       "pitch": 20.356,
       "provisional": true
@@ -263,7 +263,7 @@
     }
   },
   "stechelberg": {
-    "first": {
+    "first-feratel": {
       "yaw": -28.35,
       "pitch": 8,
       "provisional": true,
@@ -312,7 +312,7 @@
     }
   },
   "lauterbrunnen": {
-    "first": {
+    "first-feratel": {
       "yaw": -56.7,
       "pitch": 18.6,
       "provisional": true,
@@ -361,7 +361,7 @@
     }
   },
   "airtime-west": {
-    "first": {
+    "first-feratel": {
       "yaw": -148.939,
       "pitch": 13.645,
       "provisional": true
@@ -403,7 +403,7 @@
     }
   },
   "airtime-ost": {
-    "first": {
+    "first-feratel": {
       "yaw": 165.044,
       "pitch": 13.773,
       "provisional": true
@@ -445,7 +445,7 @@
     }
   },
   "airtime-winter": {
-    "first": {
+    "first-feratel": {
       "yaw": 141.819,
       "pitch": 14.738,
       "provisional": true
@@ -487,7 +487,7 @@
     }
   },
   "airtime-max": {
-    "first": {
+    "first-feratel": {
       "yaw": -74.797,
       "pitch": -33.25,
       "provisional": true
@@ -529,7 +529,7 @@
     }
   },
   "airtime-stechelberg": {
-    "first": {
+    "first-feratel": {
       "yaw": -92.447,
       "pitch": -32.492,
       "provisional": true,

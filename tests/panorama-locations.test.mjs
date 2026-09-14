@@ -28,7 +28,7 @@ test('groups preserve actions and panorama position without merging unrelated ne
 });
 
 test('wind and webcam group without a panorama link', () => {
-  const markers = [{ kind: 'meteo', station: { id: 'windline-4104' }, yaw: 3, pitch: 4 }, { kind: 'webcam', camera: { id: 'first' }, yaw: 5, pitch: 6 }];
+  const markers = [{ kind: 'meteo', station: { id: 'windline-4104' }, yaw: 3, pitch: 4 }, { kind: 'webcam', camera: { id: 'first-feratel' }, yaw: 5, pitch: 6 }];
   const groups = groupPanoramaMarkers([], markers);
   assert.equal(groups.length, 1);
   assert.equal(groups[0].markers.length, 2);

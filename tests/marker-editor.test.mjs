@@ -12,7 +12,7 @@ test('local editor saves selected entries, preserves other edits, serializes wri
   await mkdir(join(root, 'src'));
   const webcamFile = join(root, 'src/panorama-webcams.json');
   const overrideFile = join(root, 'src/panorama-marker-overrides.json');
-  const initial = { 'airtime-west': { baeregg: { yaw: 7, pitch: 8, provisional: true }, first: { yaw: 1, pitch: 2 } }, grund: { terminal: { yaw: 9, pitch: 10 } } };
+  const initial = { 'airtime-west': { baeregg: { yaw: 7, pitch: 8, provisional: true }, 'first-feratel': { yaw: 1, pitch: 2 } }, grund: { terminal: { yaw: 9, pitch: 10 } } };
   await writeFile(webcamFile, JSON.stringify(initial));
   await writeFile(overrideFile, '{}');
   const middleware = createMarkerSaveMiddleware(root);
@@ -26,7 +26,9 @@ test('local editor saves selected entries, preserves other edits, serializes wri
   const changed = JSON.parse(await readFile(webcamFile, 'utf8'));
   assert.deepEqual(changed['airtime-west'].baeregg, { yaw: 0, pitch: -3, provisional: false });
   assert.deepEqual(changed.grund, initial.grund);
-  assert.deepEqual(changed['airtime-west'].first, initial['airtime-west'].first);
+  assert.deepEqual(changed['airtime-west']['first-feratel'], initial['airtime-west']['first-feratel']);
+  assert.equal((await post({ ...data, id: 'first-feratel', position: { yaw: 12, pitch: 4 } })).status, 200);
+  assert.deepEqual(JSON.parse(await readFile(webcamFile, 'utf8'))['airtime-west']['first-feratel'], { yaw: 12, pitch: 4, provisional: false });
   const visibility = { sceneId: data.sceneId, kind: data.kind, id: data.id, hidden: true };
   assert.equal((await post(visibility)).status, 200);
   assert.deepEqual(JSON.parse(await readFile(webcamFile, 'utf8'))['airtime-west'].baeregg, { ...changed['airtime-west'].baeregg, hidden: true });

@@ -18,6 +18,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Durable implementation decisions
 
+- Panorama views use the `First · Feratel` webcam for every First camera marker; Schreckfeld remains a separate Meteo-gallery camera and must not be presented as First. Panorama wind markers use the shared `useWindFeed` client and its ThermalBase public API data, including loading, stale, degraded, and unavailable states; never render deterministic demo readings in panoramas.
+
 - Embed the existing Google membership form directly below the three application steps on `/mitglied`. Keep a visible external Google Forms link as a fallback when embedding is blocked.
 
 - Club documents follow the Gönner section near the end of `/club`. Use the approved two-panel Statuten/Protokoll design; show the latest published HV protocol directly and keep the full 2001–2025 archive behind a compact expansion. Open protocols in a new tab with the local PDF viewer and retain download as a secondary fallback. Keep protocol PDFs local because the legacy server will be retired.

@@ -10,7 +10,7 @@ import { Imprint } from "./Imprint.jsx";
 import { WeatherForecast } from "./WeatherForecast.jsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FileText } from "@phosphor-icons/react";
-import { CONFIG, boardMembers, chronology, clubPortrait, clubProgramme, clubPurposes, clubStories, flightFacts, flightSceneGroups, flightScenes, grundMeteoStation, images, membershipFormUrl, meteoStations, meteoWebcams, news, photoReports, routes, safetyAreas, shvAirspaceUrl, shvGrindelwaldDocument, utilityLinks } from "./data.js";
+import { CONFIG, boardMembers, chronology, clubPortrait, clubProgramme, clubPurposes, clubStories, flightFacts, flightSceneGroups, flightScenes, images, membershipFormUrl, meteoWebcams, news, photoReports, routes, safetyAreas, shvAirspaceUrl, shvGrindelwaldDocument, utilityLinks } from "./data.js";
 import { protocolYears, statuteSections } from "./club-documents.js";
 import { WindStationCard } from "./WindStationCard.jsx";
 import { useWindFeed } from "./useWindFeed.js";
@@ -245,10 +245,10 @@ function createLocationHotspot(element, { group, onSelectScene, onOpenMeteo }) {
     element.append(button);
   }
 }
-function locationMarkers(site, includeHidden = false) {
+function locationMarkers(site, windStations, includeHidden = false) {
   const links = site.links.map(link => ({ ...applyMarkerPosition(link, panoramaMarkerOverrides[site.id]?.panoramas?.[link.targetId]), label: flightScenes.find(scene => scene.id === link.targetId)?.label || link.targetId }));
   links.forEach(link => { link.hidden = panoramaMarkerOverrides[site.id]?.panoramas?.[link.targetId]?.hidden === true; });
-  const markers = panoramaInfoMarkers(site).map(marker => ({ ...marker, hidden: (marker.kind === 'webcam' ? panoramaWebcams[site.id]?.[marker.camera.id] : panoramaMarkerOverrides[site.id]?.wind?.[marker.station.id])?.hidden === true }));
+  const markers = panoramaInfoMarkers(site, windStations).map(marker => ({ ...marker, hidden: (marker.kind === 'webcam' ? panoramaWebcams[site.id]?.[marker.camera.id] : panoramaMarkerOverrides[site.id]?.wind?.[marker.station.id])?.hidden === true }));
   const groups = groupPanoramaMarkers(links, markers);
   return includeHidden ? groups : visibleLocationGroups(groups);
 }
@@ -306,14 +306,18 @@ function projectSphericalPolygon(vertices, viewer, width, height) {
 }
 
 const stationSceneIds = { first: "windline-4104", maennlichen: "slf-MAN1", stechelberg: "holfuy-1989" };
-function panoramaInfoMarkers(site) {
+function panoramaInfoMarkers(site, windStations) {
   const markers = [];
   const addMarkers = (targetId, yaw, pitch, prefix) => {
-
-    const station = meteoStations.find((item) => item.id === stationSceneIds[targetId]);
-
-    if (station) markers.push({ id: `${prefix}-station-${station.id}`, kind: "meteo", yaw: yaw + 2.2, pitch: pitch + 4, eyebrow: "Demo-Messwert", title: station.name, detail: `${station.average} km/h Ø · ${station.gust} km/h Böen · ${station.directionLabel}`, ariaLabel: `Meteo ${station.name}: Demo-Messwert ${station.average} Kilometer pro Stunde, Meteo-Seite öffnen`, station });
-    if (targetId === "grund") markers.push({ id: `${prefix}-station-${grundMeteoStation.id}`, kind: "meteo", yaw: yaw + 2.2, pitch: pitch + 4, eyebrow: "Live-Wind · burnair", title: grundMeteoStation.name, detail: "Aktuelle Messwerte · Meteo öffnen", ariaLabel: `Live-Windstation ${grundMeteoStation.name}, Meteo-Seite öffnen`, station: grundMeteoStation });
+    const stationId = targetId === "grund" ? "fanet-BA-4" : stationSceneIds[targetId];
+    const station = windStations.find((item) => item.id === stationId);
+    if (!station) return;
+    const hasMeasurement = station.liveState === "ready";
+    const detail = hasMeasurement
+      ? `${station.average === null ? "–" : Math.round(station.average)} km/h Ø · ${station.gust === null ? "–" : Math.round(station.gust)} km/h Böen · ${station.directionLabel}${station.values[0]?.time ? ` · ${station.values[0].time}` : ""}`
+      : station.trend;
+    const source = station.attribution || station.source || "ThermalBase";
+    markers.push({ id: `${prefix}-station-${station.id}`, kind: "meteo", yaw: yaw + 2.2, pitch: pitch + 4, eyebrow: `${station.statusLabel} · ${source}`, title: station.name, detail, ariaLabel: `Windstation ${station.name}: ${station.statusLabel}. ${hasMeasurement ? `${station.average === null ? "kein Mittelwert" : `${Math.round(station.average)} Kilometer pro Stunde`}, ${station.gust === null ? "keine Böenangabe" : `Böen ${Math.round(station.gust)} Kilometer pro Stunde`}` : station.trend}. Meteo-Seite öffnen`, station });
   };
   site.links.forEach((link, index) => addMarkers(link.targetId, link.yaw, link.pitch, `${site.id}-link-${index}`));
   if (site.id === "first") {
@@ -335,20 +339,22 @@ function panoramaInfoMarkers(site) {
   }
   return markers.map((marker) => marker.kind === "meteo" ? applyMarkerPosition(marker, panoramaMarkerOverrides[site.id]?.wind?.[marker.station.id]) : marker);
 }
-function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas }) {
+function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas, windStations }) {
   const containerRef = useRef(null);
   const areaOverlayRef = useRef(null);
   const viewerRef = useRef(null);
   const savedView = useRef(null);
   const editingMarkers = useRef(false);
+  const windStationsRef = useRef(windStations);
+  const refreshLocationsRef = useRef(null);
   const [selectingPosition, setSelectingPosition] = useState(false);
   const [pickedPosition, setPickedPosition] = useState(null);
   const [, updateMarkerConfig] = useState(0);
   const editableMarkers = [
     ...meteoWebcams.filter((camera) => panoramaWebcams[site.id]?.[camera.id]).map((camera) => ({ key: `webcam:${camera.id}`, id: camera.id, label: camera.title, group: "Webcams", file: "src/panorama-webcams.json" })),
-    ...[...new Map(panoramaInfoMarkers(site).filter((marker) => marker.kind === "meteo").map((marker) => [marker.station.id, marker])).values()].map((marker) => ({ key: `wind:${marker.station.id}`, id: marker.station.id, label: marker.title, group: "Wind", section: "wind", file: "src/panorama-marker-overrides.json" })),
+    ...[...new Map(panoramaInfoMarkers(site, windStations).filter((marker) => marker.kind === "meteo").map((marker) => [marker.station.id, marker])).values()].map((marker) => ({ key: `wind:${marker.station.id}`, id: marker.station.id, label: marker.title, group: "Wind", section: "wind", file: "src/panorama-marker-overrides.json" })),
     ...site.links.map((link) => ({ key: `panorama:${link.targetId}`, id: link.targetId, label: flightScenes.find((scene) => scene.id === link.targetId)?.label || link.targetId, group: "Andere Panoramen", section: "panoramas", file: "src/panorama-marker-overrides.json" })),
-  ].map(marker => ({ ...marker, hidden: (marker.section ? panoramaMarkerOverrides[site.id]?.[marker.section]?.[marker.id] : panoramaWebcams[site.id]?.[marker.id])?.hidden === true, canPosition: locationMarkers(site, true).some(group => group.link ? marker.key === `panorama:${group.link.targetId}` : marker.key === `${group.kind === "webcam" ? "webcam" : "wind"}:${group.camera?.id || group.station?.id}`) }));
+  ].map(marker => ({ ...marker, hidden: (marker.section ? panoramaMarkerOverrides[site.id]?.[marker.section]?.[marker.id] : panoramaWebcams[site.id]?.[marker.id])?.hidden === true, canPosition: locationMarkers(site, windStations, true).some(group => group.link ? marker.key === `panorama:${group.link.targetId}` : marker.key === `${group.kind === "webcam" ? "webcam" : "wind"}:${group.camera?.id || group.station?.id}`) }));
   const resetPickedPosition = () => { setPickedPosition(null); setSelectingPosition(false); viewerRef.current?.removeHotSpot("marker-position-preview"); };
   const pickPosition = (event) => {
     if (!selectingPosition || event.target.closest(".pano-marker-editor") || !viewerRef.current) return;
@@ -362,6 +368,10 @@ function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas 
     viewerRef.current.addHotSpot({ id: "marker-position-preview", yaw, pitch, cssClass: "pano-position-preview", createTooltipFunc: (element) => { element.textContent = "+"; element.setAttribute("aria-hidden", "true"); } });
   };
   useEffect(() => {
+    windStationsRef.current = windStations;
+    refreshLocationsRef.current?.();
+  }, [windStations]);
+  useEffect(() => {
     let viewer;
     let areaFrame;
     let stopNearbyLocations;
@@ -374,7 +384,7 @@ function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas 
         const centre = areaCentre(area.vertices);
         return site.sceneType === "overview" ? [] : [{ pitch: centre.pitch, yaw: centre.yaw, cssClass: `pano-area-label is-${area.kind}`, createTooltipFunc: createAreaLabelHotspot, createTooltipArgs: area }];
       }) : [];
-      let groups = locationMarkers(site);
+      let groups = locationMarkers(site, windStationsRef.current);
       let elements = new Map();
       const makeLocationHotspots = () => groups.map(group => ({ id: `location-${group.locationId}`, pitch: group.pitch, yaw: group.yaw, cssClass: "pano-location-hotspot", createTooltipFunc: (element, args) => { createLocationHotspot(element, args); elements.set(group.locationId, element); }, createTooltipArgs: { group, onSelectScene, onOpenMeteo } }));
       const sceneHotSpots = makeLocationHotspots();
@@ -384,15 +394,19 @@ function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas 
       viewerRef.current = viewer;
       if (savedView.current) viewer.lookAt(savedView.current.pitch, savedView.current.yaw, savedView.current.hfov, false);
       stopNearbyLocations = watchNearbyLocations(groups, elements, viewer, containerRef.current, () => editingMarkers.current);
-      unsubscribeMarkers = subscribeMarkerConfig(() => {
+      const refreshLocations = () => {
         if (cancelled) return;
-        updateMarkerConfig(value => value + 1);
         stopNearbyLocations?.();
         groups.forEach(group => viewer.removeHotSpot(`location-${group.locationId}`));
-        groups = locationMarkers(site);
+        groups = locationMarkers(site, windStationsRef.current);
         elements = new Map();
         makeLocationHotspots().forEach(hotspot => viewer.addHotSpot(hotspot));
         stopNearbyLocations = watchNearbyLocations(groups, elements, viewer, containerRef.current, () => editingMarkers.current);
+      };
+      refreshLocationsRef.current = refreshLocations;
+      unsubscribeMarkers = subscribeMarkerConfig(() => {
+        updateMarkerConfig(value => value + 1);
+        refreshLocations();
       });
       if (showAreas) {
         const overlay = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -425,11 +439,12 @@ function LocalPanorama({ site, reloadKey, onSelectScene, onOpenMeteo, showAreas 
       if (showAreas) areaFrame = requestAnimationFrame(updateAreas);
     };
     mountViewer();
-    return () => { cancelled = true; unsubscribeMarkers?.(); stopNearbyLocations?.(); if (areaFrame) cancelAnimationFrame(areaFrame); if (viewer) savedView.current = { yaw: viewer.getYaw(), pitch: viewer.getPitch(), hfov: viewer.getHfov() }; viewer?.destroy(); viewerRef.current = null; areaOverlayRef.current = null; };
+    return () => { cancelled = true; refreshLocationsRef.current = null; unsubscribeMarkers?.(); stopNearbyLocations?.(); if (areaFrame) cancelAnimationFrame(areaFrame); if (viewer) savedView.current = { yaw: viewer.getYaw(), pitch: viewer.getPitch(), hfov: viewer.getHfov() }; viewer?.destroy(); viewerRef.current = null; areaOverlayRef.current = null; };
   }, [site, reloadKey, onSelectScene, onOpenMeteo, showAreas]);
   return <div className={`panorama-layer${selectingPosition ? " is-picking" : ""}`} onClickCapture={pickPosition}><div className="panorama-canvas" ref={containerRef} role="region" aria-label={`Interaktives 360°-Panorama: ${site.label}`} />{import.meta.env.DEV && ['localhost', '127.0.0.1', '[::1]'].includes(window.location.hostname) && <PanoramaPositionPicker site={site} markers={editableMarkers} point={pickedPosition} selecting={selectingPosition} onSelect={setSelectingPosition} onReset={resetPickedPosition} onOpenChange={open => { editingMarkers.current = open; }} />}</div>;
 }
 function FlightExplorer({ initialGroup = "overview", initialSceneId = "" }) {
+  const windFeed = useWindFeed();
   const firstScene = flightScenes.find((scene) => scene.id === initialSceneId) || flightScenes.find((scene) => scene.sceneType === initialGroup) || flightScenes[0];
   const [activeGroup, setActiveGroup] = useState(firstScene.sceneType);
   const [activeId, setActiveId] = useState(firstScene.id);
@@ -446,7 +461,7 @@ function FlightExplorer({ initialGroup = "overview", initialSceneId = "" }) {
     <div className="flight-explorer-groups" role="tablist" aria-label="Panorama-Kategorie">{flightSceneGroups.map((group) => <button key={group.id} type="button" role="tab" aria-selected={group.id === activeGroup} onClick={() => selectGroup(group.id)}><span>{group.count}</span>{group.label}</button>)}</div>
     <div className="flight-explorer-layout">
       <nav className="flight-scene-list" aria-label="Panorama auswählen">{visibleScenes.map((scene) => <button key={scene.id} type="button" className={scene.id === activeSite.id ? "is-active" : ""} aria-current={scene.id === activeSite.id ? "true" : undefined} onClick={() => selectScene(scene.id)}><img src={scene.panorama.preview} alt="" /><span><small>{scene.area}</small><strong>{scene.label}</strong></span></button>)}</nav>
-      <div className="tour-viewer"><div className="tour-toolbar"><div><p className="eyebrow">360°-Panorama · lokal</p><h2>{activeSite.label}</h2></div><div className="tour-actions">{activeSite.areas.length > 0 && <button type="button" aria-pressed={showAreas} onClick={() => setShowAreas((visible) => !visible)}>{showAreas ? "Flächen aus" : "Flächen ein"}</button>}<button type="button" onClick={() => setReloadKey((value) => value + 1)}>Neu laden</button></div></div>{activeSite.sceneType !== "overview" && <SiteFacts site={activeSite} />}<FullscreenFrame className="tour-stage" id="site-panorama" label={activeSite.label}><LocalPanorama key={`${activeSite.id}-${reloadKey}`} site={activeSite} reloadKey={reloadKey} onSelectScene={selectScene} onOpenMeteo={openMeteo} showAreas={showAreas} /></FullscreenFrame><div className="tour-footer"><p>Ziehen zum Drehen · Pfeile wechseln das Panorama · Kamera- und Windsymbole öffnen Livebild oder Meteo</p>{showAreas && activeSite.areas.length > 0 ? <span>Grün: Start/Landung · Gelb: Falten · Rot: Sperrzone / Hindernis</span> : <span>Nur gewählte Szene geladen</span>}</div>{activeSite.id === "first" && <FirstTakeoffNotice />}</div>
+      <div className="tour-viewer"><div className="tour-toolbar"><div><p className="eyebrow">360°-Panorama · lokal</p><h2>{activeSite.label}</h2></div><div className="tour-actions">{activeSite.areas.length > 0 && <button type="button" aria-pressed={showAreas} onClick={() => setShowAreas((visible) => !visible)}>{showAreas ? "Flächen aus" : "Flächen ein"}</button>}<button type="button" onClick={() => setReloadKey((value) => value + 1)}>Neu laden</button></div></div>{activeSite.sceneType !== "overview" && <SiteFacts site={activeSite} />}<FullscreenFrame className="tour-stage" id="site-panorama" label={activeSite.label}><LocalPanorama key={`${activeSite.id}-${reloadKey}`} site={activeSite} reloadKey={reloadKey} onSelectScene={selectScene} onOpenMeteo={openMeteo} showAreas={showAreas} windStations={windFeed.stations} /></FullscreenFrame><div className="tour-footer"><p>Ziehen zum Drehen · Pfeile wechseln das Panorama · Kamera- und Windsymbole öffnen Livebild oder Meteo</p>{showAreas && activeSite.areas.length > 0 ? <span>Grün: Start/Landung · Gelb: Falten · Rot: Sperrzone / Hindernis</span> : <span>Nur gewählte Szene geladen</span>}</div>{activeSite.id === "first" && <FirstTakeoffNotice />}</div>
     </div>
   </section>;
 }

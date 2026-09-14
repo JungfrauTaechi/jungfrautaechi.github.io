@@ -4,7 +4,7 @@ import { panoramaLinks } from '../src/panorama-links.js';
 
 const loopback = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1']);
 const hosts = new Set(['localhost', '127.0.0.1', '[::1]']);
-const cameras = new Set(['first', 'eigergletscher', 'maennlichen', 'kleine-scheidegg', 'terminal', 'kirchbuehl', 'baeregg', 'glecksteinhuette']);
+const cameras = new Set(['first-feratel', 'eigergletscher', 'maennlichen', 'kleine-scheidegg', 'terminal', 'kirchbuehl', 'baeregg', 'glecksteinhuette']);
 const winds = new Set(['fanet-BA-4', 'windline-4104', 'slf-MAN1', 'holfuy-1989']);
 
 export function createMarkerSaveMiddleware(root) {

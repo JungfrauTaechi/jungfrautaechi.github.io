@@ -38,7 +38,7 @@ test("marker overrides change only coordinates and retain the original link or s
 
 test("each of the thirteen panoramas has one configurable position for all eight webcams", async () => {
   const positions = JSON.parse(await readFile(new URL("../src/panorama-webcams.json", import.meta.url), "utf8"));
-  const expected = ["first", "eigergletscher", "maennlichen", "kleine-scheidegg", "terminal", "kirchbuehl", "baeregg", "glecksteinhuette"].sort();
+  const expected = ["first-feratel", "eigergletscher", "maennlichen", "kleine-scheidegg", "terminal", "kirchbuehl", "baeregg", "glecksteinhuette"].sort();
   assert.equal(Object.keys(positions).length, 13);
   for (const [scene, cameras] of Object.entries(positions)) {
     assert.deepEqual(Object.keys(cameras).sort(), expected, scene);
