@@ -18,6 +18,9 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Durable implementation decisions
 
+- September 14 compact Meteo design: keep the original wind arrow first in the readings row. Put altitude in small type immediately to the right of the station name (latest correction). Replace the separate Live label and timestamp with one status-coloured date/time pill at the top right; retain status in its accessible label and tooltip, and show loading/unavailable text when no observation exists. Show history through a collapsed per-card Verlauf disclosure; opening it must not stretch other cards. Preserve all feed behaviour and readings.
+- Show native MeteoSwiss RZC rain measurements with a two-hour time slider and playback. Desktop: beside the Föhn diagram. Mobile: immediately after wind cards and the regional-stations disclosure, before Föhn. Use the public STAC/HDF5 data and swisstopo map with visible attribution, real timestamps, stale/error and missing-coverage states; no forecast or iframe. Radar-only refresh is five minutes while visible; wind polling is unchanged. See docs/radar-integration.md.
+
 - Safety navigation: place the gold-emphasized Sicherheit shortcut before DABS in the shared utility header and Fluggebiet actions. The desktop local-safety notice links to the same safety page. Keep all three utility shortcuts available on mobile.
 
 - Pascal’s approved September follow-up: show First first, Grund second and the remaining four primary wind stations in a two-column, three-row desktop grid (one column on mobile). Integrate available recent readings oldest-to-newest directly in every station card, alongside current wind, gusts, direction, temperature, timestamp and a provider station link; remove the duplicate detail panel. This supersedes the earlier Grund-first/initial-selection decision. Never invent missing history readings.
