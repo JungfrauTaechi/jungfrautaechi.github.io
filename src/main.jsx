@@ -4,6 +4,7 @@ import { App } from "./App.jsx";
 import "pannellum/build/pannellum.css";
 import "./styles.css";
 import "./pascal-followup.css";
+import "./meteo-compact.css";
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
