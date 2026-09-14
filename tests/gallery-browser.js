@@ -25,6 +25,7 @@ async (page) => {
       arrowsAlongsidePhoto: arrowCenter >= img.bottom - renderedHeight && arrowCenter <= img.bottom,
       noVerticalStripScroll: strip.scrollHeight <= strip.clientHeight + 1,
       stripInViewport: s.bottom <= innerHeight + 1 && s.left >= -1 && s.right <= innerWidth + 1,
+      stripAtViewportBottom: Math.abs(innerHeight - s.bottom - parseFloat(getComputedStyle(document.querySelector('.photo-viewer')).paddingBottom)) <= 1,
       imageContained: img.top >= stage.top - 1 && img.bottom <= stage.bottom + 1,
       frameFits: frame.scrollHeight <= frame.clientHeight + 1 && frame.scrollWidth <= frame.clientWidth + 1,
       thumbnailSize: [Math.round(t.width), Math.round(t.height)],
@@ -35,7 +36,7 @@ async (page) => {
     await page.locator('.photo-stage > img').evaluate(image => image.decode());
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     const value = await geometry();
-    for (const key of ['selectedVisible', 'thumbnailBottomVisible', 'photoMeetsFooter', 'arrowsAlongsidePhoto', 'noVerticalStripScroll', 'stripInViewport', 'imageContained', 'frameFits']) check(value[key], `${label}: ${key} ${JSON.stringify(value)}`);
+    for (const key of ['selectedVisible', 'thumbnailBottomVisible', 'photoMeetsFooter', 'arrowsAlongsidePhoto', 'noVerticalStripScroll', 'stripInViewport', 'stripAtViewportBottom', 'imageContained', 'frameFits']) check(value[key], `${label}: ${key} ${JSON.stringify(value)}`);
   };
   for (const [route, total] of [['/fotos/annecy2026', 91], ['/news/17-01', 2]]) {
     await page.goto('http://127.0.0.1:4173' + route);
@@ -52,6 +53,10 @@ async (page) => {
     await page.keyboard.press('End');
     await expectCounter(`${total} / ${total}`);
     await verifyGeometry(`${route}: native last image`);
+    if (total === 91) for (const index of [4, 30]) {
+      await page.getByRole('button', {name:`Bild ${index} anzeigen`, exact:true}).click();
+      await verifyGeometry(`${route}: desktop photo ${index} stays above fixed filmstrip`);
+    }
     await page.keyboard.press('Home');
     await expectCounter(`1 / ${total}`);
     await page.getByRole('button', {name:'Bild 2 anzeigen', exact:true}).click();
@@ -94,6 +99,10 @@ async (page) => {
     await page.keyboard.press('End');
     await expectCounter(`${total} / ${total}`);
     await verifyGeometry(`${route}: mobile fallback last image`);
+    if (total === 91) for (const index of [4, 30, 91]) {
+      await page.getByRole('button', {name:`Bild ${index} anzeigen`, exact:true}).click();
+      await verifyGeometry(`${route}: mobile photo ${index} stays above fixed filmstrip`);
+    }
     await page.setViewportSize({width:844, height:390});
     await verifyGeometry(`${route}: landscape resize keeps last preview visible`);
     await page.setViewportSize({width:390, height:844});
