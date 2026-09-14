@@ -48,7 +48,7 @@ test("meteo prototype exposes the reviewed station hierarchy, live burnair and w
   const catalog = data.match(/export const windStationCatalog = \[([\s\S]*?)\n\];/)?.[1] || "";
   assert.equal((catalog.match(/\{ id:/g) || []).length, 29);
   for (const grund of ["fanet-BA-4", "Grindelwald Grund", "Landeplatz", "api.burnair.cloud", "map.burnair.cloud"]) assert.ok(data.includes(grund));
-  for (const camera of ["Grindelwald-First", "Eigergletscher", "Männlichen", "Lauberhorn", "Grindelwald Terminal"]) assert.ok(data.includes(camera));
+  for (const camera of ["Schreckfeld", "Eigergletscher", "Männlichen", "Lauberhorn", "Grindelwald Terminal"]) assert.ok(data.includes(camera));
   assert.equal((data.match(/(?:roundshot\.com|webcams\.jungfrau\.ch)\/cams\/\d+\/medium/g) || []).length, 14);
   assert.equal((data.match(/(?:focus: |"focus":)0\./g) || []).length, 16);
   assert.doesNotMatch(app, /setRequestKey|burnair-station-actions|>Aktualisieren</);

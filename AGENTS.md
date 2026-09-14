@@ -18,6 +18,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Durable implementation decisions
 
+- The Roundshot camera 1515, historically keyed `first`, is at Schreckfeld. Label it Schreckfeld, including its alternative text. Preserve its stable ID and saved panorama marker coordinates. First · Feratel is a separate webcam and remains First.
+
 - September 14 Meteo polish: use the shorter intro “Aktuelle Messwerte, Verlauf und Webcams aus der Region”. Keep only the small Messstationen heading and status legend above the cards; remove the repeated six-station heading, ordering explanation and station count. Align source, station link and Verlauf vertically in a single footer row. Put Föhn and radar under the Flugwetter & Prognosen heading, retaining desktop side-by-side and mobile radar-first ordering. SHV description ends after the requested “Prévutemps in der offiziellen SHV-App.” Webcam renaming/order suggestions await selection.
 
 - September 14 compact Meteo design: keep the original wind arrow first in the readings row. Put altitude in small type immediately to the right of the station name (latest correction). Replace the separate Live label and timestamp with one status-coloured date/time pill at the top right; retain status in its accessible label and tooltip, and show loading/unavailable text when no observation exists. Show history through a collapsed per-card Verlauf disclosure; opening it must not stretch other cards. Preserve all feed behaviour and readings.
