@@ -4,10 +4,12 @@
 
 News and Fotoreports share the same gallery. Fullscreen gives the image the remaining viewport height, with a compact footer instead of a vertically clipped thumbnail grid.
 
-- Main image: centered, contained without cropping; previous/next controls remain at the sides and Close at the top right.
+- Main image: the stage follows the loaded image's intrinsic aspect ratio and shrinks when viewport height is constrained. Center the photo/footer group together; contain images without cropping and bottom-align any remaining letterboxing so the footer follows the photo directly. Previous/next controls stay alongside the photo and Close remains at the top right.
 - Metadata: caption on the left, current/total on the right. Long captions truncate visually while remaining available to assistive technology and through a tooltip.
 - Filmstrip: one horizontally scrollable row of approximately 96 × 64 px previews on desktop and 72 × 48 px on mobile, separated by 8 px. Small numbers identify previews. A gold outline marks the selection; keyboard focus is also visible.
 - Selecting an image keeps its preview visible by scrolling only the filmstrip. Entering fullscreen also reveals the current selection. No vertical thumbnail scrollbar.
+- Reserve thumbnail height plus padding and a classic Windows scrollbar; no thumbnail border or number may extend below the strip's client area.
+- Arrow, Home and Ende hints are real navigation buttons with descriptive accessible names and the same behavior as their keyboard shortcuts.
 - The inline page keeps its existing thumbnail grid. A single-image gallery still supports fullscreen but needs no navigation hint.
 
 ## Keyboard ownership

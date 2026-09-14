@@ -150,11 +150,13 @@ function NewsPage() { const years = [...new Set(news.map((item) => item.date?.sl
 function GalleryViewer({ images, title, className = "" }) {
   const [selected, setSelected] = useState(0);
   const [fullscreenActive, setFullscreenActive] = useState(false);
+  const [loadedPhoto, setLoadedPhoto] = useState({ src: null, ratio: null });
   const galleryRef = useRef(null);
   const thumbnailStripRef = useRef(null);
   const thumbnailRefs = useRef([]);
   useEffect(() => setSelected(0), [title]);
   const current = images[selected] || images[0];
+  const photoAspect = loadedPhoto.src === current?.src ? loadedPhoto.ratio : null;
   const move = (step) => setSelected((value) => (value + step + images.length) % images.length);
   const onKeyDown = (event) => {
     const target = event.target;
@@ -193,10 +195,14 @@ function GalleryViewer({ images, title, className = "" }) {
   const focusGallery = (event) => {
     if (event.target === event.currentTarget || event.target.tagName === "IMG") galleryRef.current?.focus({ preventScroll: true });
   };
+  const onImageLoad = (event) => {
+    const { naturalWidth, naturalHeight } = event.currentTarget;
+    if (naturalWidth > 0 && naturalHeight > 0) setLoadedPhoto({ src: current.src, ratio: naturalWidth / naturalHeight });
+  };
   return <FullscreenFrame className="photo-gallery-fullscreen" label={`Bildergalerie ${title}`} onKeyDown={onKeyDown} onActiveChange={setFullscreenActive}>
     <div ref={galleryRef} className={`photo-viewer ${className}`} tabIndex="0" role="region" aria-roledescription="carousel" aria-label={`Bildergalerie ${title}. Mit linker und rechter Pfeiltaste blättern.`}>
-      <div className="photo-stage" onClick={focusGallery}><img src={current.src} alt={current.alt} />{images.length > 1 && <><button className="photo-prev" type="button" onClick={() => move(-1)} aria-label="Vorheriges Bild">←</button><button className="photo-next" type="button" onClick={() => move(1)} aria-label="Nächstes Bild">→</button></>}</div>
-      <div className="photo-meta"><p className="photo-caption" title={current.alt || title}>{current.alt || title}</p><span className="photo-count" aria-live="polite">{selected + 1} / {images.length}</span>{images.length > 1 && <p className="photo-keyboard-help">← → · Home/Ende</p>}</div>
+      <div className="photo-stage" style={photoAspect ? { "--photo-aspect": photoAspect } : undefined} onClick={focusGallery}><img src={current.src} alt={current.alt} onLoad={onImageLoad} />{images.length > 1 && <><button className="photo-prev" type="button" onClick={() => move(-1)} aria-label="Vorheriges Bild">←</button><button className="photo-next" type="button" onClick={() => move(1)} aria-label="Nächstes Bild">→</button></>}</div>
+      <div className="photo-meta"><p className="photo-caption" title={current.alt || title}>{current.alt || title}</p><span className="photo-count" aria-live="polite">{selected + 1} / {images.length}</span>{images.length > 1 && <div className="photo-keyboard-help" aria-label="Galerienavigation per Tastatur"><button type="button" onClick={() => move(-1)} aria-label="Vorheriges Bild (Pfeiltaste links)" aria-keyshortcuts="ArrowLeft" title="Pfeiltaste links">←</button><button type="button" onClick={() => move(1)} aria-label="Nächstes Bild (Pfeiltaste rechts)" aria-keyshortcuts="ArrowRight" title="Pfeiltaste rechts">→</button><button type="button" onClick={() => setSelected(0)} aria-label="Erstes Bild (Home)" aria-keyshortcuts="Home" title="Home">Home</button><button type="button" onClick={() => setSelected(images.length - 1)} aria-label="Letztes Bild (Ende)" aria-keyshortcuts="End" title="Ende">Ende</button></div>}</div>
       <div className="photo-thumbnails" ref={thumbnailStripRef} aria-label="Galerieauswahl">{images.map((image, index) => <button ref={(element) => { thumbnailRefs.current[index] = element; }} key={`${image.src}-${index}`} type="button" className={index === selected ? "is-selected" : ""} aria-label={`Bild ${index + 1} anzeigen`} aria-pressed={index === selected} onClick={() => setSelected(index)}><img src={image.src} alt="" loading="lazy" /><span aria-hidden="true">{index + 1}</span></button>)}</div>
     </div>
   </FullscreenFrame>;
