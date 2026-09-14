@@ -18,7 +18,7 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Durable implementation decisions
 
-- The Roundshot camera 1515, historically keyed `first`, is at Schreckfeld. Label it Schreckfeld, including its alternative text. Preserve its stable ID and saved panorama marker coordinates. First · Feratel is a separate webcam and remains First.
+- The Roundshot camera 1515, historically keyed `first`, is at Schreckfeld. Label it Schreckfeld, including its alternative text. Preserve its stable ID and saved panorama marker coordinates. First · Feratel is a separate webcam and remains First. Embed its official MediaPlayer V5 lazily with camera 4235 and the public portal GUID, retain the original Feratel link and fullscreen support, and do not use the hotlink-protected JPEG endpoint.
 
 - September 14 Meteo polish: use the shorter intro “Aktuelle Messwerte, Verlauf und Webcams aus der Region”. Keep only the small Messstationen heading and status legend above the cards; remove the repeated six-station heading, ordering explanation and station count. Align source, station link and Verlauf vertically in a single footer row. Put Föhn and radar under the Flugwetter & Prognosen heading, retaining desktop side-by-side and mobile radar-first ordering. SHV description ends after the requested “Prévutemps in der offiziellen SHV-App.” Label the chart refresh control “Prognosegrafiken aktualisieren”. Order webcams by local usefulness: Schreckfeld and external First, Grindelwald valley, nearby mountains, high-alpine huts, then wider-region views. Use “Grindelwald · Terminal”, “Grindelwald · Kirchbühl”, and “First · Feratel (extern)” to disambiguate the dropdown.
 

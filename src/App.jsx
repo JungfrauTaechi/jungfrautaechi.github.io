@@ -96,17 +96,20 @@ function WebcamCard({ camera, refreshToken, index, total, onPrevious, onNext }) 
     event.preventDefault();
   };
   return <article className="webcam-gallery">
-    {camera.externalOnly ? <div className="webcam-external"><h3>{camera.title}</h3><p>Live-Ansicht und Aufnahmezeit direkt bei Feratel ansehen.</p><ExternalLink className="button primary" href={camera.viewerUrl}>Webcam bei Feratel öffnen ↗</ExternalLink></div> : <FullscreenFrame className="webcam-fullscreen" label={camera.title}>
+    {camera.embedUrl ? <FullscreenFrame className="webcam-fullscreen webcam-feratel-fullscreen" label={camera.title}>
+      <div className="webcam-feratel-frame"><iframe src={camera.embedUrl} title={camera.alt} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" /></div>
+      <span className="fullscreen-credit">{camera.credit}</span>
+    </FullscreenFrame> : <FullscreenFrame className="webcam-fullscreen" label={camera.title}>
     <div className={`webcam-panorama-viewport${camera.still ? " is-still" : ""}`} ref={viewportRef} tabIndex="0" role="region" aria-label={camera.still ? `Webcambild ${camera.title}` : `Panorama ${camera.title}; ziehen oder mit Pfeiltasten horizontal verschieben`} onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={endDrag} onPointerCancel={endDrag} onKeyDown={moveWithKeyboard}>
       {imageFailed ? <p role="status">Webcambild momentan nicht verfügbar. Die Original-Webcam ist unten verlinkt.</p> : <img src={imageUrl} alt={camera.alt} loading="lazy" draggable="false" onLoad={focusPanorama} onError={() => setImageFailed(true)} />}
     </div>
     <span className="fullscreen-credit">{camera.credit || "© Jungfraubahnen · Roundshot"}</span></FullscreenFrame>}
     <div className="webcam-gallery-nav">
       <button type="button" onClick={onPrevious} aria-label="Vorherige Webcam">←</button>
-      <div className="webcam-gallery-meta"><small>{index + 1} / {total}</small><span><strong>{camera.title}</strong><em aria-live="polite">{camera.externalOnly ? "Live-Ansicht beim Anbieter" : capturedAt || "Stand wird geladen…"}</em></span></div>
+      <div className="webcam-gallery-meta"><small>{index + 1} / {total}</small><span><strong>{camera.title}</strong><em aria-live="polite">{camera.embedUrl ? "Live-Player von Feratel" : capturedAt || "Stand wird geladen…"}</em></span></div>
       <button type="button" onClick={onNext} aria-label="Nächste Webcam">→</button>
     </div>
-    <div className="webcam-gallery-links"><span>{camera.externalOnly ? "Video und Archiv beim Anbieter" : camera.still ? "Aufnahmezeit im Bild · Originalansicht für Video und Archiv" : "Bild ziehen oder Scrollbalken nutzen"}</span><ExternalLink className="webcam-original-link" href={camera.viewerUrl}>Original-Webcam im Vollbild ↗</ExternalLink></div>
+    <div className="webcam-gallery-links"><span>{camera.embedUrl ? "Video, 360°-Panorama und Archiv im eingebetteten Player" : camera.still ? "Aufnahmezeit im Bild · Originalansicht für Video und Archiv" : "Bild ziehen oder Scrollbalken nutzen"}</span><ExternalLink className="webcam-original-link" href={camera.viewerUrl}>Original-Webcam im Vollbild ↗</ExternalLink></div>
   </article>;
 }
 
