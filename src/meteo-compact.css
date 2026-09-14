@@ -14,9 +14,11 @@
 .wind-card-integrated .wind-bearing { gap: .1rem; }
 .wind-card-integrated .wind-bearing > small { font-size: .6rem; white-space: nowrap; }
 .wind-card-integrated .wind-direction { width: 32px; height: 32px; font-size: 1.25rem; }
-.wind-card-integrated .wind-card-foot { margin: 0; min-height: 22px; padding: 0; padding-right: 90px; font-size: .65rem; flex-wrap: wrap; gap: .15rem .65rem; }
+.wind-card-integrated .wind-card-foot { margin: 0; height: 24px; padding: 0; padding-right: 80px; font-size: .65rem; flex-wrap: nowrap; align-items: center; gap: .4rem; }
+.wind-card-integrated .wind-card-foot > small { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wind-card-integrated .wind-card-foot > a { flex-shrink: 0; }
 .wind-card-integrated .wind-card-foot a { display: inline-flex; align-items: center; min-height: 24px; }
-.wind-history-details > summary { position: absolute; bottom: .4rem; right: .7rem; display: flex; align-items: center; gap: .6rem; min-height: 44px; padding: 0 .6rem; color: #85651e; font-size: .75rem; font-weight: 700; cursor: pointer; list-style: none; border-radius: 5px; }
+.wind-history-details > summary { position: absolute; bottom: calc(.75rem - 10px); right: .9rem; display: flex; align-items: center; gap: .6rem; height: 44px; padding: 0 .3rem; color: #85651e; font-size: .75rem; font-weight: 700; cursor: pointer; list-style: none; border-radius: 5px; }
 .wind-history-details > summary::-webkit-details-marker { display: none; }
 .wind-history-details > summary:hover { background: #f8f2e4; }
 .wind-history-details > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
@@ -28,6 +30,7 @@
 .wind-history-details .wind-empty { margin: .3rem 0; font-size: .8rem; }
 
 /* The same radar follows the cards on mobile; no duplicate component or requests. */
+.meteo-overview #wind-heading { font-family: inherit; font-size: .73rem; letter-spacing: .08em; line-height: 1.4; margin: 0; }
 .meteo-forecast .forecast-shortcuts { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: 1.2rem; margin-bottom: 1.5rem; }
 .forecast-shortcuts .forecast-chart-compact .forecast-scroll img { max-height: none; }
 .rain-radar { min-width: 0; border: 1px solid var(--line); background: #fff; }
@@ -71,4 +74,5 @@
   .meteo-page .wind-card-integrated .wind-current strong { font-size: 1.45rem; }
   .wind-card-integrated .wind-current small { font-size: .6rem; }
   .wind-card-integrated .wind-card-foot { font-size: .6rem; }
+  .wind-history-details > summary { bottom: calc(.65rem - 10px); right: .7rem; }
 }

@@ -15,6 +15,6 @@ export function WindStationCard({ station }) {
     <details className="wind-history-details"><summary>Verlauf <span aria-hidden="true">⌄</span></summary><div className="wind-history-heading"><strong>Letzte Messungen</strong><span>Mittel / Böen · km/h</span></div>
     {history.length ? <div className="wind-history">{history.map((value, index) => <span key={value.epoch} className={index === history.length - 1 ? "is-latest" : ""}><small title={formatWindTime(value.epoch, { day: "2-digit", month: "2-digit" })}>{value.time}</small><strong>{readingValue(value.average)} / {readingValue(value.gust)}</strong></span>)}</div> : <p className="wind-empty">{station.liveState === "loading" ? "Messwerte werden geladen …" : "Keine Messwerte verfügbar."}</p>}
     </details>
-    <footer className="wind-card-foot"><small>Quelle: {station.attribution}</small><a href={href} target="_blank" rel="noopener noreferrer" aria-label={`Station ${station.name} öffnen (neuer Tab)`}>Station öffnen ↗</a></footer>
+    <footer className="wind-card-foot"><small title={`Quelle: ${station.attribution}`}>Quelle: {station.attribution}</small><a href={href} target="_blank" rel="noopener noreferrer" aria-label={`Station ${station.name} öffnen (neuer Tab)`}>Station öffnen ↗</a></footer>
   </article>;
 }
