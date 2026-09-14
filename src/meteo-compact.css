@@ -60,12 +60,16 @@
 .rain-radar .radar-credit { display: flex; justify-content: space-between; gap: .3rem; flex-wrap: wrap; padding: .5rem .65rem; font-size: .6rem; color: var(--muted); background: #fff; }
 .radar-credit a { color: #174361; }
 .rain-radar button:disabled { opacity: .45; cursor: default; }
+.webcam-feratel-frame { width: 100%; height: clamp(370px, 48vw, 650px); background: #071d30; }
+.webcam-feratel-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+.webcam-feratel-fullscreen.is-fullscreen .webcam-feratel-frame { height: 100dvh; max-height: none; }
 @media (max-width: 900px) {
   .meteo-forecast .forecast-shortcuts { display: flex; flex-direction: column; }
   .forecast-shortcuts > * { width: 100%; }
   .forecast-shortcuts .rain-radar { order: -1; }
 }
 @media (max-width: 520px) {
+  .webcam-feratel-frame { height: 80vh; min-height: 560px; max-height: 760px; }
   .meteo-page .wind-card-integrated { padding: .65rem .7rem; gap: .3rem; }
   .wind-card-integrated .wind-card-head h3 { font-size: .9rem; }
   .wind-card-integrated .wind-station-heading { gap: .35rem; }

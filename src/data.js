@@ -121,7 +121,7 @@ export const meteoStations = windStationCatalog.map((station, index) => {
 });
 export const meteoWebcams = [
   { id: "first", title: "Schreckfeld", focus: 0.52, image: "https://jungfrau.roundshot.com/cams/1515/medium", viewerUrl: "https://webcams.jungfrau.ch/first-schreckfeld/", alt: "Aktuelles Panoramabild der Webcam Schreckfeld" },
-  {"id":"first-feratel","title":"First · Feratel (extern)","focus":0.5,"externalOnly":true,"viewerUrl":"https://www.feratel.com/en/webcams/switzerland/bern/grindelwald-first","credit":"© feratel media technologies AG","still":true,"alt":"Webcambild Grindelwald First von Feratel"},
+  {"id":"first-feratel","title":"First · Feratel","focus":0.5,"embedUrl":"https://webtvfc.feratel.com/webtv/?design=v5&pg=DA7D2F22-8600-464D-9D4F-CDB04014A6C5&cam=4235&lg=de&sound=muted","viewerUrl":"https://www.feratel.com/en/webcams/switzerland/bern/grindelwald-first","credit":"© feratel media technologies AG","alt":"Feratel Live-Player der Webcam Grindelwald First"},
   { id: "terminal", title: "Grindelwald · Terminal", focus: 0.5, image: "https://jungfrau.roundshot.com/cams/750/medium", viewerUrl: "https://webcams.jungfrau.ch/grindelwald-terminal/", alt: "Aktuelles Panoramabild der Webcam Grindelwald Terminal" },
   { id: "kirchbuehl", title: "Grindelwald · Kirchbühl", focus: 0.5, image: "https://kirchbuehl.roundshot.com/cams/41/medium", viewerUrl: "https://kirchbuehl.roundshot.com/#/", credit: "© Hotel Kirchbühl · Roundshot", alt: "Aktuelles Panoramabild der Webcam Kirchbühl" },
   { id: "maennlichen", title: "Männlichen", focus: 0.46, image: "https://maennlichen.roundshot.com/cams/1060/medium", viewerUrl: "https://maennlichen.roundshot.com/bergstation-wengen/", alt: "Aktuelles Panoramabild der Webcam Männlichen" },
