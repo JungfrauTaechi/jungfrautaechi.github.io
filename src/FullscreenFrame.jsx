@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export function FullscreenFrame({ children, className = "", id, label }) {
+export function FullscreenFrame({ children, className = "", id, label, onKeyDown, onActiveChange }) {
   const frameRef = useRef(null);
   const buttonRef = useRef(null);
   const [native, setNative] = useState(false);
@@ -14,8 +14,9 @@ export function FullscreenFrame({ children, className = "", id, label }) {
   useEffect(() => {
     const resize = requestAnimationFrame(() => window.dispatchEvent(new Event("resize")));
     if (active) buttonRef.current?.focus({ preventScroll: true });
+    onActiveChange?.(active);
     return () => cancelAnimationFrame(resize);
-  }, [active]);
+  }, [active, onActiveChange]);
   useEffect(() => {
     if (!expanded) return;
     const previousOverflow = document.body.style.overflow;
@@ -40,7 +41,7 @@ export function FullscreenFrame({ children, className = "", id, label }) {
     }
     setExpanded(true);
   };
-  return <div ref={frameRef} id={id} className={`fullscreen-frame ${className}${active ? " is-fullscreen" : ""}${expanded ? " is-expanded" : ""}`} role={expanded ? "dialog" : undefined} aria-modal={expanded ? true : undefined} aria-label={expanded ? label : undefined}>
+  return <div ref={frameRef} id={id} className={`fullscreen-frame ${className}${active ? " is-fullscreen" : ""}${expanded ? " is-expanded" : ""}`} role={expanded ? "dialog" : undefined} aria-modal={expanded ? true : undefined} aria-label={expanded ? label : undefined} onKeyDown={onKeyDown}>
     {children}
     <button ref={buttonRef} className="panorama-fullscreen-button" type="button" onClick={toggle} aria-label={`${active ? "Vollbild schliessen" : "Vollbild öffnen"}: ${label}`} aria-pressed={active} title={active ? "Vollbild schliessen" : "Vollbild öffnen"}><span aria-hidden="true">{active ? "✕" : "⛶"}</span><span>{active ? "Schliessen" : "Vollbild"}</span></button>
   </div>;
