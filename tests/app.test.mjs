@@ -48,7 +48,11 @@ test("meteo prototype exposes the reviewed station hierarchy, live burnair and w
   const catalog = data.match(/export const windStationCatalog = \[([\s\S]*?)\n\];/)?.[1] || "";
   assert.equal((catalog.match(/\{ id:/g) || []).length, 29);
   for (const grund of ["fanet-BA-4", "Grindelwald Grund", "Landeplatz", "api.burnair.cloud", "map.burnair.cloud"]) assert.ok(data.includes(grund));
-  for (const camera of ["Schreckfeld", "Eigergletscher", "Männlichen", "Lauberhorn", "Grindelwald Terminal"]) assert.ok(data.includes(camera));
+  for (const camera of ["Schreckfeld", "First · Feratel (extern)", "Grindelwald · Terminal", "Grindelwald · Kirchbühl", "Eigergletscher", "Männlichen", "Lauberhorn"]) assert.ok(data.includes(camera));
+  const webcamCatalog = data.match(/export const meteoWebcams = \[([\s\S]*?)\n\];/)?.[1] || "";
+  const webcamOrder = ["Schreckfeld", "First · Feratel (extern)", "Grindelwald · Terminal", "Grindelwald · Kirchbühl", "Männlichen", "Pfingstegg", "Bussalp", "Faulhorn", "Eiger Express · Mast 4", "Eigergletscher", "Lauberhorn", "Bäregg", "Glecksteinhütte", "Mittellegihütte", "Schynige Platte", "Harder Kulm"];
+  const webcamNames = [...webcamCatalog.matchAll(/(?:"title"|title)\s*:\s*"([^"]+)"/g)].map((match) => match[1]);
+  assert.deepEqual(webcamNames, webcamOrder);
   assert.equal((data.match(/(?:roundshot\.com|webcams\.jungfrau\.ch)\/cams\/\d+\/medium/g) || []).length, 14);
   assert.equal((data.match(/(?:focus: |"focus":)0\./g) || []).length, 16);
   assert.doesNotMatch(app, /setRequestKey|burnair-station-actions|>Aktualisieren</);
