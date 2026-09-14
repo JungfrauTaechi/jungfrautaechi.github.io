@@ -147,7 +147,33 @@ function MeteoPage() {
   </div>;
 }
 function NewsPage() { const years = [...new Set(news.map((item) => item.date?.slice(0, 4)).filter((year) => year && year !== "1970"))]; const [year, setYear] = useState("alle"); const visible = year === "alle" ? news : news.filter((item) => item.date?.startsWith(year)); return <><SectionIntro eyebrow="Newsfeed" title="Newsarchiv Jungfrau-Tächi Grindelwald" body={`${news.length} Beiträge aus dem Clubarchiv – vollständig auf der neuen Website lesbar.`} image={news[0]?.image || images.hero} position="center 42%" /><section className="shell archive-toolbar" aria-label="News filtern"><label htmlFor="news-year">Jahr</label><select id="news-year" value={year} onChange={(event) => setYear(event.target.value)}><option value="alle">Alle Jahre</option>{years.map((item) => <option key={item} value={item}>{item}</option>)}</select><span>{visible.length} Beiträge</span></section><section className="shell cards listing news-grid">{visible.map((item) => <Card key={item.slug} item={item} />)}</section></>; }
-function GalleryViewer({ images, title, className = "" }) { const [selected, setSelected] = useState(0); useEffect(() => setSelected(0), [title]); if (!images.length) return null; const current = images[selected] || images[0]; const move = (step) => setSelected((value) => (value + step + images.length) % images.length); return <div className={`photo-viewer ${className}`} tabIndex="0" onKeyDown={(event) => { if (!["ArrowLeft", "ArrowRight"].includes(event.key) || event.altKey || event.ctrlKey || event.metaKey || event.target.closest("input,textarea,select,[contenteditable=true]")) return; event.preventDefault(); move(event.key === "ArrowLeft" ? -1 : 1); }} aria-label={`Bildergalerie ${title}. Mit linker und rechter Pfeiltaste blättern.`}><div className="photo-stage"><img src={current.src} alt={current.alt} />{images.length > 1 && <><button className="photo-prev" type="button" onClick={() => move(-1)} aria-label="Vorheriges Bild">←</button><button className="photo-next" type="button" onClick={() => move(1)} aria-label="Nächstes Bild">→</button></>}<span aria-live="polite">{selected + 1} / {images.length}</span></div>{current.alt && <p className="photo-caption">{current.alt}</p>}<div className="photo-thumbnails">{images.map((image, index) => <button key={`${image.src}-${index}`} type="button" className={index === selected ? "is-selected" : ""} aria-label={`Bild ${index + 1} anzeigen`} aria-pressed={index === selected} onClick={() => setSelected(index)}><img src={image.src} alt="" loading="lazy" /></button>)}</div></div>; }
+function GalleryViewer({ images, title, className = "" }) {
+  const [selected, setSelected] = useState(0);
+  const galleryRef = useRef(null);
+  useEffect(() => setSelected(0), [title]);
+  if (!images.length) return null;
+  const current = images[selected] || images[0];
+  const move = (step) => setSelected((value) => (value + step + images.length) % images.length);
+  const onKeyDown = (event) => {
+    if (event.altKey || event.ctrlKey || event.metaKey || event.target.closest("input,textarea,select,[contenteditable=true]")) return;
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    if (event.key === "Home") setSelected(0);
+    else if (event.key === "End") setSelected(images.length - 1);
+    else move(event.key === "ArrowLeft" ? -1 : 1);
+  };
+  const focusGallery = (event) => {
+    if (event.target === event.currentTarget || event.target.tagName === "IMG") galleryRef.current?.focus({ preventScroll: true });
+  };
+  return <FullscreenFrame className="photo-gallery-fullscreen" label={`Bildergalerie ${title}`}>
+    <div ref={galleryRef} className={`photo-viewer ${className}`} tabIndex="0" role="region" aria-roledescription="carousel" aria-label={`Bildergalerie ${title}. Mit linker und rechter Pfeiltaste blättern.`} onKeyDown={onKeyDown}>
+      <div className="photo-stage" onClick={focusGallery}><img src={current.src} alt={current.alt} />{images.length > 1 && <><button className="photo-prev" type="button" onClick={() => move(-1)} aria-label="Vorheriges Bild">←</button><button className="photo-next" type="button" onClick={() => move(1)} aria-label="Nächstes Bild">→</button></>}<span aria-live="polite">{selected + 1} / {images.length}</span></div>
+      {current.alt && <p className="photo-caption">{current.alt}</p>}
+      <p className="photo-keyboard-help">Pfeiltasten wechseln das Bild · Home/Ende springen zum Anfang oder Ende</p>
+      <div className="photo-thumbnails">{images.map((image, index) => <button key={`${image.src}-${index}`} type="button" className={index === selected ? "is-selected" : ""} aria-label={`Bild ${index + 1} anzeigen`} aria-pressed={index === selected} onClick={() => setSelected(index)}><img src={image.src} alt="" loading="lazy" /></button>)}</div>
+    </div>
+  </FullscreenFrame>;
+}
 function NewsArticlePage({ article }) { if (!article) return <NotFound />; const gallery = [...new Map([...(article.coverImage ? [{ src: article.image, alt: article.alt }] : []), ...(article.gallery || [])].map(image => [image.src, image])).values()]; const related = relatedNews(news, article); return <article className="content-detail"><DetailIntro backTo={routes.news.path} backLabel="Newsarchiv" eyebrow={`${article.category} · ${article.dateLabel}`} title={article.title} body={article.summary} image={article.image} /><div className="article-body shell" dangerouslySetInnerHTML={{ __html: article.bodyHtml }} />{gallery.length > 0 && <section className="news-gallery-module shell" aria-labelledby="article-gallery-title"><div className="section-heading"><p className="eyebrow">Impressionen</p><h2 id="article-gallery-title">Bilder zum Beitrag</h2><p>{gallery.length} {gallery.length === 1 ? "Aufnahme" : "Aufnahmen"}</p></div><GalleryViewer images={gallery} title={article.title} /></section>}{related.length > 0 && <section className="related-stories shell"><div className="section-heading"><p className="eyebrow">Weiterlesen</p><h2>Weitere Beiträge</h2></div><div className="cards news-grid">{related.map((item) => <Card key={item.slug} item={item} />)}</div></section>}</article>; }
 function ClubDocuments() {
   const [openPanel, setOpenPanel] = useState("");
