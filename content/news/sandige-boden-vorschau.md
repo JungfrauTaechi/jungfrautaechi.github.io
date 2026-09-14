@@ -40,6 +40,7 @@ Samstag 19. September 2026
 16.30h Akro Show Sandigen Boden
 
 ab 17.00h Essen
+
 Es gibt Spanferkel, Salate und Züpfe. Wir bitten alle Vegis/Veganer, den gewünschten Fleischersatz selber mitzubringen. Das Essen und die alkoholfreien Getränke werden vom Jungfrau-Tächi Club offeriert
 
 danach gemütliches Zusammensein im Sandigen Boden
