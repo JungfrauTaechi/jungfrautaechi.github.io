@@ -149,28 +149,61 @@ function MeteoPage() {
 function NewsPage() { const years = [...new Set(news.map((item) => item.date?.slice(0, 4)).filter((year) => year && year !== "1970"))]; const [year, setYear] = useState("alle"); const visible = year === "alle" ? news : news.filter((item) => item.date?.startsWith(year)); return <><SectionIntro eyebrow="Newsfeed" title="Newsarchiv Jungfrau-Tächi Grindelwald" body={`${news.length} Beiträge aus dem Clubarchiv – vollständig auf der neuen Website lesbar.`} image={news[0]?.image || images.hero} position="center 42%" /><section className="shell archive-toolbar" aria-label="News filtern"><label htmlFor="news-year">Jahr</label><select id="news-year" value={year} onChange={(event) => setYear(event.target.value)}><option value="alle">Alle Jahre</option>{years.map((item) => <option key={item} value={item}>{item}</option>)}</select><span>{visible.length} Beiträge</span></section><section className="shell cards listing news-grid">{visible.map((item) => <Card key={item.slug} item={item} />)}</section></>; }
 function GalleryViewer({ images, title, className = "" }) {
   const [selected, setSelected] = useState(0);
+  const [fullscreenActive, setFullscreenActive] = useState(false);
+  const [loadedPhoto, setLoadedPhoto] = useState({ src: null, ratio: null });
   const galleryRef = useRef(null);
+  const thumbnailStripRef = useRef(null);
+  const thumbnailRefs = useRef([]);
   useEffect(() => setSelected(0), [title]);
-  if (!images.length) return null;
   const current = images[selected] || images[0];
+  const photoAspect = loadedPhoto.src === current?.src ? loadedPhoto.ratio : null;
   const move = (step) => setSelected((value) => (value + step + images.length) % images.length);
   const onKeyDown = (event) => {
-    if (event.altKey || event.ctrlKey || event.metaKey || event.target.closest("input,textarea,select,[contenteditable=true]")) return;
+    const target = event.target;
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || target?.isContentEditable || target?.closest?.("input,textarea,select,[contenteditable]")) return;
     if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
     event.preventDefault();
     if (event.key === "Home") setSelected(0);
     else if (event.key === "End") setSelected(images.length - 1);
     else move(event.key === "ArrowLeft" ? -1 : 1);
   };
+  const keepThumbnailVisible = useCallback(() => {
+    const strip = thumbnailStripRef.current;
+    const thumbnail = thumbnailRefs.current[selected];
+    if (!strip || !thumbnail) return;
+    const stripRect = strip.getBoundingClientRect();
+    const thumbnailRect = thumbnail.getBoundingClientRect();
+    const thumbnailStart = strip.scrollLeft + thumbnailRect.left - stripRect.left;
+    const thumbnailEnd = thumbnailStart + thumbnailRect.width;
+    const visibleStart = strip.scrollLeft;
+    const visibleEnd = visibleStart + strip.clientWidth;
+    if (thumbnailStart < visibleStart) strip.scrollLeft = Math.max(0, thumbnailStart - 8);
+    else if (thumbnailEnd > visibleEnd) strip.scrollLeft = thumbnailEnd - strip.clientWidth + 8;
+  }, [selected]);
+  useEffect(() => {
+    const frame = requestAnimationFrame(keepThumbnailVisible);
+    return () => cancelAnimationFrame(frame);
+  }, [keepThumbnailVisible, fullscreenActive]);
+  useEffect(() => {
+    if (!fullscreenActive || !thumbnailStripRef.current || typeof ResizeObserver === "undefined") return undefined;
+    const strip = thumbnailStripRef.current;
+    const observer = new ResizeObserver(keepThumbnailVisible);
+    observer.observe(strip);
+    return () => observer.disconnect();
+  }, [fullscreenActive, keepThumbnailVisible]);
+  if (!images.length) return null;
   const focusGallery = (event) => {
     if (event.target === event.currentTarget || event.target.tagName === "IMG") galleryRef.current?.focus({ preventScroll: true });
   };
-  return <FullscreenFrame className="photo-gallery-fullscreen" label={`Bildergalerie ${title}`}>
-    <div ref={galleryRef} className={`photo-viewer ${className}`} tabIndex="0" role="region" aria-roledescription="carousel" aria-label={`Bildergalerie ${title}. Mit linker und rechter Pfeiltaste blättern.`} onKeyDown={onKeyDown}>
-      <div className="photo-stage" onClick={focusGallery}><img src={current.src} alt={current.alt} />{images.length > 1 && <><button className="photo-prev" type="button" onClick={() => move(-1)} aria-label="Vorheriges Bild">←</button><button className="photo-next" type="button" onClick={() => move(1)} aria-label="Nächstes Bild">→</button></>}<span aria-live="polite">{selected + 1} / {images.length}</span></div>
-      {current.alt && <p className="photo-caption">{current.alt}</p>}
-      <p className="photo-keyboard-help">Pfeiltasten wechseln das Bild · Home/Ende springen zum Anfang oder Ende</p>
-      <div className="photo-thumbnails">{images.map((image, index) => <button key={`${image.src}-${index}`} type="button" className={index === selected ? "is-selected" : ""} aria-label={`Bild ${index + 1} anzeigen`} aria-pressed={index === selected} onClick={() => setSelected(index)}><img src={image.src} alt="" loading="lazy" /></button>)}</div>
+  const onImageLoad = (event) => {
+    const { naturalWidth, naturalHeight } = event.currentTarget;
+    if (naturalWidth > 0 && naturalHeight > 0) setLoadedPhoto({ src: current.src, ratio: naturalWidth / naturalHeight });
+  };
+  return <FullscreenFrame className="photo-gallery-fullscreen" label={`Bildergalerie ${title}`} onKeyDown={onKeyDown} onActiveChange={setFullscreenActive}>
+    <div ref={galleryRef} className={`photo-viewer ${className}`} tabIndex="0" role="region" aria-roledescription="carousel" aria-label={`Bildergalerie ${title}. Mit linker und rechter Pfeiltaste blättern.`}>
+      <div className="photo-stage" style={photoAspect ? { "--photo-aspect": photoAspect } : undefined} onClick={focusGallery}><img src={current.src} alt={current.alt} onLoad={onImageLoad} />{images.length > 1 && <><button className="photo-prev" type="button" onClick={() => move(-1)} aria-label="Vorheriges Bild">←</button><button className="photo-next" type="button" onClick={() => move(1)} aria-label="Nächstes Bild">→</button></>}</div>
+      <div className="photo-meta"><p className="photo-caption" title={current.alt || title}>{current.alt || title}</p><span className="photo-count" aria-live="polite">{selected + 1} / {images.length}</span>{images.length > 1 && <div className="photo-keyboard-help" aria-label="Galerienavigation per Tastatur"><button type="button" onClick={() => move(-1)} aria-label="Vorheriges Bild (Pfeiltaste links)" aria-keyshortcuts="ArrowLeft" title="Pfeiltaste links">←</button><button type="button" onClick={() => move(1)} aria-label="Nächstes Bild (Pfeiltaste rechts)" aria-keyshortcuts="ArrowRight" title="Pfeiltaste rechts">→</button><button type="button" onClick={() => setSelected(0)} aria-label="Erstes Bild (Home)" aria-keyshortcuts="Home" title="Home">Home</button><button type="button" onClick={() => setSelected(images.length - 1)} aria-label="Letztes Bild (Ende)" aria-keyshortcuts="End" title="Ende">Ende</button></div>}</div>
+      <div className="photo-thumbnails" ref={thumbnailStripRef} aria-label="Galerieauswahl">{images.map((image, index) => <button ref={(element) => { thumbnailRefs.current[index] = element; }} key={`${image.src}-${index}`} type="button" className={index === selected ? "is-selected" : ""} aria-label={`Bild ${index + 1} anzeigen`} aria-pressed={index === selected} onClick={() => setSelected(index)}><img src={image.src} alt="" loading="lazy" /><span aria-hidden="true">{index + 1}</span></button>)}</div>
     </div>
   </FullscreenFrame>;
 }
