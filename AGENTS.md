@@ -18,6 +18,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Durable implementation decisions
 
+- Embed the existing Google membership form directly below the three application steps on `/mitglied`. Keep a visible external Google Forms link as a fallback when embedding is blocked.
+
 - Club documents follow the Gönner section near the end of `/club`. Use the approved two-panel Statuten/Protokoll design; show the latest published HV protocol directly and keep the full 2001–2025 archive behind a compact expansion. Open protocols in a new tab with the local PDF viewer and retain download as a secondary fallback. Keep protocol PDFs local because the legacy server will be retired.
 
 - The Roundshot camera 1515, historically keyed `first`, is at Schreckfeld. Label it Schreckfeld, including its alternative text. Preserve its stable ID and saved panorama marker coordinates. First · Feratel is a separate webcam and remains First. Embed its official MediaPlayer V5 lazily with camera 4235 and the public portal GUID, retain the original Feratel link and fullscreen support, and do not use the hotlink-protected JPEG endpoint.
