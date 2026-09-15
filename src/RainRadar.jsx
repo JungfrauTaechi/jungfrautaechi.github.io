@@ -116,7 +116,11 @@ export function RainRadar() {
 
   const latest = frames.at(-1);
   const stale = latest && now - latest.epoch > RADAR_STALE_MS;
-  const loading = !error && (!displayed || busy || displayed.url !== frame?.url);
+  // Keep the last committed frame visible while the next frame decodes. The old
+  // loading condition toggled the full-screen message for every playback step,
+  // which made the radar appear to flicker even though the canvas still held a
+  // valid image.
+  const loading = !error && !displayed;
   return <section className="rain-radar" ref={root} aria-labelledby="radar-heading">
     <header className="radar-heading"><div><p className="eyebrow">Messungen · letzte 2 Stunden</p><h3 id="radar-heading">Regenradar</h3></div><button type="button" onClick={() => { setPlaying(false); setMapFailed(false); setRefresh(value => value + 1); }} aria-label="Radar neu laden" disabled={busy}>↻</button></header>
     <div className="radar-map">
