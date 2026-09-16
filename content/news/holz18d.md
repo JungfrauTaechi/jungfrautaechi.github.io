@@ -18,7 +18,7 @@ gallery:
     alt: ''
   - src: /assets/archive/news/holz18d/004.jpg
     alt: ''
-  - src: /assets/archive/news/holz18d/005.jpg
+  - src: /assets/archive/news/holz18d/001.jpg
     alt: ''
   - src: /assets/archive/news/holz18d/006.jpg
     alt: ''

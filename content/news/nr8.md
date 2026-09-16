@@ -8,9 +8,9 @@ summary: >-
   Ich konnte heute das Geschehen nicht verfolgen. Anstatt den ganzen Tag mit
   Kommentaren und Timeshift Revue passieren zu lassen, nehme ich dies
   Gelegenheit wahr, aus einem einzigen Blick auf die aktuelle Rennsituation…
-coverImage: /assets/archive/news/nr8/001.jpg
+coverImage: /assets/archive/news/nr1/001.jpg
 gallery:
-  - src: /assets/archive/news/nr8/001.jpg
+  - src: /assets/archive/news/nr1/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/nr8'
 ---

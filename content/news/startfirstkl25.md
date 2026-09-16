@@ -8,9 +8,9 @@ summary: >-
   Ab sofort darf mit dem Gleitschirm ab Grindelwald First wiederum nur südlich
   des Startturms oder westlich des Wegs zum Startplatz gestartet werden.
   Zwischen der Bergstation First und dem Startturm gibt es eine…
-coverImage: /assets/archive/news/startfirstkl25/001.jpg
+coverImage: /assets/archive/news/startfirstkl/001.jpg
 gallery:
-  - src: /assets/archive/news/startfirstkl25/001.jpg
+  - src: /assets/archive/news/startfirstkl/001.jpg
     alt: ''
   - src: /assets/archive/news/startfirstkl25/002.jpg
     alt: ''

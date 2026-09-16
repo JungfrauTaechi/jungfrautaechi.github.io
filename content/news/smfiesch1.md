@@ -16,7 +16,7 @@ gallery:
     alt: ''
   - src: /assets/archive/news/smfiesch1/003.jpg
     alt: ''
-  - src: /assets/archive/news/smfiesch1/004.jpg
+  - src: /assets/archive/news/smfiesch1/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/smfiesch1'
 ---

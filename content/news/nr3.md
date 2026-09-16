@@ -8,9 +8,9 @@ summary: >-
   Vor zwei Jahren haben die Teilnehmer an den Merkmalen bisheriger Sieger auf
   einfachste Weise gemessen und daraus eine Ranglistenprognose erstellt. Diese
   Spielerei machen wir auch dieses Jahr. Die einfachen Kriterien…
-coverImage: /assets/archive/news/nr3/001.jpg
+coverImage: /assets/archive/news/nr1/001.jpg
 gallery:
-  - src: /assets/archive/news/nr3/001.jpg
+  - src: /assets/archive/news/nr1/001.jpg
     alt: ''
   - src: /assets/archive/news/nr3/002.jpg
     alt: ''

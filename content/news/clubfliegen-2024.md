@@ -54,7 +54,7 @@ gallery:
     alt: ''
   - src: /assets/archive/news/clubfliegen-2024/022.jpg
     alt: ''
-  - src: /assets/archive/news/clubfliegen-2024/023.jpg
+  - src: /assets/archive/news/clubfliegen-2024/001.jpg
     alt: ''
   - src: /assets/archive/news/clubfliegen-2024/024.jpg
     alt: ''

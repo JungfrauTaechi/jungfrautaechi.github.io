@@ -28,7 +28,7 @@ gallery:
     alt: ''
   - src: /assets/archive/news/holzerbar23/009.jpg
     alt: ''
-  - src: /assets/archive/news/holzerbar23/010.jpg
+  - src: /assets/archive/news/holzerbar23/005.jpg
     alt: ''
   - src: /assets/archive/news/holzerbar23/011.jpg
     alt: ''

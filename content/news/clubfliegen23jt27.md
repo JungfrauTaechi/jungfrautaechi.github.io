@@ -50,7 +50,7 @@ gallery:
     alt: ''
   - src: /assets/archive/news/clubfliegen23jt27/020.jpg
     alt: ''
-  - src: /assets/archive/news/clubfliegen23jt27/021.jpg
+  - src: /assets/archive/news/clubfliegen23jt27/001.jpg
     alt: ''
   - src: /assets/archive/news/clubfliegen23jt27/022.jpg
     alt: ''

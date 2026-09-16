@@ -22,7 +22,7 @@ gallery:
     alt: ''
   - src: /assets/archive/news/club2020fliegen0/006.jpg
     alt: ''
-  - src: /assets/archive/news/club2020fliegen0/007.jpg
+  - src: /assets/archive/news/club2020fliegen0/001.jpg
     alt: ''
   - src: /assets/archive/news/club2020fliegen0/008.jpg
     alt: ''

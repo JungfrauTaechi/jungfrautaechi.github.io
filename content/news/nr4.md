@@ -8,9 +8,9 @@ summary: >-
   Das X-Alps 2015 ist mit einem tollen Flugtag so richtig gestartet. Chrigel
   Maurer liess nichts anbrennen und hinterliess zusammen mit dem Österreicher
   Wettkampfpiloten Stephan Gruber heute den stärksten Eindruck. Sie…
-coverImage: /assets/archive/news/nr4/001.jpg
+coverImage: /assets/archive/news/nr1/001.jpg
 gallery:
-  - src: /assets/archive/news/nr4/001.jpg
+  - src: /assets/archive/news/nr1/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/nr4'
 ---

@@ -8,9 +8,9 @@ summary: >-
   Am 16. November 2024 findet das jährliche Clubessen statt. Dieses Jahr gehen
   wir ins Restaurant Blümlisalp. Der Club lädt Euch um 18:00 Uhr zu einem
   kleinen Apero ein. Anschliessend dürfen wir eine Suppe,…
-coverImage: /assets/archive/news/clubessen24/001.jpg
+coverImage: /assets/archive/news/clubessen23/001.jpg
 gallery:
-  - src: /assets/archive/news/clubessen24/001.jpg
+  - src: /assets/archive/news/clubessen23/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/clubessen24'
 ---

@@ -8,9 +8,9 @@ summary: >-
   Chrigel hat sich gestern Abend sicher über die Strafreduktion von 6 auf 2
   Stunden gefreut. Zu früh! Die härtere Sanktion hätte im heute wohl den
   Frühstart und das Absaufen verunmöglicht. Die Ungeduld der beiden…
-coverImage: /assets/archive/news/nr6/001.jpg
+coverImage: /assets/archive/news/nr1/001.jpg
 gallery:
-  - src: /assets/archive/news/nr6/001.jpg
+  - src: /assets/archive/news/nr1/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/nr6'
 ---

@@ -8,9 +8,9 @@ summary: >-
   Liebe Tächi, am 08. November 2025 findet das jährliche Clubessen statt. Dieses
   Jahr gehen wir ins Restaurant Barrys im Hotel Eiger.Der Club lädt Euch um
   18:00 Uhr zu einem kleinen Apero ein.Anschliessend dürfen wir…
-coverImage: /assets/archive/news/clubessen25/001.jpg
+coverImage: /assets/archive/news/clubessen23/001.jpg
 gallery:
-  - src: /assets/archive/news/clubessen25/001.jpg
+  - src: /assets/archive/news/clubessen23/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/clubessen25'
 ---

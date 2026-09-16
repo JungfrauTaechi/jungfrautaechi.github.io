@@ -30,7 +30,7 @@ gallery:
     alt: 'Landecup, 14. März 2015'
   - src: /assets/archive/photos/landecup-grindelwald-14-marz-2015/012.jpg
     alt: 'Landecup, 14. März 2015'
-  - src: /assets/archive/photos/landecup-grindelwald-14-marz-2015/013.jpg
+  - src: /assets/archive/photos/landecup-grindelwald-14-marz-2015/001.jpg
     alt: 'Landecup, 14. März 2015'
   - src: /assets/archive/photos/landecup-grindelwald-14-marz-2015/014.jpg
     alt: ''

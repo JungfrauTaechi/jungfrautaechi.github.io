@@ -48,7 +48,7 @@ gallery:
     alt: ''
   - src: /assets/archive/news/ausflug23jt23/019.jpg
     alt: ''
-  - src: /assets/archive/news/ausflug23jt23/020.jpg
+  - src: /assets/archive/news/ausflug23jt23/001.jpg
     alt: ''
   - src: /assets/archive/news/ausflug23jt23/021.jpg
     alt: ''

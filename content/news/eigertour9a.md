@@ -8,9 +8,9 @@ summary: >-
   Als Rückblick auf eine gelungene Eigertour präsentieren wir euch noch Dubis
   Kommentare zum Geschehen auf deutsch zum nachlesen: Gratulation an
   Tächi-Mitglied Chrigel Maurer zur grandiosen Leistung und zum Sieg!…
-coverImage: /assets/archive/news/eigertour9a/001.jpg
+coverImage: /assets/archive/news/eigertour9/001.jpg
 gallery:
-  - src: /assets/archive/news/eigertour9a/001.jpg
+  - src: /assets/archive/news/eigertour9/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/eigertour9a'
 ---

@@ -16,7 +16,7 @@ gallery:
     alt: ''
   - src: /assets/archive/news/clubessen23/003.jpg
     alt: ''
-  - src: /assets/archive/news/clubessen23/004.jpg
+  - src: /assets/archive/news/clubessen23/001.jpg
     alt: ''
   - src: /assets/archive/news/clubessen23/005.jpg
     alt: ''

@@ -12,7 +12,7 @@ coverImage: /assets/archive/news/50challenge/001.jpg
 gallery:
   - src: /assets/archive/news/50challenge/001.jpg
     alt: ''
-  - src: /assets/archive/news/50challenge/002.jpg
+  - src: /assets/archive/news/50challenge/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/50challenge'
 ---

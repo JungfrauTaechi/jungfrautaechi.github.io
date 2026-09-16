@@ -8,9 +8,9 @@ summary: >-
   Bereits jetzt werden in unserer Region die Hirsche gejagt. Die Gämsjagd
   startet dieses Jahr am 11. und endet am 30. September.Aus Rücksicht auf die
   Jägerschaft verzichten wir in dieser Zeit von Montag - Samstag,…
-coverImage: /assets/archive/news/herbstjagd23/001.jpg
+coverImage: /assets/archive/news/herbstjagd18/001.jpg
 gallery:
-  - src: /assets/archive/news/herbstjagd23/001.jpg
+  - src: /assets/archive/news/herbstjagd18/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/herbstjagd23'
 ---

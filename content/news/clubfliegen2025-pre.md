@@ -8,9 +8,9 @@ summary: >-
   Diesen Samstag 13.09.2025 steht das Clubfliegen auf dem Programm!Aufgrund der
   Wetterprognose treffen wir uns bereits um 09.00 Uhr zum Einschreiben auf der
   First-Terrasse. Das Programm wird flexibel ans Wetter…
-coverImage: /assets/archive/news/clubfliegen2025-pre/001.jpg
+coverImage: /assets/archive/news/clubfliegen2024/001.jpg
 gallery:
-  - src: /assets/archive/news/clubfliegen2025-pre/001.jpg
+  - src: /assets/archive/news/clubfliegen2024/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/clubfliegen2025_pre'
 ---

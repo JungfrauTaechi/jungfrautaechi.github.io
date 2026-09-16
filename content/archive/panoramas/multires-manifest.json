@@ -38,6 +38,19 @@
       "cubeResolution": 6656
     }
   },
+  "muerren": {
+    "sourceScene": "pano20989",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 90.0,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 6656
+    }
+  },
   "grund": {
     "sourceScene": "pano20642",
     "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
@@ -53,6 +66,32 @@
   },
   "bodmi": {
     "sourceScene": "pano20641",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 90.0,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 4096
+    }
+  },
+  "stechelberg": {
+    "sourceScene": "pano20344",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 90.0,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 4096
+    }
+  },
+  "lauterbrunnen": {
+    "sourceScene": "pano20643",
     "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
     "minPitch": -90.0,
     "maxPitch": 90.0,
@@ -108,6 +147,19 @@
     "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
     "minPitch": -90.0,
     "maxPitch": 21.82554,
+    "multiRes": {
+      "path": "%l/%s_%y_%x",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 6144
+    }
+  },
+  "airtime-stechelberg": {
+    "sourceScene": "pano20982",
+    "sourceUrl": "https://jungfrau-taechi.ch/sites/dcjt360_bootstrapdata/",
+    "minPitch": -90.0,
+    "maxPitch": 90.0,
     "multiRes": {
       "path": "%l/%s_%y_%x",
       "extension": "jpg",

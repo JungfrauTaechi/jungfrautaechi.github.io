@@ -40,7 +40,7 @@ gallery:
     alt: ''
   - src: /assets/archive/news/holzerbarcup16a/015.jpg
     alt: ''
-  - src: /assets/archive/news/holzerbarcup16a/016.jpg
+  - src: /assets/archive/news/holzerbar19/002.jpg
     alt: ''
   - src: /assets/archive/news/holzerbarcup16a/017.jpg
     alt: ''

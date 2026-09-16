@@ -8,9 +8,9 @@ summary: >-
   Nicht vergessen: Clubessen 2015 An alle Clubmitglieder und Ihre Begleitung. Es
   ist wieder soweit...unser alljähriges Clubessen steht vor der Tür am Freitag
   den 30. Oktober ab 18.00 h im Hotel Eiger in Grindelwald…
-coverImage: /assets/archive/news/clubessen/001.jpg
+coverImage: /assets/archive/news/clubessen-1/001.jpg
 gallery:
-  - src: /assets/archive/news/clubessen/001.jpg
+  - src: /assets/archive/news/clubessen-1/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/clubessen'
 ---

@@ -8,9 +8,9 @@ summary: >-
   Paul Guschelbauer hat heute eine sehr gute Flugleistung geboten. Sicher war er
   bei seiner Landung, zufrieden mit sich, vielleicht ein bisschen unglücklich
   das letzte kleine Hindernis vor Boje 4 nicht auch noch…
-coverImage: /assets/archive/news/nr5/001.jpg
+coverImage: /assets/archive/news/nr1/001.jpg
 gallery:
-  - src: /assets/archive/news/nr5/001.jpg
+  - src: /assets/archive/news/nr1/001.jpg
     alt: ''
   - src: /assets/archive/news/nr5/002.jpg
     alt: ''

@@ -8,9 +8,9 @@ summary: >-
   Die Gämsjagd startet auch dieses Jahr am 10. und endet am 30. September.Aus
   Rücksicht auf die Jägerschaft verzichten wir in der Zeit von Montag - Samstag,
   jeweils ab 16:00 Uhr, auf das Soaren. Flüge von der First…
-coverImage: /assets/archive/news/herbstjagd22/001.jpg
+coverImage: /assets/archive/news/herbstjagd18/001.jpg
 gallery:
-  - src: /assets/archive/news/herbstjagd22/001.jpg
+  - src: /assets/archive/news/herbstjagd18/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/herbstjagd22'
 ---

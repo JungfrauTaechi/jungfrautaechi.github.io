@@ -12,7 +12,7 @@ coverImage: /assets/archive/news/dreigertour0/001.jpg
 gallery:
   - src: /assets/archive/news/dreigertour0/001.jpg
     alt: ''
-  - src: /assets/archive/news/dreigertour0/002.jpg
+  - src: /assets/archive/news/dreigertour0/001.jpg
     alt: ''
   - src: /assets/archive/news/dreigertour0/003.jpg
     alt: ''

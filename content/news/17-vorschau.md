@@ -8,9 +8,9 @@ summary: >-
   X-Alps 2017 – Der fünfte Stern? Start des eigentlichen X-Alps Abenteurs ist am
   2. Juli 2017. Ab 2. Juli findest du hier auf unserer Webseite die
   Tageskommentare von Urs Dubach. Anquetil, Merx, Hinault, Indurain:…
-coverImage: /assets/archive/news/17-vorschau/001.jpg
+coverImage: /assets/archive/news/17-01/001.jpg
 gallery:
-  - src: /assets/archive/news/17-vorschau/001.jpg
+  - src: /assets/archive/news/17-01/001.jpg
     alt: ''
   - src: /assets/archive/news/17-vorschau/002.jpg
     alt: ''

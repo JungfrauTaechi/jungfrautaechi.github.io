@@ -8,9 +8,9 @@ summary: >-
   Das X-Alps hat noch nicht richtig begonnen und schon müssen wir uns
   entschuldigen. Die Ferienabwesenheit eines Redaktors berechtigt natürlich
   nicht dazu, den versprochenen Berichtsauftakt und den erstmaligen Prolog…
-coverImage: /assets/archive/news/nr2/001.jpg
+coverImage: /assets/archive/news/nr1/001.jpg
 gallery:
-  - src: /assets/archive/news/nr2/001.jpg
+  - src: /assets/archive/news/nr1/001.jpg
     alt: ''
   - src: /assets/archive/news/nr2/002.jpg
     alt: ''

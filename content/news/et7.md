@@ -8,9 +8,9 @@ summary: >-
   Eigertour Edition 7 vom 3.-6. Juli 2024Morgen Mittwoch startet die 7.
   Eigertour rund um Grindelwald. Sei beim Start auf dem Eiger+-Platz dabei oder
   beobachte die ersten Starts beim ersten Turnpoint First. Das Rennen…
-coverImage: /assets/archive/news/et7/001.jpg
+coverImage: /assets/archive/news/et7-2/001.jpg
 gallery:
-  - src: /assets/archive/news/et7/001.jpg
+  - src: /assets/archive/news/et7-2/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/et7'
 ---

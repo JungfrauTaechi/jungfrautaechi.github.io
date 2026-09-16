@@ -8,9 +8,9 @@ summary: >-
   Dieser Tag mit Nordwind erwies sich als relativ tricky und brachte eine
   weitere Vorentscheidung. Chrigel erreichte die Matterhornboje quasi
   standardmässig über die Gomser Rennbahn. Seine Verfolger nahmen die…
-coverImage: /assets/archive/news/nr9/001.jpg
+coverImage: /assets/archive/news/nr1/001.jpg
 gallery:
-  - src: /assets/archive/news/nr9/001.jpg
+  - src: /assets/archive/news/nr1/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/nr9'
 ---

@@ -64,7 +64,7 @@ export const windStationCatalog = [
   { id: "slf-SCH2", name: "Türliboden", altitude: 2332, provider: "slf.ch", latitude: 46.576916, longitude: 7.834732, distanceKm: 16.6 },
   { id: "slf-ROA2", name: "Rotschalp", altitude: 1875, provider: "slf.ch", latitude: 46.774319, longitude: 7.993941, distanceKm: 17.1 },
   { id: "slf-SCH1", name: "Schilthorn", altitude: 2996, provider: "slf.ch", latitude: 46.557313, longitude: 7.835202, distanceKm: 17.4 },
-  { id: "holfuy-1850", name: "Lehn", altitude: 560, provider: "holfuy.com", latitude: 46.68084, longitude: 7.82554, distanceKm: 17.6 },
+  { id: "holfuy-1850", name: "Interlaken / Lehn", altitude: 560, provider: "holfuy.com", latitude: 46.68084, longitude: 7.82554, distanceKm: 17.6 },
   { id: "holfuy-1957", name: "Bilitscher", altitude: 1300, provider: "holfuy.com", latitude: 46.71637, longitude: 8.2322, distanceKm: 17.8 },
   { id: "slf-SCB2", name: "Schönbüel", altitude: 1777, provider: "slf.ch", latitude: 46.779375, longitude: 8.103438, distanceKm: 17.9 },
   { id: "slf-ROA1", name: "Brienzer Rothorn", altitude: 2348, provider: "slf.ch", latitude: 46.78712, longitude: 8.046917, distanceKm: 18.1 },
@@ -94,7 +94,7 @@ const compassLabel = (degrees) => ["N", "NE", "E", "SE", "S", "SW", "W", "NW"][M
 // Stable public feed IDs and display order; no mock readings enter the live grid.
 export const windStationRoster = [
   { ...grundMeteoStation, source: "burnair", primary: true },
-  ...windStationCatalog.map((station, index) => ({ ...station, source: "winds.mobi", primary: index < 5 })),
+  ...windStationCatalog.map((station) => ({ ...station, source: "winds.mobi", primary: ["windline-4104", "slf-MAN1", "slf-LHO2", "meteoswiss-JUN", "holfuy-1850"].includes(station.id) })),
 ];
 const mockAverages = [12, 9, 7, 16, 11, 22, 15, 6, 8, 5, 10, 14, 7, 4, 18, 13, 25, 6, 9, 12, 20, 8, 7, 17, 15, 19, 11, 13, 21];
 const mockDirections = [248, 212, 276, 281, 236, 305, 258, 198, 92, 244, 225, 270, 186, 240, 284, 210, 304, 248, 132, 204, 278, 244, 226, 290, 262, 248, 220, 238, 286];
@@ -106,7 +106,7 @@ export const meteoStations = windStationCatalog.map((station, index) => {
   const status = average >= 22 ? "strong" : average >= 16 ? "watch" : "good";
   return {
     ...station,
-    primary: index < 5,
+    primary: ["windline-4104", "slf-MAN1", "slf-LHO2", "meteoswiss-JUN", "holfuy-1850"].includes(station.id),
     average,
     gust,
     direction,
@@ -308,10 +308,10 @@ export const flightSceneGroups = [
   { id: "landing", label: "Landeplätze", count: landingSites.length },
 ];
 export const safetyAreas = [
-  { id: "grindelwald", title: "Fluggebiet Grindelwald", detail: "LS-R6 Axalp und lokale Vereinbarung", body: "DABS zwingend beachten. Bei aktiver LS-R6 gilt innerhalb der lokalen Sonderzone südlich SwissGrid 169000 eine maximale Höhe von 2250 m ü. M. statt 1850 m ü. M. (Sonderregelung). Während dem Axalp-Fliegerschiessen kann die grössere temporäre LS-R13 gelten; diese Sonderregelung gilt dann nicht.", images: [localAsset("/assets/documents/fluggebiete/previews/Grindelwald.jpg"), images.safetyGrindelwald, images.safetyEigergletscher, images.safetyMaennlichen], document: { title: "Fluggebiet Grindelwald · Karte", edition: "Ausgabe 2022", path: localAsset("/assets/documents/fluggebiete/Grindelwald.pdf"), preview: localAsset("/assets/documents/fluggebiete/previews/Grindelwald.jpg") } },
-  { id: "lauterbrunnen", title: "Lauterbrunnen und Mürren", detail: "Lokale Fluggebietsregeln", body: "Bitte die eingezeichneten lokalen Regeln sowie Start- und Landeplatzhinweise vor dem Flug vollständig prüfen. Die Panoramen dieses Tals wurden wegen veralteter Landeplatzaufnahmen aus dem öffentlichen Explorer entfernt.", images: [localAsset("/assets/documents/fluggebiete/previews/lauterbrunnen.jpg"), images.safetyLauterbrunnen], document: { title: "Fluggebiet Lauterbrunnen", edition: "Ausgabe 2020", path: localAsset("/assets/documents/fluggebiete/lauterbrunnen.pdf"), preview: localAsset("/assets/documents/fluggebiete/previews/lauterbrunnen.jpg") } },
-  { id: "meiringen", title: "HX Meiringen", detail: "Militärflugplatz und Luftraum", body: "Die aktuellen HX-Regeln und Aktivierungszeiten vor jedem Flug prüfen; DABS und offizielle Luftfahrtinformationen bleiben verbindlich.", images: [localAsset("/assets/documents/fluggebiete/previews/meiringen2024.jpg"), images.safetyMeiringen], document: { title: "Fluggebiet Meiringen", edition: "Ausgabe 2024", path: localAsset("/assets/documents/fluggebiete/meiringen2024.pdf"), preview: localAsset("/assets/documents/fluggebiete/previews/meiringen2024.jpg") } },
-  { id: "interlaken", title: "Landeplätze Interlaken", detail: "Höhenangaben in AMSL", body: "Die publizierten Höhen sind Meter über Meer und nicht Meter über Grund. Die beiden Regelkarten vor Anflug der Interlakner Landeplätze beachten.", images: [images.safetyInterlaken1, images.safetyInterlaken2] },
+  { id: "grindelwald", title: "Fluggebiet Grindelwald", detail: "LS-R6 Axalp und lokale Vereinbarung", body: "DABS zwingend beachten. Bei aktiver LS-R6 gilt innerhalb der lokalen Sonderzone südlich SwissGrid 169000 eine maximale Höhe von 2250 m ü. M. statt 1850 m ü. M. (Sonderregelung). Während dem Axalp-Fliegerschiessen kann die grössere temporäre LS-R13 gelten; diese Sonderregelung gilt dann nicht.", images: [], document: { title: "Fluggebiet Grindelwald · Karte", edition: "Ausgabe 2022", path: localAsset("/assets/documents/fluggebiete/Grindelwald.pdf"), preview: localAsset("/assets/documents/fluggebiete/previews/Grindelwald.jpg") } },
+  { id: "lauterbrunnen", title: "Lauterbrunnen und Mürren", detail: "Lokale Fluggebietsregeln", body: "Bitte die eingezeichneten lokalen Regeln sowie Start- und Landeplatzhinweise vor dem Flug vollständig prüfen. Die Panoramen dieses Tals wurden wegen veralteter Landeplatzaufnahmen aus dem öffentlichen Explorer entfernt.", images: [], document: { title: "Fluggebiet Lauterbrunnen", edition: "Ausgabe 2020", path: localAsset("/assets/documents/fluggebiete/lauterbrunnen.pdf"), preview: localAsset("/assets/documents/fluggebiete/previews/lauterbrunnen.jpg") } },
+  { id: "meiringen", title: "HX Meiringen", detail: "Militärflugplatz und Luftraum", body: "Die aktuellen HX-Regeln und Aktivierungszeiten vor jedem Flug prüfen; DABS und offizielle Luftfahrtinformationen bleiben verbindlich.", images: [], document: { title: "Fluggebiet Meiringen", edition: "Ausgabe 2024", path: localAsset("/assets/documents/fluggebiete/meiringen2024.pdf"), preview: localAsset("/assets/documents/fluggebiete/previews/meiringen2024.jpg") } },
+  { id: "interlaken", title: "Landeplätze Interlaken", detail: "Höhenangaben in AMSL", body: "Die publizierten Höhen sind Meter über Meer und nicht Meter über Grund. Die beiden Regelkarten vor Anflug der Interlakner Landeplätze beachten.", images: [images.safetyInterlaken1, images.safetyInterlaken2], document: { title: "SHV Infotafel Interlaken", edition: "Ausgabe 03/2024", path: "https://www.shv-fsvl.ch/fileadmin/files/redakteure/Allgemein/Sicherheit/SHVInfotafeln/Interlaken.pdf" } },
 ];
 export const membershipFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfFEIRJqhDSkB7wPeH2SWIIHiL5s61NnF57sO9EX1a2C3wc_w/viewform";
 export const boardMembers = [

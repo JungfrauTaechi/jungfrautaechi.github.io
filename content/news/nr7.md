@@ -8,9 +8,9 @@ summary: >-
   Oft sind am X-Alps unscheinbare Situationen die spannendsten und
   entscheidenden. Wie heute Abend, als auf dem Bildschirm in einem Couloir bei
   der Boje 5 zwei Symbole wartender Piloten zu sehen sind. Durch das Web…
-coverImage: /assets/archive/news/nr7/001.jpg
+coverImage: /assets/archive/news/nr1/001.jpg
 gallery:
-  - src: /assets/archive/news/nr7/001.jpg
+  - src: /assets/archive/news/nr1/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/nr7'
 ---

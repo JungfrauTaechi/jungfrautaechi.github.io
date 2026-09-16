@@ -1,0 +1,361 @@
+{
+  "description": "Exact non-panorama image deduplication; old paths mapped to retained identical content. Panorama tiles retain coordinate paths.",
+  "groups": [
+    {
+      "sha256": "05bbe55da1f2384d71c20a4712c080918f5b5549e2dfd426af2d881f32f17695",
+      "bytes_per_file": 474569,
+      "kept": "/assets/archive/news/holzerbar23/005.jpg",
+      "removed": [
+        "/assets/archive/news/holzerbar23/010.jpg"
+      ]
+    },
+    {
+      "sha256": "0dfa463db7015d69b32a4b75fe2934299463fff81d44fd5c2fe63e72d4d28a22",
+      "bytes_per_file": 507521,
+      "kept": "/assets/archive/news/bankstabil0/001.jpg",
+      "removed": [
+        "/assets/archive/news/bankstabil0/004.jpg"
+      ]
+    },
+    {
+      "sha256": "142b857de3b9ecddd7efea89236017f8ee5b8c72c6b4d9a78e4cde53473b9232",
+      "bytes_per_file": 285680,
+      "kept": "/assets/archive/news/sc22/001.jpg",
+      "removed": [
+        "/assets/archive/news/sc22/002.jpg"
+      ]
+    },
+    {
+      "sha256": "1b34ab9becbf44c37be2412211126e304f0e5566a848fb9aba941925a7b8d0c1",
+      "bytes_per_file": 33135,
+      "kept": "/assets/archive/news/19-01/001.jpg",
+      "removed": [
+        "/assets/archive/news/19-02/001.jpg",
+        "/assets/archive/news/19-02a/001.jpg",
+        "/assets/archive/news/19-03/001.jpg",
+        "/assets/archive/news/19-04/001.jpg",
+        "/assets/archive/news/19-05/001.jpg",
+        "/assets/archive/news/19-06/001.jpg",
+        "/assets/archive/news/19-07/001.jpg",
+        "/assets/archive/news/19-08/001.jpg",
+        "/assets/archive/news/19-09/001.jpg",
+        "/assets/archive/news/19-10/001.jpg",
+        "/assets/archive/news/19-11/001.jpg",
+        "/assets/archive/news/19-12/001.jpg",
+        "/assets/archive/news/19-13/001.jpg"
+      ]
+    },
+    {
+      "sha256": "25af37ddcdfd9e1fe2c47d5a6fc07db7969e1e0d50d42863d1640808964930ea",
+      "bytes_per_file": 18713,
+      "kept": "/assets/archive/news/et7-2/001.jpg",
+      "removed": [
+        "/assets/archive/news/et7/001.jpg"
+      ]
+    },
+    {
+      "sha256": "2eb8cde7fe2aa2ba809b3ad1facc305c1c7d8578079b4e73821b597a9adcbc57",
+      "bytes_per_file": 180968,
+      "kept": "/assets/archive/news/swiss-cup-grindelwald-2016/001.jpg",
+      "removed": [
+        "/assets/archive/news/sc26/002.jpg",
+        "/assets/archive/news/swiss-cup-grindelwald-2016/002.jpg"
+      ]
+    },
+    {
+      "sha256": "2ed4d22e5b11394ca0c5971f28524193924015baec67ccec62aae2bfc3ff23f9",
+      "bytes_per_file": 112701,
+      "kept": "/assets/archive/news/holzerbar19/002.jpg",
+      "removed": [
+        "/assets/archive/news/holzerbarcup16a/016.jpg"
+      ]
+    },
+    {
+      "sha256": "2f879832e9c62140b978d40455598c05a947b1018d138995bb64099bb98e8f68",
+      "bytes_per_file": 264469,
+      "kept": "/assets/archive/news/eigertour9/001.jpg",
+      "removed": [
+        "/assets/archive/news/eigertour9a/001.jpg"
+      ]
+    },
+    {
+      "sha256": "36e0d78fc1ce5f914c4b3b76b28e672c8b67118ab4e87a645aab1b8ece28c134",
+      "bytes_per_file": 222985,
+      "kept": "/assets/archive/news/dreigertour0/001.jpg",
+      "removed": [
+        "/assets/archive/news/dreigertour0/002.jpg"
+      ]
+    },
+    {
+      "sha256": "3c7dc139b350ca7f50ecdeebc521b91b9899a0ccfa53b4bd47cecf3ee7400886",
+      "bytes_per_file": 302545,
+      "kept": "/assets/archive/news/et25-1/001.jpg",
+      "removed": [
+        "/assets/archive/news/et25-1/002.jpg"
+      ]
+    },
+    {
+      "sha256": "4bed7a13af0965d42d29512c8b368e7cc001906c641ff05c5b1766f30dc76ca5",
+      "bytes_per_file": 182435,
+      "kept": "/assets/archive/news/50challenge/001.jpg",
+      "removed": [
+        "/assets/archive/news/50challenge/002.jpg"
+      ]
+    },
+    {
+      "sha256": "5146ffa10595685b1f3d747a34932b6a37e78e680fc802915e7f01848890ebb8",
+      "bytes_per_file": 373829,
+      "kept": "/assets/archive/news/windmessstation0/001.jpg",
+      "removed": [
+        "/assets/archive/news/windmessstation0/002.jpg"
+      ]
+    },
+    {
+      "sha256": "59c0902228f871d72ef9d4df09318f51ad35a9dcb0e97946fdd4ddb13c9bf53c",
+      "bytes_per_file": 383841,
+      "kept": "/assets/archive/news/clubfliegen23jt27/001.jpg",
+      "removed": [
+        "/assets/archive/news/clubfliegen23jt27/021.jpg"
+      ]
+    },
+    {
+      "sha256": "65b927c8f77b1a4e06377d311049cef6e518db6b22722597bea805290742fd08",
+      "bytes_per_file": 149909,
+      "kept": "/assets/archive/news/clubessen-1/001.jpg",
+      "removed": [
+        "/assets/archive/news/clubessen/001.jpg"
+      ]
+    },
+    {
+      "sha256": "6b4e425a6684605683f0dd06c1acc64961817509cb6f13ce63ef642de47ac357",
+      "bytes_per_file": 263201,
+      "kept": "/assets/archive/news/hf26-1-5/001.jpg",
+      "removed": [
+        "/assets/archive/news/hf26-1-5/006.jpg"
+      ]
+    },
+    {
+      "sha256": "70f9b61d6a3af06eabc702a8bb0d3e11b915a6a6e68270357e5f8e97374613c5",
+      "bytes_per_file": 99499,
+      "kept": "/assets/archive/news/acf19breitbild/005.jpg",
+      "removed": [
+        "/assets/archive/news/et191/035.jpg"
+      ]
+    },
+    {
+      "sha256": "8bea150ee0cb59ebd90fe9a75579c65653a207eb235dee18307d91463428e85c",
+      "bytes_per_file": 171981,
+      "kept": "/assets/archive/news/clubfliegen2024/001.jpg",
+      "removed": [
+        "/assets/archive/news/clubfliegen2025-pre/001.jpg"
+      ]
+    },
+    {
+      "sha256": "8c152bd4dbe50670ecdca6b14fefd286be99b35942a999e4b0a1d14ebc248974",
+      "bytes_per_file": 237102,
+      "kept": "/assets/archive/news/clubessen23/001.jpg",
+      "removed": [
+        "/assets/archive/news/clubessen23/004.jpg",
+        "/assets/archive/news/clubessen24/001.jpg",
+        "/assets/archive/news/clubessen25/001.jpg"
+      ]
+    },
+    {
+      "sha256": "a8116a05b6cc56d3d8d02e48b369fefcfeba500746468fa3309fff5b33cb31ba",
+      "bytes_per_file": 232710,
+      "kept": "/assets/archive/news/h16/001.jpg",
+      "removed": [
+        "/assets/archive/news/herbstjagd/001.jpg"
+      ]
+    },
+    {
+      "sha256": "a9cb9b9231b873b6b8fe3670583b5599b11df1b190c8efa9b90f277cdab77b99",
+      "bytes_per_file": 275126,
+      "kept": "/assets/archive/news/smfiesch1/001.jpg",
+      "removed": [
+        "/assets/archive/news/smfiesch1/004.jpg"
+      ]
+    },
+    {
+      "sha256": "afb341b805cdb4d7158c0dbc0aaaf9cbc42c8100931587403d1cd15a03973a0b",
+      "bytes_per_file": 33190,
+      "kept": "/assets/archive/news/17-01/001.jpg",
+      "removed": [
+        "/assets/archive/news/17-02/001.jpg",
+        "/assets/archive/news/17-03/001.jpg",
+        "/assets/archive/news/17-04/001.jpg",
+        "/assets/archive/news/17-05/001.jpg",
+        "/assets/archive/news/17-06/001.jpg",
+        "/assets/archive/news/17-07/001.jpg",
+        "/assets/archive/news/17-08/001.jpg",
+        "/assets/archive/news/17-09/001.jpg",
+        "/assets/archive/news/17-10/001.jpg",
+        "/assets/archive/news/17-11/001.jpg",
+        "/assets/archive/news/17-12/001.jpg",
+        "/assets/archive/news/17-13/001.jpg",
+        "/assets/archive/news/17-14/001.jpg",
+        "/assets/archive/news/17-15/001.jpg",
+        "/assets/archive/news/17-16/001.jpg",
+        "/assets/archive/news/17-17/001.jpg",
+        "/assets/archive/news/17-18/001.jpg",
+        "/assets/archive/news/17-19/001.jpg",
+        "/assets/archive/news/17-20/001.jpg",
+        "/assets/archive/news/17-21/001.jpg",
+        "/assets/archive/news/17-vorschau/001.jpg"
+      ]
+    },
+    {
+      "sha256": "b10d136e6e8bc00f0d56451ebc284702895895427dc9274a9acc9498032317e9",
+      "bytes_per_file": 487977,
+      "kept": "/assets/archive/news/clubfliegen-2024/001.jpg",
+      "removed": [
+        "/assets/archive/news/clubfliegen-2024/023.jpg"
+      ]
+    },
+    {
+      "sha256": "b27569fba17ef5a759f4ffdf2c6d023366d1e9ad17c7562271501fe9054d832f",
+      "bytes_per_file": 231850,
+      "kept": "/assets/archive/news/hf2-2025/001.jpg",
+      "removed": [
+        "/assets/archive/news/hf2-2025/004.jpg"
+      ]
+    },
+    {
+      "sha256": "b3fe094396b36ebb5fda0b7537fad38facd52cacd67316c8f2f3416e8d976a24",
+      "bytes_per_file": 187315,
+      "kept": "/assets/archive/photos/landecup-grindelwald-14-marz-2015/001.jpg",
+      "removed": [
+        "/assets/archive/photos/landecup-grindelwald-14-marz-2015/013.jpg"
+      ]
+    },
+    {
+      "sha256": "b50c14ace8e72bba516402340e5ea163564ff994d9fa1181e70e9c65d97e779d",
+      "bytes_per_file": 161439,
+      "kept": "/assets/archive/news/ce24/001.jpg",
+      "removed": [
+        "/assets/archive/news/ce24/012.jpg"
+      ]
+    },
+    {
+      "sha256": "ba79044a598feab7c6d29bde35a21b88c420a150297f119d6d2e0a0086df77db",
+      "bytes_per_file": 149445,
+      "kept": "/assets/archive/news/holz18d/001.jpg",
+      "removed": [
+        "/assets/archive/news/holz18d/005.jpg"
+      ]
+    },
+    {
+      "sha256": "bba85945a0c4fa07d77d13535cccbbf4d9aedd659302fcd8ae1d2c2772eb35fa",
+      "bytes_per_file": 232659,
+      "kept": "/assets/archive/news/herbstjagd18/001.jpg",
+      "removed": [
+        "/assets/archive/news/herbstjagd19/001.jpg",
+        "/assets/archive/news/herbstjagd20/001.jpg",
+        "/assets/archive/news/herbstjagd2024/001.jpg",
+        "/assets/archive/news/herbstjagd2025/001.jpg",
+        "/assets/archive/news/herbstjagd21/001.jpg",
+        "/assets/archive/news/herbstjagd22/001.jpg",
+        "/assets/archive/news/herbstjagd23/001.jpg"
+      ]
+    },
+    {
+      "sha256": "bdecb22cf6902ae061a5f3638e21fdbee30f73e091b8783161d88ba160bc992b",
+      "bytes_per_file": 156838,
+      "kept": "/assets/archive/news/lsr13/001.jpg",
+      "removed": [
+        "/assets/archive/news/lsr1321/001.jpg"
+      ]
+    },
+    {
+      "sha256": "bed7c9d1c83da0b27508a458e96ada4dc570d1bb42c914ef54397825722392e3",
+      "bytes_per_file": 203912,
+      "kept": "/assets/archive/news/eigertour23/001.jpg",
+      "removed": [
+        "/assets/archive/news/eigertour23/005.jpg"
+      ]
+    },
+    {
+      "sha256": "c53619ca46f236b0d02f5a2a1f47d2e5a740252b8acb2ed86744f7728ef5e3c3",
+      "bytes_per_file": 315415,
+      "kept": "/assets/archive/news/et25-2/001.jpg",
+      "removed": [
+        "/assets/archive/news/et25-2/002.jpg"
+      ]
+    },
+    {
+      "sha256": "ccfbfeaa2915fc77545eea43e31f0edbad27f64a2bbc67fd0797aa036602b937",
+      "bytes_per_file": 230199,
+      "kept": "/assets/archive/news/club2020fliegen0/001.jpg",
+      "removed": [
+        "/assets/archive/news/club2020fliegen0/007.jpg"
+      ]
+    },
+    {
+      "sha256": "dbfb44afd52f9ee3ea2ad8fccccbb12e51c78e5f5c88e610fbbbb3d627a2a602",
+      "bytes_per_file": 63474,
+      "kept": "/assets/legacy-images/bbdc1db25e0c15c9ff59.jpg",
+      "removed": [
+        "/assets/legacy-images/49e25b0b372435c0f892.jpg"
+      ]
+    },
+    {
+      "sha256": "e09cc2779ed75b10617889b467277e3f435ae37825821db42131d9533a6d6285",
+      "bytes_per_file": 35671,
+      "kept": "/assets/archive/news/nr1/001.jpg",
+      "removed": [
+        "/assets/archive/news/nr10/001.jpg",
+        "/assets/archive/news/nr11/001.jpg",
+        "/assets/archive/news/nr12/001.jpg",
+        "/assets/archive/news/nr13/001.jpg",
+        "/assets/archive/news/nr14/001.jpg",
+        "/assets/archive/news/nr15/001.jpg",
+        "/assets/archive/news/nr16/001.jpg",
+        "/assets/archive/news/nr2/001.jpg",
+        "/assets/archive/news/nr3/001.jpg",
+        "/assets/archive/news/nr4/001.jpg",
+        "/assets/archive/news/nr5/001.jpg",
+        "/assets/archive/news/nr6/001.jpg",
+        "/assets/archive/news/nr7/001.jpg",
+        "/assets/archive/news/nr8/001.jpg",
+        "/assets/archive/news/nr9/001.jpg"
+      ]
+    },
+    {
+      "sha256": "ebc8d5f4030626ece845cd094684ba18706c4b01efe2150d8c2aac1305e4a8d9",
+      "bytes_per_file": 135000,
+      "kept": "/assets/archive/news/startfirstkl/001.jpg",
+      "removed": [
+        "/assets/archive/news/startfirstkl25/001.jpg"
+      ]
+    },
+    {
+      "sha256": "f14f41505ea54e951890702e2d189bd3607715521df4feeed46583fd86cd4454",
+      "bytes_per_file": 136559,
+      "kept": "/assets/archive/news/ausflug23jt23/001.jpg",
+      "removed": [
+        "/assets/archive/news/ausflug23jt23/020.jpg"
+      ]
+    },
+    {
+      "sha256": "f968baa1846ef6f303d8b4ac91b28af652e72a78e40a424ffa4ef896630bf477",
+      "bytes_per_file": 28105,
+      "kept": "/assets/archive/news/21-00/001.jpg",
+      "removed": [
+        "/assets/archive/news/21-01/001.jpg",
+        "/assets/archive/news/21-02/001.jpg",
+        "/assets/archive/news/21-03/001.jpg",
+        "/assets/archive/news/21-04/001.jpg",
+        "/assets/archive/news/21-05/001.jpg",
+        "/assets/archive/news/21-06/001.jpg",
+        "/assets/archive/news/21-07/001.jpg",
+        "/assets/archive/news/21-08/001.jpg",
+        "/assets/archive/news/21-09/001.jpg",
+        "/assets/archive/news/21-10/001.jpg",
+        "/assets/archive/news/21-11/001.jpg",
+        "/assets/archive/news/21-12/001.jpg",
+        "/assets/archive/news/21-13/001.jpg",
+        "/assets/archive/news/21-14/001.jpg"
+      ]
+    }
+  ]
+}

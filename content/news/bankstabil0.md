@@ -16,7 +16,7 @@ gallery:
     alt: ''
   - src: /assets/archive/news/bankstabil0/003.jpg
     alt: ''
-  - src: /assets/archive/news/bankstabil0/004.jpg
+  - src: /assets/archive/news/bankstabil0/001.jpg
     alt: ''
 sourceUrl: 'https://jungfrau-taechi.ch/newsfeed/bankstabil0'
 ---

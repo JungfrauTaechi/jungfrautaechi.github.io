@@ -20,7 +20,7 @@ gallery:
     alt: ''
   - src: /assets/archive/news/eigertour23/004.jpg
     alt: ''
-  - src: /assets/archive/news/eigertour23/005.jpg
+  - src: /assets/archive/news/eigertour23/001.jpg
     alt: ''
   - src: /assets/archive/news/eigertour23/006.jpg
     alt: ''

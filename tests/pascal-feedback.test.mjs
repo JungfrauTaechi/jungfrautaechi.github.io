@@ -50,10 +50,17 @@ test("each of the thirteen panoramas has one configurable position for all eight
   }
 });
 
-test("all thirteen panorama pyramids have every expected local tile and original crop limits", async () => {
+test("the nine published panorama pyramids have all tiles and retired scenes remain archived", async () => {
   const root = new URL("../public/assets/panoramas/", import.meta.url);
   const manifest = JSON.parse(await readFile(new URL("multires-manifest.json", root), "utf8"));
-  assert.equal(Object.keys(manifest).length, 13);
+  assert.equal(Object.keys(manifest).length, 9);
+  const archiveRoot = new URL("../content/archive/panoramas/", import.meta.url);
+  const archiveManifest = JSON.parse(await readFile(new URL("multires-manifest.json", archiveRoot), "utf8"));
+  for (const retired of ["muerren", "stechelberg", "lauterbrunnen", "airtime-stechelberg"]) {
+    assert.ok(!(retired in manifest));
+    assert.ok(retired in archiveManifest);
+    await access(new URL(`${retired}/thumbnail.jpg`, archiveRoot));
+  }
   assert.equal(manifest.waldspitz.multiRes.cubeResolution, 6656);
   assert.equal(manifest.maennlichen.multiRes.cubeResolution, 6656);
   assert.ok(Math.abs(manifest.waldspitz.minPitch + 44.38548) < 0.00001);
