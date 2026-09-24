@@ -36,8 +36,8 @@ export const images = {
   safetyMaennlichen: localAsset("/assets/source/safety-maennlichen.jpg"),
   safetyLauterbrunnen: localAsset("/assets/source/safety-lauterbrunnen.jpg"),
   safetyMeiringen: localAsset("/assets/source/safety-meiringen.jpg"),
-  safetyInterlaken1: localAsset("/assets/source/safety-interlaken-1.jpg"),
-  safetyInterlaken2: localAsset("/assets/source/safety-interlaken-2.jpg"),
+  safetyInterlakenPreview: localAsset("/assets/documents/fluggebiete/previews/Interlaken.jpg"),
+  jagdbanngebiet: localAsset("/assets/source/jagdbanngebiet-pascal-2026.jpg"),
 };
 export const routes = {
   imprint: { path: "/impressum", label: "Impressum" },
@@ -308,10 +308,11 @@ export const flightSceneGroups = [
   { id: "landing", label: "Landeplätze", count: landingSites.length },
 ];
 export const safetyAreas = [
+  { id: "jagdbanngebiet", title: "Jagdbanngebiet", detail: "Wildschutz · AuLaV", body: "Im Jagdbanngebiet sind Starts und Landungen mit dem Gleitschirm verboten. Auf bundesrechtlicher Ebene gelten für Hängegleiter Start- und Landeverbote in AuLaV-Schutzgebieten; Übertretungen können gebüsst werden. Die aktuellen Perimeter sind im Geoportal des Bundes unter dem Filter AuLaV einsehbar. Beim Überflug Rücksicht auf Wildtiere nehmen und Abstand halten.", images: [], graphic: images.jagdbanngebiet, document: { title: "SHV Infotafel Grindelwald", edition: "Ausgabe 06/2024", path: "https://www.shv-fsvl.ch/fileadmin/files/redakteure/Allgemein/Sicherheit/SHVInfotafeln/Grindelwald.pdf" } },
   { id: "grindelwald", title: "Fluggebiet Grindelwald", detail: "LS-R6 Axalp und lokale Vereinbarung", body: "DABS zwingend beachten. Bei aktiver LS-R6 gilt innerhalb der lokalen Sonderzone südlich SwissGrid 169000 eine maximale Höhe von 2250 m ü. M. statt 1850 m ü. M. (Sonderregelung). Während dem Axalp-Fliegerschiessen kann die grössere temporäre LS-R13 gelten; diese Sonderregelung gilt dann nicht.", images: [], document: { title: "Fluggebiet Grindelwald · Karte", edition: "Ausgabe 2022", path: localAsset("/assets/documents/fluggebiete/Grindelwald.pdf"), preview: localAsset("/assets/documents/fluggebiete/previews/Grindelwald.jpg") } },
   { id: "lauterbrunnen", title: "Lauterbrunnen und Mürren", detail: "Lokale Fluggebietsregeln", body: "Bitte die eingezeichneten lokalen Regeln sowie Start- und Landeplatzhinweise vor dem Flug vollständig prüfen. Die Panoramen dieses Tals wurden wegen veralteter Landeplatzaufnahmen aus dem öffentlichen Explorer entfernt.", images: [], document: { title: "Fluggebiet Lauterbrunnen", edition: "Ausgabe 2020", path: localAsset("/assets/documents/fluggebiete/lauterbrunnen.pdf"), preview: localAsset("/assets/documents/fluggebiete/previews/lauterbrunnen.jpg") } },
   { id: "meiringen", title: "HX Meiringen", detail: "Militärflugplatz und Luftraum", body: "Die aktuellen HX-Regeln und Aktivierungszeiten vor jedem Flug prüfen; DABS und offizielle Luftfahrtinformationen bleiben verbindlich.", images: [], document: { title: "Fluggebiet Meiringen", edition: "Ausgabe 2024", path: localAsset("/assets/documents/fluggebiete/meiringen2024.pdf"), preview: localAsset("/assets/documents/fluggebiete/previews/meiringen2024.jpg") } },
-  { id: "interlaken", title: "Landeplätze Interlaken", detail: "Höhenangaben in AMSL", body: "Die publizierten Höhen sind Meter über Meer und nicht Meter über Grund. Die beiden Regelkarten vor Anflug der Interlakner Landeplätze beachten.", images: [images.safetyInterlaken1, images.safetyInterlaken2], document: { title: "SHV Infotafel Interlaken", edition: "Ausgabe 03/2024", path: "https://www.shv-fsvl.ch/fileadmin/files/redakteure/Allgemein/Sicherheit/SHVInfotafeln/Interlaken.pdf" } },
+  { id: "interlaken", title: "Landeplätze Interlaken", detail: "Höhenangaben in AMSL", body: "Die publizierten Höhen sind Meter über Meer und nicht Meter über Grund. Die aktuelle SHV Infotafel vor dem Flug vollständig prüfen.", images: [], document: { title: "SHV Infotafel Interlaken", edition: "Ausgabe 03/2024", path: "https://www.shv-fsvl.ch/fileadmin/files/redakteure/Allgemein/Sicherheit/SHVInfotafeln/Interlaken.pdf", preview: images.safetyInterlakenPreview } },
 ];
 export const membershipFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfFEIRJqhDSkB7wPeH2SWIIHiL5s61NnF57sO9EX1a2C3wc_w/viewform";
 export const boardMembers = [

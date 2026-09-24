@@ -22,7 +22,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 - Retired Lauterbrunnental panorama assets (`muerren`, `stechelberg`, `lauterbrunnen`, `airtime-stechelberg`) live in `content/archive/panoramas/` outside the published `public/` tree. The public multires manifest contains only the nine active Grindelwald scenes; the full 13-scene manifest is archived with the retired files. Do not regenerate retired scenes into `public/` during normal builds.
 
-- Safety page PDF maps: show one preview for each Grindelwald, Lauterbrunnen and Meiringen PDF. Clicking the preview opens that PDF directly; keep the separate PDF button. Do not repeat the older screenshot cards alongside these previews. Interlaken's two standalone rule cards and PDF button link to the SHV Infotafel Interlaken PDF (03/2024) listed on the SHV flight-area page.
+- Safety page PDF maps: show one preview for each Grindelwald, Lauterbrunnen, Meiringen and Interlaken PDF. Clicking the preview opens that PDF directly; keep the separate PDF button. Generate the Interlaken preview from the SHV PDF linked on the flight-area page so the image and document match; do not repeat the older standalone screenshot cards. The Jagdbanngebiet section uses Pascal's supplied map, his start/landing restriction text, an official SHV Grindelwald PDF link, and a link to the federal Geoportal for current AuLaV boundaries.
+- Board portraits remain anonymous placeholders until approved portraits are supplied. Keep the enlarged, high-contrast board contact text when replacing images.
 
 - Panorama views use the `First · Feratel` webcam for every First camera marker; Schreckfeld remains a separate Meteo-gallery camera and must not be presented as First. Panorama wind markers use the shared `useWindFeed` client and its ThermalBase public API data, including loading, stale, degraded, and unavailable states; never render deterministic demo readings in panoramas.
 
