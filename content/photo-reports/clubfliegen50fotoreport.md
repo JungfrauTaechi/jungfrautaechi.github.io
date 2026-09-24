@@ -4,7 +4,7 @@ slug: clubfliegen50fotoreport
 title: Jubiläumsclubfliegen 50 Jahre Jungfrau-Tächi
 date: '2026-09-19'
 detail: Fotoreport vom Clubfliegen im Sandigen Boden zum 50jährigen Jubliäum Jungfrau-Tächi.
-coverImage: /media/photos/clubfliegen50fotoreport/08d4bcdb-cc75-4dcd-8da5-458954ac6021.JPG
+coverImage: /media/photos/clubfliegen50fotoreport/7159a83f-faa9-4c61-9aa7-dc73995f54ec.JPG
 gallery:
   - src: /media/photos/clubfliegen50fotoreport/08d4bcdb-cc75-4dcd-8da5-458954ac6021.JPG
     alt: 08d4bcdb-cc75-4dcd-8da5-458954ac6021.JPG
