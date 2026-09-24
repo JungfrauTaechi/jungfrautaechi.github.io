@@ -7,11 +7,11 @@ category: Clubleben
 summary: Bericht zum Clubfliegen.
 coverImage: /media/news/sandigeboden50/titelbild.jpg
 gallery:
-  - src: /media/news/mein-beitrag/Rangliste-Clubfliegen-2026.jpg
+  - src: /media/news/sandigeboden50/Rangliste-Clubfliegen-2026.jpg
     alt: Rangliste vom Clubfliegen
-  - src: /media/news/mein-beitrag/IMG_5157.jpg
+  - src: /media/news/sandigeboden50/IMG_5157.jpg
     alt: Sieger Clubfliegen
-  - src: /media/news/mein-beitrag/IMG_5159.jpg
+  - src: /media/news/sandigeboden50/IMG_5159.jpg
     alt: Sieger Kuchenchallenge
 ---
 
