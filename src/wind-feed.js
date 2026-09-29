@@ -19,13 +19,18 @@ function normalizeReading(reading) {
 
 function observations(readings) {
   const ordered = [...new Map(readings.map(normalizeReading).filter(Boolean).sort((a, b) => b.epoch - a.epoch).map((reading) => [reading.epoch, reading])).values()];
-  // Keep the latest reading, then sample older history at a minimum five-minute interval.
-  const sampled = [];
-  for (const reading of ordered) {
-    if (!sampled.length || sampled[sampled.length - 1].epoch - reading.epoch >= 5 * 60) sampled.push(reading);
-    if (sampled.length === 5) break;
+  if (ordered.length <= 5) return ordered;
+  // Prefer five-minute gaps, then shorten them as needed to retain four earlier readings.
+  for (const intervalSeconds of [300, 240, 180, 120, 60]) {
+    const sampled = [ordered[0]];
+    for (const reading of ordered.slice(1)) {
+      if (sampled[sampled.length - 1].epoch - reading.epoch >= intervalSeconds) sampled.push(reading);
+      if (sampled.length === 5) break;
+    }
+    if (sampled.length === 5) return sampled;
   }
-  return sampled;
+  // Preserve four older values even when source rows arrive more often than once per minute.
+  return ordered.slice(0, 5);
 }
 
 // The public feed is separate from EigAir's authenticated, session-scoped POST /api/live-wind.

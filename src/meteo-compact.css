@@ -27,6 +27,8 @@
 .wind-history-details .wind-history-heading { margin-bottom: .4rem; }
 .wind-history-details .wind-history { margin-bottom: .4rem; }
 .wind-card-integrated .wind-history > span { display: flex; flex-direction: column; align-items: center; }
+.wind-card-integrated .wind-history-measurement { display: flex; align-items: center; justify-content: center; gap: .25rem; white-space: nowrap; }
+.wind-card-integrated .wind-history-measurement > small { color: var(--muted); font-size: .61rem; font-weight: 700; }
 .wind-history-details .wind-empty { margin: .3rem 0; font-size: .8rem; }
 
 /* The same radar follows the cards on mobile; no duplicate component or requests. */
