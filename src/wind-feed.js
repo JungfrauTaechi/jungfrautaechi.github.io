@@ -70,7 +70,7 @@ export function buildWindStations(roster, feed, now = Date.now()) {
 
 export function createWindFeedClient({ roster, url = "", fetchImpl = globalThis.fetch, storage, now = Date.now, timeoutMs = 10000 }) {
   const mode = url ? "thermalbase" : "prototype";
-  const cacheKey = `jungfrau-taechi.wind-feed.v2:${url || mode}:${roster.map((s) => s.id).join(",")}`;
+  const cacheKey = `jungfrau-taechi.wind-feed.v3:${url || mode}:${roster.map((s) => s.id).join(",")}`;
   let memory = null;
   let inFlight = null;
   const read = () => {
