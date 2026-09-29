@@ -18,7 +18,14 @@ function normalizeReading(reading) {
 }
 
 function observations(readings) {
-  return [...new Map(readings.map(normalizeReading).filter(Boolean).sort((a, b) => b.epoch - a.epoch).map((reading) => [reading.epoch, reading])).values()].slice(0, 4);
+  const ordered = [...new Map(readings.map(normalizeReading).filter(Boolean).sort((a, b) => b.epoch - a.epoch).map((reading) => [reading.epoch, reading])).values()];
+  // Keep the latest reading, then sample older history at a minimum five-minute interval.
+  const sampled = [];
+  for (const reading of ordered) {
+    if (!sampled.length || sampled[sampled.length - 1].epoch - reading.epoch >= 5 * 60) sampled.push(reading);
+    if (sampled.length === 5) break;
+  }
+  return sampled;
 }
 
 // The public feed is separate from EigAir's authenticated, session-scoped POST /api/live-wind.

@@ -2,7 +2,16 @@ import { useEffect, useState } from "react";
 import { windStationRoster } from "./data.js";
 import { buildWindStations, createWindFeedClient } from "./wind-feed.js";
 
-export const thermalbaseWeatherUrl = (import.meta.env.VITE_THERMALBASE_WEATHER_URL || "").trim();
+const configuredThermalbaseUrl = (import.meta.env.VITE_THERMALBASE_WEATHER_URL || "").trim();
+export const thermalbaseWeatherUrl = (() => {
+  if (!configuredThermalbaseUrl) return "";
+  try {
+    const url = new URL(configuredThermalbaseUrl);
+    // Fetch enough source rows to find four earlier observations at >=5-minute spacing.
+    url.searchParams.set("observations", "20");
+    return url.href;
+  } catch { return configuredThermalbaseUrl; }
+})();
 export const WIND_FEED_POLL_MS = 5 * 60 * 1000;
 let storage;
 try { storage = globalThis.localStorage; } catch { /* Private browsing may block storage. */ }
