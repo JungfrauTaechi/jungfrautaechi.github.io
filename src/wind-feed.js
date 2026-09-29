@@ -65,7 +65,7 @@ export function buildWindStations(roster, feed, now = Date.now()) {
 
 export function createWindFeedClient({ roster, url = "", fetchImpl = globalThis.fetch, storage, now = Date.now, timeoutMs = 10000 }) {
   const mode = url ? "thermalbase" : "prototype";
-  const cacheKey = `jungfrau-taechi.wind-feed.v1:${url || mode}:${roster.map((s) => s.id).join(",")}`;
+  const cacheKey = `jungfrau-taechi.wind-feed.v2:${url || mode}:${roster.map((s) => s.id).join(",")}`;
   let memory = null;
   let inFlight = null;
   const read = () => {
@@ -128,7 +128,7 @@ export function createWindFeedClient({ roster, url = "", fetchImpl = globalThis.
   }
   return { snapshot, load() {
     const cached = snapshot();
-    if (cached.status !== "loading" && cached.status !== "refreshing") return Promise.resolve(cached);
+    if (cached.status !== "loading" && cached.status !== "refreshing" && cached.status !== "error") return Promise.resolve(cached);
     if (!inFlight) inFlight = refresh().finally(() => { inFlight = null; });
     return inFlight;
   } };
