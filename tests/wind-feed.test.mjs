@@ -71,7 +71,9 @@ test("public adapter allowlists stations, sorts and deduplicates history, and pr
   payload.stations.push({ id: "not-published", latest: observation() });
   const entries = parseThermalbaseFeed(payload, roster);
   assert.equal(entries.length, 2);
-  assert.deepEqual(entries[0].readings.map((r) => r.epoch), [epoch, epoch - 600, epoch - 1200, epoch - 1800]);
+  const readings = entries[0].readings;
+  assert.deepEqual(readings.map((r) => r.epoch), [epoch, epoch - 600, epoch - 1200, epoch - 1800, epoch - 2400]);
+  assert.ok(readings.slice(1).every((reading, index) => readings[index].epoch - reading.epoch >= 5 * 60));
   assert.equal(entries[0].readings[0].average, 0);
   assert.equal(entries[0].readings[0].temperature, 12);
   assert.throws(() => parseThermalbaseFeed({ ...payload, apiVersion: 2 }, roster));
