@@ -7,8 +7,8 @@ export const thermalbaseWeatherUrl = (() => {
   if (!configuredThermalbaseUrl) return "";
   try {
     const url = new URL(configuredThermalbaseUrl);
-    // Fetch enough source rows to find four earlier observations at >=5-minute spacing.
-    url.searchParams.set("observations", "20");
+    // The public endpoint accepts up to 12 rows; sample them at >=5-minute spacing.
+    url.searchParams.set("observations", "12");
     return url.href;
   } catch { return configuredThermalbaseUrl; }
 })();
