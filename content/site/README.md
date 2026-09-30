@@ -2,7 +2,7 @@
 
 Diese Dateien werden direkt von der Website gelesen. Es ist kein React-Code nötig.
 
-**Pages-CMS-Pilot:** News, Fotoreports und Jahresprogramm lassen sich zusätzlich über Formulare bearbeiten. Die [Pages-CMS-Anleitung](../../docs/pages-cms-guide.md) erklärt den Testbranch und die spätere Veröffentlichung. Während des Piloten `codex/pages-cms-pilot` auswählen.
+**Pages CMS:** News, Fotoreports und Jahresprogramm lassen sich über Formulare bearbeiten. Die [Pages-CMS-Anleitung](../../docs/pages-cms-guide.md) erklärt Anmeldung, Bildordner und Veröffentlichung. Für Clubinhalte den Branch `main` auswählen.
 
 | Was ändern? | Datei | Online bearbeiten |
 | --- | --- | --- |

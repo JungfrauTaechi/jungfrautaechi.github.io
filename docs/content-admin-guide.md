@@ -108,6 +108,6 @@ Unterhalb des zweiten `---` steht bei News der vollständige Beitrag. Übliche M
 - Jedes Bild hat einen beschreibenden `alt`-Text; ein Kameradateiname wie `IMG_1234` ist kein Alt-Text.
 - Es wurden keine Passwörter, internen Dokumente oder personenbezogenen Daten hochgeladen, die nicht öffentlich sein dürfen.
 
-## Pages-CMS-Pilot
+## Pages CMS
 
-Für News, Fotoreports und das Jahresprogramm ist ein Pages-CMS-Pilot vorbereitet. Die [Pages-CMS-Anleitung](pages-cms-guide.md) erklärt Anmeldung, Bilder und den Testbranch `codex/pages-cms-pilot`. Die Formulare schreiben dieselben Markdown- bzw. JSON-Dateien; die Inhaltsstruktur bleibt unabhängig vom CMS und vom Website-Hosting.
+Für News, Fotoreports und das Jahresprogramm steht Pages CMS bereit. Die [Pages-CMS-Anleitung](pages-cms-guide.md) erklärt Anmeldung, Foto-Ordner und Veröffentlichung auf `main`. Die Formulare schreiben dieselben Markdown- bzw. JSON-Dateien; die Inhaltsstruktur bleibt unabhängig vom CMS und vom Website-Hosting.
