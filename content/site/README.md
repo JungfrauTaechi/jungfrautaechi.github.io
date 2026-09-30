@@ -2,6 +2,8 @@
 
 Diese Dateien werden direkt von der Website gelesen. Es ist kein React-Code nötig.
 
+**Pages-CMS-Pilot:** News, Fotoreports und Jahresprogramm lassen sich zusätzlich über Formulare bearbeiten. Die [Pages-CMS-Anleitung](../../docs/pages-cms-guide.md) erklärt den Testbranch und die spätere Veröffentlichung. Während des Piloten `codex/pages-cms-pilot` auswählen.
+
 | Was ändern? | Datei | Online bearbeiten |
 | --- | --- | --- |
 | Jahresprogramm und nächster Termin auf der Startseite | `programme.json` | [Jahresprogramm öffnen](https://github.com/JungfrauTaechi/jungfrautaechi.github.io/edit/main/content/site/programme.json) |
