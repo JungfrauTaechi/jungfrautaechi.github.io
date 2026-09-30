@@ -2,6 +2,8 @@
 
 Diese Dateien werden direkt von der Website gelesen. Es ist kein React-Code nötig.
 
+**Pages CMS:** News, Fotoreports und Jahresprogramm lassen sich über Formulare bearbeiten. Die [Pages-CMS-Anleitung](../../docs/pages-cms-guide.md) erklärt Anmeldung, Bildordner und Veröffentlichung. Für Clubinhalte den Branch `main` auswählen.
+
 | Was ändern? | Datei | Online bearbeiten |
 | --- | --- | --- |
 | Jahresprogramm und nächster Termin auf der Startseite | `programme.json` | [Jahresprogramm öffnen](https://github.com/JungfrauTaechi/jungfrautaechi.github.io/edit/main/content/site/programme.json) |

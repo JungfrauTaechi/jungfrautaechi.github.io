@@ -50,6 +50,8 @@ Vor dem Upload beachten:
 
 ### 3. Markdown-Datei anlegen
 
+**Fotoreports mit automatischer Galerie:** Die aktuelle Fotoreport-Vorlage verwendet `galleryDirectory: /media/photos/<slug>`. Alle JPEG-, PNG- und WebP-Fotos direkt in diesem Ordner werden beim Build automatisch in natürlicher Dateinamenreihenfolge übernommen. Einzelne `gallery`-Einträge sind nicht erforderlich. Für eine bestimmte Reihenfolge vor dem Upload nummerieren, zum Beispiel `001-start.jpg`, `002-gruppe.jpg`. Bestehende manuelle Galerien bleiben unterstützt; optionale Einzelbildeinträge können weiterhin Beschreibungen liefern.
+
 1. Die passende Vorlage öffnen: `content/templates/news.md` oder `content/templates/photo-report.md`.
 2. Den gesamten Inhalt der Vorlage kopieren.
 3. Zum Zielordner `content/news/` beziehungsweise `content/photo-reports/` wechseln.
@@ -92,6 +94,7 @@ Für einen Fotoreport lautet derselbe Pfad entsprechend `/media/photos/<slug>/<d
 - `detail`: kurze Einordnung eines Fotoreports.
 - `coverImage`: Titelbild in Übersicht und Detailseite.
 - `gallery`: sortierte Liste aller Bilder; `src` ist der Bildpfad, `alt` beschreibt das Motiv.
+- `galleryDirectory`: optionaler Foto-Ordner unter `/media/photos/`; erzeugt die Fotoreport-Galerie automatisch, ohne jeden Bildpfad einzutragen.
 
 Unterhalb des zweiten `---` steht bei News der vollständige Beitrag. Übliche Markdown-Formatierung wie Absätze, `## Zwischentitel`, Listen, Hervorhebungen und Links wird unterstützt. Die Fotogalerie benötigt normalerweise keinen zusätzlichen Fliesstext.
 
@@ -105,6 +108,6 @@ Unterhalb des zweiten `---` steht bei News der vollständige Beitrag. Übliche M
 - Jedes Bild hat einen beschreibenden `alt`-Text; ein Kameradateiname wie `IMG_1234` ist kein Alt-Text.
 - Es wurden keine Passwörter, internen Dokumente oder personenbezogenen Daten hochgeladen, die nicht öffentlich sein dürfen.
 
-## Spätere Komfortlösung
+## Pages CMS
 
-Wenn die direkte GitHub-Bearbeitung für die Admins zu technisch ist, kann Decap CMS ergänzt werden. Es stellt unter `/admin` Formulare für dieselben Felder, Text und Bild-Uploads bereit und schreibt weiterhin die gleichen Markdown-Dateien ins Repository. Die Inhaltsstruktur bleibt dadurch unabhängig von einem bestimmten CMS.
+Für News, Fotoreports und das Jahresprogramm steht Pages CMS bereit. Die [Pages-CMS-Anleitung](pages-cms-guide.md) erklärt Anmeldung, Foto-Ordner und Veröffentlichung auf `main`. Die Formulare schreiben dieselben Markdown- bzw. JSON-Dateien; die Inhaltsstruktur bleibt unabhängig vom CMS und vom Website-Hosting.

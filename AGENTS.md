@@ -18,6 +18,9 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Durable implementation decisions
 
+- September 30 CMS approval: Pages CMS is approved for Pascal's German-labelled News, Fotoreport and Jahresprogramm / Agenda forms. Use `main` for production content and remove pilot records before release. Preserve the existing Markdown collections, `content/site/programme.json` top-level array and imported metadata. Keep the CMS independent of GitHub Pages versus future Cloudflare hosting. Pascal has a GitHub account; URL access still requires repository Write permission or a Pages CMS collaborator invitation.
+- September 30 photo-report workflow: upload all photos to one folder and set `galleryDirectory` to that `/media/photos/<folder>` path. Build the gallery automatically in natural filename order; no per-photo CMS entry is required. Keep existing explicit galleries and optional per-photo descriptions. New uploads and deletions in a referenced folder are reflected on the next successful build.
+
 - Wind-station replacement is active: primary cards are ordered Grund, First, Männlichen, Russisprung, Jungfraujoch, and Interlaken / Lehn. Schmidigen-Bidmeren and Itramen remain available in the regional station list. Keep their stable provider IDs and feed adapters; do not delete historical data.
 
 - Retired Lauterbrunnental panorama assets (`muerren`, `stechelberg`, `lauterbrunnen`, `airtime-stechelberg`) live in `content/archive/panoramas/` outside the published `public/` tree. The public multires manifest contains only the nine active Grindelwald scenes; the full 13-scene manifest is archived with the retired files. Do not regenerate retired scenes into `public/` during normal builds.

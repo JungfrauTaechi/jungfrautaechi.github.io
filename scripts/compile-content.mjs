@@ -5,6 +5,7 @@ import matter from "gray-matter";
 import { marked } from "marked";
 import sanitizeHtml from "sanitize-html";
 import { validateSiteContent } from "./site-content-validation.mjs";
+import { resolvePhotoGallery } from "./photo-directory-gallery.mjs";
 
 const root = path.resolve(".");
 const siteContent = Object.fromEntries(await Promise.all(['programme', 'portrait', 'purposes'].map(async name => [name, JSON.parse(await readFile(path.join(root, 'content/site', `${name}.json`), 'utf8'))])));
@@ -39,7 +40,7 @@ const readCollection = async (directory) => {
     if (issues.length) throw new Error(`${file}: ${issues.join("; ")}`);
     const legacy = /^https?:\/\/(www\.)?jungfrau-taechi\.ch\//.test(record.sourceUrl || "");
     const gallery = [];
-    for (const [index, image] of (record.gallery || []).entries()) {
+    for (const [index, image] of (await resolvePhotoGallery(record, root)).entries()) {
       if (!await mediaExists(image?.src)) {
         if (!legacy) throw new Error(`${file}: missing gallery image ${image?.src || "(empty path)"}`);
         unavailableArchiveImages++; continue;

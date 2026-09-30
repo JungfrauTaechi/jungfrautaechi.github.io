@@ -1,0 +1,224 @@
+# Pages CMS: use main for club content. Saving publishes after validation/build.
+# See docs/pages-cms-guide.md for editing, drafts and photo folders.
+media:
+  - name: club-images
+    label: Bilder für News und Fotoreports
+    input: public/media
+    output: /media
+    extensions: [jpg, jpeg, png, webp]
+    # Preserve numbered filenames for automatic photo-report ordering.
+    rename: false
+
+settings:
+  content:
+    # Keep imported provenance and other fields outside the editor schema.
+    merge: true
+
+components:
+  article-slug:
+    type: string
+    label: URL-Kürzel
+    required: true
+    description: "Zum Beispiel clubausflug-2027. Nach Veröffentlichung nicht mehr ändern."
+    pattern:
+      regex: '^[a-z0-9][a-z0-9-]*$'
+      message: Nur Kleinbuchstaben, Zahlen und Bindestriche; mit Buchstabe oder Zahl beginnen.
+  article-date:
+    type: date
+    label: Beitragsdatum
+    required: true
+    options:
+      time: false
+      format: yyyy-MM-dd
+  article-draft:
+    type: boolean
+    label: Entwurf – auf der Website ausblenden
+    default: false
+    description: "Für neue Entwürfe einschalten. Entwürfe sind im öffentlichen GitHub-Repository weiterhin lesbar. Ohne Entwurf wird der Beitrag nach erfolgreicher Prüfung und Veröffentlichung sichtbar."
+  article-body:
+    type: rich-text
+    label: Beitragstext
+    description: "Absätze, Zwischentitel, Listen und Links. Bilder bitte unter Galerie hinzufügen."
+    options:
+      format: markdown
+      media: false
+
+content:
+  - name: news
+    label: News
+    type: collection
+    path: content/news
+    format: yaml-frontmatter
+    subfolders: false
+    filename: '{fields.slug}.md'
+    view:
+      primary: title
+      fields: [title, date, category, draft]
+      sort: [date, title]
+      search: [title, summary, category]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: kind
+        type: string
+        hidden: true
+        default: news
+      - name: title
+        label: Titel
+        type: string
+        required: true
+      - name: slug
+        component: article-slug
+      - name: date
+        component: article-date
+      - name: draft
+        component: article-draft
+      - name: category
+        label: Rubrik
+        type: string
+        default: Clubleben
+      - name: summary
+        label: Kurztext für die Newsübersicht
+        type: text
+      - name: coverImage
+        label: Titelbild
+        type: image
+        description: "Optional. Ohne Titelbild wird das erste Galeriebild verwendet. Ein ausgewähltes Titelbild erscheint automatisch einmal in der Newsgalerie."
+        options:
+          media: club-images
+          path: public/media/news
+      - name: body
+        component: article-body
+      - name: gallery
+        label: Galerie
+        type: object
+        description: "Bilder in der gewünschten Reihenfolge hinzufügen. Dateien vor dem Upload auf etwa 1600–2000 Pixel und möglichst 1–2 MB verkleinern."
+        list:
+          collapsible:
+            collapsed: true
+            summary: '{index}. {fields.alt}'
+        fields:
+          - name: src
+            label: Bild
+            type: image
+            required: true
+            options:
+              media: club-images
+              path: public/media/news
+          - name: alt
+            label: Bildbeschreibung
+            type: string
+            required: true
+            description: "Das Motiv kurz beschreiben, zum Beispiel Startvorbereitung auf First."
+
+  - name: photo-reports
+    label: Fotoreports
+    type: collection
+    path: content/photo-reports
+    format: yaml-frontmatter
+    subfolders: false
+    filename: '{fields.slug}.md'
+    view:
+      primary: title
+      fields: [title, date, draft]
+      sort: [date, title]
+      search: [title, detail]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: kind
+        type: string
+        hidden: true
+        default: photo-report
+      - name: title
+        label: Titel
+        type: string
+        required: true
+      - name: slug
+        component: article-slug
+      - name: date
+        component: article-date
+      - name: draft
+        component: article-draft
+      - name: detail
+        label: Kurze Einleitung
+        type: text
+      - name: galleryDirectory
+        label: Foto-Ordner – automatische Galerie
+        type: string
+        description: "Alle Fotos in einen Ordner der Mediathek hochladen und dessen Pfad eintragen, zum Beispiel /media/photos/clubausflug-2027. Alle JPEG-, PNG- und WebP-Bilder direkt in diesem Ordner erscheinen automatisch, nach Dateinamen sortiert (bild-2 vor bild-10). Keine einzelnen Galerieeinträge nötig."
+        pattern:
+          regex: '^$|^/media/photos/[a-zA-Z0-9_-]+(?:/[a-zA-Z0-9_-]+)*/?$'
+          message: "Einen Ordner wie /media/photos/clubausflug-2027 verwenden oder für bestehende manuelle Galerien leer lassen."
+      - name: coverImage
+        label: Titelbild
+        type: image
+        description: "Optional. Ohne Titelbild wird das erste Galeriebild verwendet. Wenn das Titelbild in der Galerie erscheinen soll, dort ebenfalls hinzufügen."
+        options:
+          media: club-images
+          path: public/media/photos
+      - name: gallery
+        label: Einzelbilder / Beschreibungen (optional)
+        type: object
+        description: "Bei einem Foto-Ordner nicht erforderlich. Einträge für Bilder im Ordner ergänzen eigene Beschreibungen; andere Einzelbilder werden am Ende angehängt. Ohne Foto-Ordner bleibt dies die bestehende manuelle Galerie mit eigener Reihenfolge."
+        list:
+          collapsible:
+            collapsed: true
+            summary: '{index}. {fields.alt}'
+        fields:
+          - name: src
+            label: Foto
+            type: image
+            required: true
+            options:
+              media: club-images
+              path: public/media/photos
+          - name: alt
+            label: Bildbeschreibung
+            type: string
+            required: true
+
+  - name: agenda
+    label: Jahresprogramm / Agenda
+    type: file
+    path: content/site/programme.json
+    format: json
+    list: true
+    fields:
+      - name: title
+        label: Anlass
+        type: string
+        required: true
+      - name: startDate
+        label: Startdatum
+        type: date
+        required: true
+        options:
+          time: false
+          format: yyyy-MM-dd
+      - name: endDate
+        label: Enddatum
+        type: date
+        default: ''
+        description: "Bei einem eintägigen Anlass dasselbe Datum wie das Startdatum wählen oder leer lassen. Bei mehreren Tagen den letzten Tag eintragen."
+        options:
+          time: false
+          format: yyyy-MM-dd
+      - name: date
+        label: Datum für die Anzeige
+        type: string
+        required: true
+        description: "Zum Beispiel 7. November 2026 oder 19.–20. September 2026. Bei einer Datumsänderung ebenfalls aktualisieren."
+      - name: text
+        label: Beschreibung
+        type: text
+        required: true
+      - name: path
+        label: Link zu einem Beitrag (optional)
+        type: string
+        description: "Leer lassen oder einen bestehenden internen Pfad eintragen, zum Beispiel /news/clubausflug-2027."
+        pattern:
+          regex: '^$|^/(?!/)(?!.*\.\.)[a-z0-9/-]+$'
+          message: Einen internen Pfad wie /news/clubausflug-2027 verwenden oder leer lassen.
