@@ -6,7 +6,8 @@ media:
     input: public/media
     output: /media
     extensions: [jpg, jpeg, png, webp]
-    rename: random
+    # Preserve numbered filenames for automatic photo-report ordering.
+    rename: false
 
 settings:
   content:
@@ -144,6 +145,13 @@ content:
       - name: detail
         label: Kurze Einleitung
         type: text
+      - name: galleryDirectory
+        label: Foto-Ordner – automatische Galerie
+        type: string
+        description: "Alle Fotos in einen Ordner der Mediathek hochladen und dessen Pfad eintragen, zum Beispiel /media/photos/clubausflug-2027. Alle JPEG-, PNG- und WebP-Bilder direkt in diesem Ordner erscheinen automatisch, nach Dateinamen sortiert (bild-2 vor bild-10). Keine einzelnen Galerieeinträge nötig."
+        pattern:
+          regex: '^$|^/media/photos/[a-zA-Z0-9_-]+(?:/[a-zA-Z0-9_-]+)*/?$'
+          message: "Einen Ordner wie /media/photos/clubausflug-2027 verwenden oder für bestehende manuelle Galerien leer lassen."
       - name: coverImage
         label: Titelbild
         type: image
@@ -152,9 +160,9 @@ content:
           media: club-images
           path: public/media/photos
       - name: gallery
-        label: Fotos in Reihenfolge
+        label: Einzelbilder / Beschreibungen (optional)
         type: object
-        description: "Für jedes Foto einen Eintrag mit Bild und Beschreibung hinzufügen. Mehrere Dateien lassen sich zuerst in der Mediathek hochladen. Vorher auf etwa 1600–2000 Pixel und möglichst 1–2 MB verkleinern."
+        description: "Bei einem Foto-Ordner nicht erforderlich. Einträge für Bilder im Ordner ergänzen eigene Beschreibungen; andere Einzelbilder werden am Ende angehängt. Ohne Foto-Ordner bleibt dies die bestehende manuelle Galerie mit eigener Reihenfolge."
         list:
           collapsible:
             collapsed: true
