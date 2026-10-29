@@ -1,23 +1,60 @@
-# Jungfrau-Tächi redesign
+# Jungfrau-Tächi website
 
-Local Vite/React first version of the Jungfrau-Tächi Grindelwald redesign, structured as reusable shell, page-intro, card listing, flight-area, gallery and anniversary components.
+This repository contains the files that make up the club website. The public website is [jungfrautaechi.github.io](https://jungfrautaechi.github.io/).
 
-Club-Redaktion: [Jahresprogramm und Seitentexte bearbeiten](content/site/README.md) · [News und Fotoreports veröffentlichen](docs/content-admin-guide.md).
+## How the website works
+
+The website has two kinds of files:
+
+- **Club content**: news, photo reports, dates, text and images. These can be maintained through the club’s editing forms.
+- **Website features and design**: navigation, page layouts, panorama viewer and other interactive parts. These are maintained in the website code and should be changed with help from a developer.
+
+When a change is saved to the production branch, GitHub checks and prepares the website, then publishes it automatically if the checks succeed:
+
+```mermaid
+flowchart LR
+    A[Edit club content] --> B[Save to main]
+    B --> C[Automatic checks and website build]
+    C -->|Successful| D[Website is published]
+    C -->|Problem found| E[Current website stays online]
+```
+
+A successful save is not the same as a successful publication. For important edits, check the latest **Deploy GitHub Pages** run and then look at the live page.
+
+## Editing club content
+
+Use [Pages CMS](https://app.pagescms.org/jungfrautaechi/jungfrautaechi.github.io/main/collection/news) to edit news, photo reports and the annual programme. Sign in with GitHub and select the club repository on the **main** branch. You need editing access; if the forms say you do not have permission, ask a repository administrator to grant access.
+
+- News and photo reports can be saved as drafts while they are being prepared.
+- Photo reports can use one folder of pictures; the site builds the gallery from the images in that folder.
+- Annual programme changes appear on the site after the automatic checks and publication finish.
+
+The step-by-step instructions, including image preparation, are in the [Pages CMS guide](docs/pages-cms-guide.md). The [news and photo report guide](docs/content-admin-guide.md) explains the file-based alternative.
+
+## Where things live
+
+- `src/` contains the page design and interactive features. Most routine article and event updates do not require changing these files.
+- `docs/` contains practical editing and technical reference guides.
+- `public/` holds images and other files delivered with the website.
+- `scripts/` contains the automated tools that prepare and check the site.
+
+The website is published from the public GitHub repository **JungfrauTaechi/jungfrautaechi.github.io**. The **main** branch is the live version. Changes to page design, navigation or code should be reviewed before they are added to `main`; publishing code changes directly can affect the whole website.
+
+## For website maintainers
+
+To run a local preview, install Node.js and run these commands in PowerShell from the project folder:
 
 ```powershell
-npm run inventory
-npm run build
-npm run test:sites
-npm test
+npm install
 npm run dev
 ```
 
-`npm run inventory` reads the public sitemap and writes JSON, Markdown, CSV and image-source manifests under `content/inventory/`. It performs public GET requests only and does not alter the live website. If the public crawl is unavailable after an internal-link parser correction, the retained corpus is kept but its internal-link values are explicitly marked unavailable rather than treated as zero; a successful fresh crawl restores current/complete link data.
+To prepare and check a release:
 
-The runtime uses mirrored local club images under `public/assets/source/` (served as `/assets/source/...`), so the deployed site does not depend on remote image delivery. The original club URLs and one-time retrieval provenance remain recorded in `content/inventory/assets-manifest.json`. Set the single `showAnniversary` flag in `src/data.js` to `false` to remove anniversary-only UI.
+```powershell
+npm test
+npm run build:pages
+npm run test:pages
+```
 
-## GitHub Pages
-
-The site publishes from the single public repository `JungfrauTaechi/jungfrautaechi.github.io`. The `main` branch is the production source and deploys to `https://jungfrautaechi.github.io/`. A `dev` branch may be used for ongoing work, but it is not deployed as a separate public Pages site; validate it locally before merging it into `main`.
-
-`npm run build` retains the local/Sites-compatible build. For GitHub Pages, `npm run build:pages` builds the static client and copies `index.html` to `dist/client/404.html` so direct SPA links work on Pages. Vite reads `SITE_BASE`; the production root leaves it unset. See [DEPLOYMENT.md](DEPLOYMENT.md) for the branch workflow, Pages setup, promotion and rollback runbook.
+See [DEPLOYMENT.md](DEPLOYMENT.md) for the maintainer release and rollback process. The regular `npm run build` also prepares an output compatible with the Sites handoff. `npm run inventory` refreshes the records of public pages and image sources; it does not publish or change the live website.
